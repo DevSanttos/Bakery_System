@@ -9,5 +9,8 @@ package model.bean;
  * @author joseo
  */
 public class Venda {
+
+    public Venda() {
+    }
     
 }
