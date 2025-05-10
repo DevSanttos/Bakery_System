@@ -9,5 +9,5 @@ package model.bean;
  * @author joseo
  */
 public class Pessoa {
-    
+    String nome;
 }
