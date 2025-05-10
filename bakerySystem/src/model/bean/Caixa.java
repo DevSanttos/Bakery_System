@@ -8,6 +8,6 @@ package model.bean;
  *
  * @author joseo
  */
-public class Caixa {
+public class Caixa extends Funcionario {
     
 }

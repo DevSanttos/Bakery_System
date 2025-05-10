@@ -8,6 +8,6 @@ package model.bean;
  *
  * @author joseo
  */
-public class Cliente {
+public class Cliente extends Pessoa {
     
 }

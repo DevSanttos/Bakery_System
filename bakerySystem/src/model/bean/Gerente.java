@@ -8,6 +8,6 @@ package model.bean;
  *
  * @author joseo
  */
-public class Gerente {
+public class Gerente extends Funcionario {
     
 }
