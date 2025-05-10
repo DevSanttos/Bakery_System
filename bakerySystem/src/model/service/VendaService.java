@@ -14,7 +14,7 @@ import model.bean.Venda;
  */
 public class VendaService {
     
-    public boolean realizaVenda(Pessoa pessoa, Venda venda, Caixa caixa) {
+    public boolean realizaVenda(Pessoa pessoa   , Venda venda, Caixa caixa) {
         return true;
     }
     

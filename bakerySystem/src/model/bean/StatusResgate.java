@@ -9,17 +9,11 @@ package model.bean;
  * @author joseo
  */
 public enum StatusResgate {
-    BOLO_DE_PAO(50),
-    CUCA_DE_MORANGO(150),
-    BOLO_BRIGADEIRO(125);
-
-    private final int quantPontosNecessarios;
-
-    StatusResgate(int quantPontosNecessarios) {
-        this.quantPontosNecessarios = quantPontosNecessarios;
+    NAO_REALIZADO,
+    PENDENTE,
+    REALIZADO;
+    
+    StatusResgate() {
+        
     }
-
-    public int getQuantPontosNecessarios() {
-        return quantPontosNecessarios;
-    } 
 }
