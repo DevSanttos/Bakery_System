@@ -8,6 +8,6 @@ package model.dao;
  *
  * @author jonat
  */
-public class PssoaDao {
+public class ClienteDAO {
     
 }

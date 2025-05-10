@@ -4,13 +4,57 @@
  */
 package model.bean;
 
+import java.time.LocalDate;
+import java.util.List;
+
 /**
  *
  * @author joseo
  */
 public class Venda {
+    
+    private LocalDate dataVenda;
+    private Cliente cliente;
+    private List<Produto> listaProdutos; 
 
     public Venda() {
     }
+
+    public LocalDate getDataVenda() {
+        return dataVenda;
+    }
+
+    public void setDataVenda(LocalDate dataVenda) {
+        this.dataVenda = dataVenda;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<Produto> getListaProdutos() {
+        return listaProdutos;
+    }
+
+    public void setListaProdutos(List<Produto> listaProdutos) {
+        this.listaProdutos = listaProdutos;
+    }
+    
+    public void addProduto(Produto umProduto){
+        this.listaProdutos.add(umProduto);
+    }
+    
+    public void removeProduto(Produto umProduto){
+        this.listaProdutos.remove(umProduto);
+    }
+    
+    public String toString(){
+        return null; //sei la qq coloco aqui
+    }
+    
     
 }

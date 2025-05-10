@@ -18,4 +18,20 @@ public class VendaService {
         return true;
     }
     
+    public boolean atualizaEstoqueProdutos(){
+        return true;
+    }
+    
+    public int calculaPontosCompra(){
+        return 1;
+    }
+    
+    public boolean realizarTrocaPontos(){
+        return true;
+    }
+    
+    public String toString(){
+        return null;
+    }
+    
 }

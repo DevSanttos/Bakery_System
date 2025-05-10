@@ -10,4 +10,20 @@ package model.service;
  */
 public class GerenteService {
     
+    public boolean createProduto(){
+        return true;
+    }
+    
+    public boolean readProduto(){
+        return true;
+    }
+    
+    public boolean updateProduto(){
+        return true;
+    }
+    
+    public boolean deleteProduto(){
+        return true;
+    }
+    
 }

@@ -10,4 +10,11 @@ package model.bean;
  */
 public class Caixa extends Funcionario {
     
+    public Caixa(String nome, String CPF, String telefone, String cargo, String login, String senha){
+        super(nome,CPF,telefone,cargo,login,senha);
+    }
+
+         
+    //Usa o toString do Funcionario
+    
 }
