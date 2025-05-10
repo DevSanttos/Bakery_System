@@ -14,6 +14,10 @@ public class Gerente extends Funcionario {
         super(nome,CPF,telefone,cargo,login,senha);
     }
     
-    //Usa o toString do Funcionario
+   
+    @Override
+    public String toString() {
+        return super.toString();
+    }
     
 }

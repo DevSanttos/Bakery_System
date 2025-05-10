@@ -12,11 +12,11 @@ public class Produto {
 
     private String nome;
     private double preco;
-    private TrocaPontos resgatavel;
+    private StatusResgate resgatavel;
     private String tipo;
     private int quantidade;
 
-    public Produto(String nome, double preço, TrocaPontos resgatavel, String tipo, int quantidade) {
+    public Produto(String nome, double preço, StatusResgate resgatavel, String tipo, int quantidade) {
         this.nome = nome;
         this.preco = preco;
         this.resgatavel = resgatavel;
@@ -40,11 +40,11 @@ public class Produto {
         this.preco = preco;
     }
 
-    public TrocaPontos getResgatavel() {
+    public StatusResgate getResgatavel() {
         return resgatavel;
     }
 
-    public void setResgatavel(TrocaPontos resgatavel) {
+    public void setResgatavel(StatusResgate resgatavel) {
         this.resgatavel = resgatavel;
     }
 
@@ -66,6 +66,6 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto{" + "nome=" + nome + ", pre\u00e7o=" + preco + ", resgatavel=" + resgatavel + ", tipo=" + tipo + ", quantidade=" + quantidade + '}';
+        return "Produto{" + "nome=" + nome + ", preço=" + preco + ", resgatavel=" + resgatavel + ", tipo=" + tipo + ", quantidade=" + quantidade + '}';
     }
 }

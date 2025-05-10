@@ -8,14 +8,14 @@ package model.bean;
  *
  * @author joseo
  */
-public enum TrocaPontos {
+public enum StatusResgate {
     BOLO_DE_PAO(50),
     CUCA_DE_MORANGO(150),
     BOLO_BRIGADEIRO(125);
 
     private final int quantPontosNecessarios;
 
-    TrocaPontos(int quantPontosNecessarios) {
+    StatusResgate(int quantPontosNecessarios) {
         this.quantPontosNecessarios = quantPontosNecessarios;
     }
 

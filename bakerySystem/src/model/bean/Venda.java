@@ -51,10 +51,9 @@ public class Venda {
     public void removeProduto(Produto umProduto){
         this.listaProdutos.remove(umProduto);
     }
-    
-    public String toString(){
-        return null; //sei la qq coloco aqui
+
+    @Override
+    public String toString() {
+        return "Venda{" + "dataVenda=" + dataVenda + ", cliente=" + cliente + ", listaProdutos=" + listaProdutos + '}';
     }
-    
-    
 }
