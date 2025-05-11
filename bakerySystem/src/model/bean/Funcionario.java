@@ -16,57 +16,45 @@ public class Funcionario extends Pessoa {
     
     public Funcionario(String nome, String CPF, String telefone, String cargo, String login, String senha){
         super(nome,CPF,telefone);
-        this.cargo = cargo;
-        this.login = login;
-        this.senha = senha;
+        this.setCargo(cargo);
+        this.setLogin(login);
+        this.setSenha(senha);
     }
 
     public String getCargo() {
-        return cargo;
+        return this.cargo;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public boolean setCargo(String cargo) {
+        if(!cargo.isBlank()){
+            this.cargo = cargo;
+            return true;
+        }
+        return false;
     }
 
     public String getLogin() {
-        return login;
+        return this.login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public boolean setLogin(String login) {
+        if(!login.isBlank()){
+            this.login = login;
+            return true;
+        } else
+            return false;
     }
 
     public String getSenha() {
-        return senha;
+        return this.senha;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-    
-    public String getnome(){
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCPF() {
-        return CPF;
-    }
-
-    public void setCPF(String CPF) {
-        this.CPF = CPF;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public boolean setSenha(String senha) {
+        if(!senha.isBlank()){
+            this.senha = senha;
+            return true;
+        } else
+            return false;
     }
     
     @Override

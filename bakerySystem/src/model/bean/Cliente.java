@@ -14,20 +14,20 @@ public class Cliente extends Pessoa {
     
     public Cliente(String nome, String CPF, String telefone, int totalPontosAcumulados){
         super(nome,CPF,telefone);
-        this.totalPontosAcumulados = totalPontosAcumulados;
+        this.setTotalPontosAcumulados(totalPontosAcumulados);
     }
 
     public int getTotalPontosAcumulados() {
-        return totalPontosAcumulados;
+        return this.totalPontosAcumulados;
     }
 
-    /*public void setTotalPontosAcumulados(int totalPontosAcumulados) {
+    public void setTotalPontosAcumulados(int totalPontosAcumulados) {
         this.totalPontosAcumulados = totalPontosAcumulados;
-    }*/
+    }
     
     @Override
     public String toString(){
-        return "Total de pontos acumulados: "+ totalPontosAcumulados;
+        return super.toString() + " Total de pontos acumulados: "+ this.getTotalPontosAcumulados();
     }
     
     

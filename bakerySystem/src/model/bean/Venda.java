@@ -21,27 +21,31 @@ public class Venda {
     }
 
     public LocalDate getDataVenda() {
-        return dataVenda;
+        return this.dataVenda;
     }
 
-    public void setDataVenda(LocalDate dataVenda) {
-        this.dataVenda = dataVenda;
+    public boolean setDataVenda(LocalDate dataVenda) {
+        if (dataVenda != null) {
+            this.dataVenda = dataVenda;
+            return true;
+        } else
+            return false;
     }
 
     public Cliente getCliente() {
-        return cliente;
+        return this.cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public boolean setCliente(Cliente cliente) {
+        if (cliente != null) {
+            this.cliente = cliente;
+            return true;
+        } else
+            return false;
     }
 
     public List<Produto> getListaProdutos() {
-        return listaProdutos;
-    }
-
-    public void setListaProdutos(List<Produto> listaProdutos) {
-        this.listaProdutos = listaProdutos;
+        return this.listaProdutos;
     }
     
     public void addProduto(Produto umProduto){
