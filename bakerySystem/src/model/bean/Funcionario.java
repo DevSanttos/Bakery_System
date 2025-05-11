@@ -8,7 +8,7 @@ package model.bean;
  *
  * @author joseo
  */
-public class Funcionario extends Pessoa {
+public abstract class Funcionario extends Pessoa {
     
     protected String cargo;
     protected String login;
