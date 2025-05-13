@@ -24,7 +24,10 @@ public class Main {
         Produto produto1 = new Produto("Bolo", 10, "Doces");
         Produto produto2 = new Produto("Pão de queijo Mineiro", 100, "Salgados");
         
-        dao.create(produto2);;
+//        dao.create(produto2);
+//        dao.update(produto1);
+//        ver o erro do update depois
+        dao.delete(produto1);
         System.out.println(dao.read());
     }
 }
