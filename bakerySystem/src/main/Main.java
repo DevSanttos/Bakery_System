@@ -26,8 +26,8 @@ public class Main {
         
 //        dao.create(produto2);
 //        dao.update(produto1);
-//        ver o erro do update depois
-        dao.delete(produto1);
+//        ver o erro do update e do delete depois (settar o valor do id, pois não está sendo informado)
+        
         System.out.println(dao.read());
     }
 }
