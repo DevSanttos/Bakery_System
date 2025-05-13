@@ -19,9 +19,9 @@ import java.util.logging.Logger;
  */
 public class ConnectionFactory {
     private static final String DRIVER = "org.postgresql.Driver";
-    private static final String URL = "jdbc:postgresql://localhost:5432/sistema_padaria";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "Admin";
+    private static final String URL = "jdbc:postgresql://d0fatf3e5dus73bcvp20-a.oregon-postgres.render.com/sistema_padaria";
+    private static final String USER = "admin";
+    private static final String PASSWORD = "M7J9CgacsZ708Xk8TyYWFckQeaf46lrF";
     
     public static Connection getConnection() {
         try {

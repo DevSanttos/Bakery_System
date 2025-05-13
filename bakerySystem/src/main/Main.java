@@ -4,6 +4,11 @@
  */
 package main;
 
+
+import connection.ConnectionFactory;
+import java.sql.Connection;
+import model.bean.Produto;
+import model.dao.ProdutoDAO;
 /**
  *
  * @author GUILHERME
@@ -11,7 +16,15 @@ package main;
 public class Main {
     
     public static void main(String[] args){
+        Connection conexao = null;
+        System.out.println(conexao = (Connection) ConnectionFactory.getConnection());
         
+        ProdutoDAO dao = new ProdutoDAO();
+        
+        Produto produto1 = new Produto("Bolo", 10, "Doces");
+        Produto produto2 = new Produto("Pão de queijo Mineiro", 100, "Salgados");
+        
+        dao.create(produto2);;
+        System.out.println(dao.read());
     }
-    
 }
