@@ -7,8 +7,7 @@ package model.bean;
 /**
  *
  * @author jonathan
- */
-public class Produto {
+ */public class Produto {
     private Long idProduto;
     
     private String nome;
