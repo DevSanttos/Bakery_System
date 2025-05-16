@@ -81,7 +81,7 @@ public class ProdutoDAO {
         PreparedStatement stmt = null;
         Connection connection = ConnectionFactory.getConnection();
         
-        if (produto.getIdProduto() <= 0) {
+        if (produto.getIdProduto() <= 0 || produto.getIdProduto() == null) {
             System.err.println("O produto para atualização precisa ter um ID válido!");
             return;
         }

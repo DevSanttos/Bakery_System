@@ -28,8 +28,8 @@ public class Main {
         
         dao.create(produto5);
         
-        System.out.println(produto1.getIdProduto());
-//        System.out.println(produto1.getNome());
+        System.out.println(dao.read());
+//       System.out.println(produto1.getNome());
 //        
 ////        dao.create(produto2);
 //        produto1.setNome("Bolo de pão");
