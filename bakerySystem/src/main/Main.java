@@ -22,12 +22,22 @@ public class Main {
         ProdutoDAO dao = new ProdutoDAO();
         
         Produto produto1 = new Produto("Bolo", 10, "Doces");
+        Produto produto5 = new Produto("Bulacha", 10, "Doces");
+        
         Produto produto2 = new Produto("Pão de queijo Mineiro", 100, "Salgados");
         
-//        dao.create(produto2);
-//        dao.update(produto1);
-//        ver o erro do update e do delete depois (settar o valor do id, pois não está sendo informado)
+        dao.create(produto5);
         
-        System.out.println(dao.read());
+        System.out.println(produto1.getIdProduto());
+//        System.out.println(produto1.getNome());
+//        
+////        dao.create(produto2);
+//        produto1.setNome("Bolo de pão");
+//        System.out.println(produto1.getIdProduto());
+//        dao.update(produto1);
+//        System.out.println(dao.read());
+        
+        
+        
     }
 }

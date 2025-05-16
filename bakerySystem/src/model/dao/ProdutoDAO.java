@@ -20,12 +20,19 @@ import model.bean.Produto;
  */
 public class ProdutoDAO {
     
+    private static final String SQL_INSERT_PRODUTO = "INSERT INTO produto (nome, preco, tipo) VALUES (?, ?, ?)";
+    private static final String SQL_SELECT_ALL_PRODUTOS = "SELECT id_produto, nome, preco, tipo FROM produto";
+    private static final String SQL_UPDATE_PRODUTO = "UPDATE produto SET nome = ?, preco = ?, tipo = ? WHERE id_produto = ?";
+    private static final String SQL_DELETE_PRODUTO = "DELETE FROM produto WHERE idProduto = ?";
+    private static final String SQL_SELECT_PRODUTO_BY_ID = "SELECT id, nome, preco, quantidade FROM produtos WHERE id = ?";
+    
     public void create(Produto produto) {
         PreparedStatement stmt = null;
         Connection connection = ConnectionFactory.getConnection();
         
         try {    
-            stmt = connection.prepareStatement("INSERT INTO produto(nome,preco,tipo)VALUES(?,?,?)");
+            stmt = connection.prepareStatement(SQL_INSERT_PRODUTO);
+            
             stmt.setString(1, produto.getNome());
             stmt.setDouble(2, produto.getPreco());
             stmt.setString(3, produto.getTipo());
@@ -48,12 +55,13 @@ public class ProdutoDAO {
         ResultSet rs = null;
         
         try {
-            stmt = connection.prepareStatement("SELECT * FROM produto");
+            stmt = connection.prepareStatement(SQL_SELECT_ALL_PRODUTOS);
             rs = stmt.executeQuery();
             
             while (rs.next()) {
                 Produto produto = new Produto();
                 
+                produto.setIdProduto(rs.getLong("id_produto"));
                 produto.setNome(rs.getString("nome"));
                 produto.setPreco(rs.getDouble("preco"));
                 produto.setTipo(rs.getString("tipo"));
@@ -73,8 +81,13 @@ public class ProdutoDAO {
         PreparedStatement stmt = null;
         Connection connection = ConnectionFactory.getConnection();
         
+        if (produto.getIdProduto() <= 0) {
+            System.err.println("O produto para atualização precisa ter um ID válido!");
+            return;
+        }
+        
         try {    
-            stmt = connection.prepareStatement("UPDATE produto SET nome = ?, preco = ?, tipo = ? WHERE idProduto = ?");
+            stmt = connection.prepareStatement(SQL_UPDATE_PRODUTO);
             stmt.setString(1, produto.getNome());
             stmt.setDouble(2, produto.getPreco());
             stmt.setString(3, produto.getTipo());
@@ -90,13 +103,13 @@ public class ProdutoDAO {
         } 
     }
     
-    public void delete(Produto produto) {
+    public void delete(int id) {
         PreparedStatement stmt = null;
         Connection connection = ConnectionFactory.getConnection();
         
         try {    
-            stmt = connection.prepareStatement("DELETE FROM produto WHERE idProduto = ?");
-            stmt.setLong(1, produto.getIdProduto());
+            stmt = connection.prepareStatement(SQL_DELETE_PRODUTO);
+            stmt.setLong(1, id);
                 
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Produto excluido com sucesso!");

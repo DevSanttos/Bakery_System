@@ -80,6 +80,10 @@ public class Produto {
         this.statusResgate = statusResgate;
     }
 
+    public void setIdProduto(Long idProduto) {
+        this.idProduto = idProduto;
+    }
+    
     public Long getIdProduto() {
         return idProduto;
     }
