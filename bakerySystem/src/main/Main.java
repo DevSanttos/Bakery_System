@@ -25,7 +25,10 @@ public class Main {
         Produto produto2 = new Produto("Pão de queijo Mineiro", 100, "Salgados");
         Produto produto3 = new Produto("Bulacha", 10, "Doces");
         Produto produto5 = new Produto("Sonho", 10, "Doce");
-        
+
+        Produto produto23 = new Produto("Arroz", 15, "Aliemnto");
+        produto23.setNome("Feijão");
+
        
 //        produto5 = dao.create(produto5);
 //        System.out.println(dao.read());
