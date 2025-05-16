@@ -22,9 +22,9 @@ public class ProdutoDAO {
     
     private static final String SQL_INSERT_PRODUTO = "INSERT INTO produto (nome, preco, tipo) VALUES (?, ?, ?)";
     private static final String SQL_SELECT_ALL_PRODUTOS = "SELECT id_produto, nome, preco, tipo FROM produto";
-    private static final String SQL_UPDATE_PRODUTO = "UPDATE produto SET nome = ?, preco = ?, tipo = ? WHERE id_produto = ?";
-    private static final String SQL_DELETE_PRODUTO = "DELETE FROM produto WHERE idProduto = ?";
-    private static final String SQL_SELECT_PRODUTO_BY_ID = "SELECT id, nome, preco, quantidade FROM produtos WHERE id = ?";
+    private static final String SQL_UPDATE_PRODUTO = "UPDATE produto SET nome = ?, preco = ?, tipo = ? WHERE produto.id_produto = ?";
+    private static final String SQL_DELETE_PRODUTO = "DELETE FROM produto WHERE produto.id_Produto = ?";
+    private static final String SQL_SELECT_PRODUTO_BY_ID = "SELECT id, nome, preco, quantidade FROM produtos WHERE produto.id_produto = ?";
     
     public void create(Produto produto) {
         PreparedStatement stmt = null;
@@ -39,12 +39,24 @@ public class ProdutoDAO {
             
             stmt.executeUpdate();
             
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    produto.setIdProduto(generatedKeys.getLong(1));
+                } else {
+                    throw new SQLException("Falha ao obter o ID do produto, nenhum ID obtido.");
+                }
+            } catch(SQLException ex){
+                System.out.print(ex.getMessage());
+            }
+            
             JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar o Produto!" + ex);
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
         } 
+        
+        
     }
     
     public List<Produto> read(){
