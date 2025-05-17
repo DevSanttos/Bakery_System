@@ -20,6 +20,7 @@ import java.util.List;
  * @author jonat
  */
 public class ClienteDAO {
+
     private static final String SQL_INSERT_CLIENTE = "INSERT INTO cliente (nome, CPF, telefone, totPontosAcumulados) VALUES (?, ?, ?, ?)";
     private static final String SQL_SELECT_ALL_CLIENTES = "SELECT * FROM cliente";
     private static final String SQL_UPDATE_CLIENTE = "UPDATE cliente SET nome = ?, CPF = ?, telefone = ?, totPontosAcumulados = ? WHERE cliente.id_cliente = ?";
@@ -153,8 +154,8 @@ public class ClienteDAO {
         }
         return false;
     }
-    public Cliente findById(Long idCliente) {
 
+    public Cliente findById(Long idCliente) {
 
         PreparedStatement stmt = null;
         Connection connection = ConnectionFactory.getConnection();
@@ -165,7 +166,6 @@ public class ClienteDAO {
             stmt = connection.prepareStatement(SQL_FIND_BY_ID);
             stmt.setLong(1, idCliente);
             rs = stmt.executeQuery();
-
 
             while (rs.next()) {
                 cliente.setId(rs.getLong("id_produto"));
@@ -182,5 +182,5 @@ public class ClienteDAO {
         }
         return cliente;
     }
-    
+
 }

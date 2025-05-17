@@ -24,5 +24,19 @@ public class Main {
         Connection conexao = null;
         System.out.println(conexao = (Connection) ConnectionFactory.getConnection());
         
+        CaixaDAO dao = new CaixaDAO();
+        ProdutoDAO daoProduto = new ProdutoDAO();
+        
+        Caixa caixa = new Caixa("Santos", "14375229632", "999999999", "caixa01", "joantahn", "123");
+        
+        Caixa novoCaixa = dao.findById(5L);
+        System.out.println(dao.update(novoCaixa));
+        System.out.println(novoCaixa.getNome());
+        System.out.println(novoCaixa.getId());
+        System.out.println(novoCaixa.getTelefone());
+
+      
+        
+        
     }  
 }
