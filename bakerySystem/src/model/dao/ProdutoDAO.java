@@ -69,7 +69,6 @@ public class ProdutoDAO {
         try {
             stmt = connection.prepareStatement(SQL_SELECT_ALL_PRODUTOS);
             rs = stmt.executeQuery();
-
             while (rs.next()) {
                 Produto produto = new Produto();
 

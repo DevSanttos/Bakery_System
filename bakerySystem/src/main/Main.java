@@ -7,7 +7,12 @@ package main;
 
 import connection.ConnectionFactory;
 import java.sql.Connection;
+
+import model.bean.Caixa;
+import model.bean.Cliente;
 import model.bean.Produto;
+import model.dao.CaixaDAO;
+import model.dao.ClienteDAO;
 import model.dao.ProdutoDAO;
 /**
  *
@@ -18,19 +23,6 @@ public class Main {
     public static void main(String[] args){
         Connection conexao = null;
         System.out.println(conexao = (Connection) ConnectionFactory.getConnection());
-        
-        ProdutoDAO dao = new ProdutoDAO();
-        
-        Produto presunto = dao.findById(2L);
-        
-        presunto.setNome("Presunto");
-        
-        System.out.print(dao.update(presunto));
-        
-        
-        
-
-        
         
     }  
 }

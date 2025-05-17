@@ -10,28 +10,41 @@ package model.bean;
  * @author joseo
  */
 public abstract class Pessoa {
+    protected Long id;
     protected String nome;
     protected String CPF;
     protected String telefone;
     
 
-    public Pessoa(String nome, String CPF,String telefone){
+    public Pessoa(String nome, String CPF, String telefone){
         this.setNome(nome);
         this.setCPF(CPF);
         this.setTelefone(telefone);
     }
-    
+
     public Pessoa(){
+
     }
 
-    // INÍCIO GETTERS AND SETTERS
+    public boolean setId(Long id){
+        if(id != null) {
+            this.id = id;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public String getCPF() {
         return this.CPF;
     }
 
     public boolean setCPF(String CPF) {
-        if(CPF.length() != 11){
+        if(CPF.length() > 14 || CPF.length() < 11){
             return false;
         } else {
             this.CPF = CPF;
@@ -63,9 +76,7 @@ public abstract class Pessoa {
             return false;
     }
 
-    //FIM GETTERS AND SETTERS
-
     public String toString(){
-        return "Nome: " + this.getNome() + " CPF: " + this.getCPF() + " Telefone: " + this.getTelefone();
+        return "ID: " + getId() + " Nome: " + this.getNome() + " CPF: " + this.getCPF() + " Telefone: " + this.getTelefone();
     }
 }

@@ -13,7 +13,11 @@ public class Caixa extends Funcionario {
     public Caixa(String nome, String CPF, String telefone, String cargo, String login, String senha){
         super(nome,CPF,telefone,cargo,login,senha);
     }
-    
+
+    public Caixa() {
+
+    }
+
     @Override
     public String toString() {
         return super.toString();

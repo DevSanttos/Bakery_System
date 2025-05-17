@@ -17,6 +17,10 @@ public class Cliente extends Pessoa {
         this.setTotalPontosAcumulados(totalPontosAcumulados);
     }
 
+    public Cliente(){
+
+    }
+
     public int getTotalPontosAcumulados() {
         return this.totalPontosAcumulados;
     }
@@ -29,7 +33,4 @@ public class Cliente extends Pessoa {
     public String toString(){
         return super.toString() + " Total de pontos acumulados: "+ this.getTotalPontosAcumulados();
     }
-    
-    
-        
 }
