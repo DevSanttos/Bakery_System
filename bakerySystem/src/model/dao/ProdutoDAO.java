@@ -24,6 +24,7 @@ public class ProdutoDAO {
     private static final String SQL_SELECT_ALL_PRODUTOS = "SELECT id_produto, nome, preco, tipo FROM produto";
     private static final String SQL_UPDATE_PRODUTO = "UPDATE produto SET nome = ?, preco = ?, tipo = ? WHERE produto.id_produto = ?";
     private static final String SQL_DELETE_PRODUTO = "DELETE FROM produto WHERE produto.id_produto = ?";
+    private static final String SQL_FIND_BY_ID = "SELECT * FROM produto WHERE produto.id_produto = ?";
 
     public Produto create(Produto produto) {
         PreparedStatement stmt = null;
@@ -91,7 +92,7 @@ public class ProdutoDAO {
     public boolean update(Produto produto) {
         PreparedStatement stmt = null;
         Connection connection = ConnectionFactory.getConnection();
-
+        
         if (produto == null || produto.getIdProduto() == null || produto.getIdProduto() <= 0L) {
             throw new IllegalArgumentException("Produto para atualização é nulo ou não tem um ID válido!");
         }
@@ -150,4 +151,33 @@ public class ProdutoDAO {
         } 
         return false;
     }
+    public Produto findById(Long idProduto) {
+        
+
+        PreparedStatement stmt = null;
+        Connection connection = ConnectionFactory.getConnection();
+        ResultSet rs = null;
+        Produto produto = new Produto();
+       
+        try {
+            stmt = connection.prepareStatement(SQL_FIND_BY_ID);
+            stmt.setLong(1, idProduto);
+            rs = stmt.executeQuery();
+            
+            
+            while (rs.next()) {
+                produto.setIdProduto(rs.getLong("id_produto"));
+                produto.setNome(rs.getString("nome"));
+                produto.setPreco(rs.getDouble("preco"));
+                produto.setTipo(rs.getString("tipo"));
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos produtos!" + ex.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt, rs);
+        }
+        return produto;
+    }
+    
 }

@@ -21,26 +21,16 @@ public class Main {
         
         ProdutoDAO dao = new ProdutoDAO();
         
-        Produto produto1 = new Produto("Bolo", 10, "Doces");
-        Produto produto2 = new Produto("Pão de queijo Mineiro", 100, "Salgados");
-        Produto produto3 = new Produto("Bulacha", 10, "Doces");
-        Produto produto5 = new Produto("Sonho", 10, "Doce");
-
-        Produto produto23 = new Produto("Arroz", 15, "Aliemnto");
-        produto23.setNome("Feijão");
-
-       
-//        produto5 = dao.create(produto5);
-//        System.out.println(dao.read());
-//        
-//        produto5.setNome("Sonho choc");
-//        dao.update(produto5);
-//        System.out.println(dao.read());
+        Produto presunto = dao.findById(2L);
         
-        produto5.setNome("Sonho de Valsa");
-        dao.update(produto5);
+        presunto.setNome("Presunto");
+        
+        System.out.print(dao.update(presunto));
+        
+        
         
 
-        System.out.println(produto5.getIdProduto());
-    }
+        
+        
+    }  
 }
