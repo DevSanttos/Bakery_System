@@ -34,11 +34,17 @@ Este sistema simula a rotina de uma padaria, permitindo o gerenciamento de produ
 ## 📁 Organização do Projeto
 
 /src
+
 ├── model → Classes de domínio e conexão com banco
+
 ├── view → Interface gráfica com Swing
+
 └── controller → Lógica de negócio
+
 /database
+
 └── script.sql → Script de criação do banco de dados
+
 
 ## 🧪 Como executar o projeto
 
