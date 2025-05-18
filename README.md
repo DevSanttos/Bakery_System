@@ -39,6 +39,8 @@ Este sistema simula a rotina de uma padaria, permitindo o gerenciamento de produ
 
 ├── view → Interface gráfica com Swing
 
+├── service → Centraliza a lógica de negócio da aplicação
+
 └── controller → Lógica de negócio
 
 /database
