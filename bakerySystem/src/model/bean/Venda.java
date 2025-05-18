@@ -1,63 +1,89 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model.bean;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author joseo
- */
 public class Venda {
-    
+    private Long idVenda;
     private LocalDate dataVenda;
     private Cliente cliente;
-    private List<Produto> listaProdutos; 
+    private List<ItemVenda> itens;
+
+
+
+    public Venda(LocalDate dataVenda, Cliente cliente) {
+        this.dataVenda = dataVenda != null ? dataVenda : LocalDate.now();
+        this.cliente = cliente;
+        this.itens = new ArrayList<>();
+    }
 
     public Venda() {
+        this.dataVenda = LocalDate.now();
+        this.itens = new ArrayList<>();
+    }
+
+    public Long getIdVenda() {
+        return idVenda;
+    }
+
+    public void setIdVenda(Long idVenda) {
+        this.idVenda = idVenda;
     }
 
     public LocalDate getDataVenda() {
-        return this.dataVenda;
+        return dataVenda;
     }
 
-    public boolean setDataVenda(LocalDate dataVenda) {
+    public void setDataVenda(LocalDate dataVenda) {
         if (dataVenda != null) {
             this.dataVenda = dataVenda;
-            return true;
-        } else
-            return false;
+        }
     }
 
     public Cliente getCliente() {
-        return this.cliente;
+        return cliente;
     }
 
-    public boolean setCliente(Cliente cliente) {
-        if (cliente != null) {
-            this.cliente = cliente;
-            return true;
-        } else
-            return false;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public List<Produto> getListaProdutos() {
-        return this.listaProdutos;
+    public void addItem(ItemVenda item) {
+        this.itens.add(item);
     }
-    
-    public void addProduto(Produto umProduto){
-        this.listaProdutos.add(umProduto);
+
+    public void removeItem(ItemVenda item) {
+        this.itens.remove(item);
     }
-    
-    public void removeProduto(Produto umProduto){
-        this.listaProdutos.remove(umProduto);
+
+    public List<ItemVenda> getItens() {
+        return itens;
+    }
+
+    public Date getDataVendaSQL() {
+        return Date.valueOf(this.dataVenda);
+    }
+
+    public double calcularTotal() {
+        return itens.stream()
+                .mapToDouble(item -> item.getPrecoUnitario() * item.getQuantidade())
+                .sum();
     }
 
     @Override
     public String toString() {
-        return "Venda{" + "dataVenda=" + dataVenda + ", cliente=" + cliente + ", listaProdutos=" + listaProdutos + '}';
+        return "Venda{" +
+                "idVenda=" + idVenda +
+                ", dataVenda=" + dataVenda +
+                ", cliente=" + cliente +
+                ", itens=" + itens +
+                '}';
     }
+
+    public void setItens(List<ItemVenda> itens) {
+        this.itens = itens;
+    }
+
 }

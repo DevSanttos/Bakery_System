@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+
+import model.bean.Caixa;
+import model.bean.Gerente;
 import model.bean.Produto;
 
 /**
@@ -20,101 +23,110 @@ import model.bean.Produto;
  */
 public class GerenteDAO {
 
-    private static final String SQL_INSERT_GERENTE = "INSERT INTO gerente (nome, preco, tipo) VALUES (?, ?, ?)";
+    private static final String SQL_INSERT_GERENTE = "INSERT INTO gerente (nome, CPF, telefone, cargo, login, senha) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String SQL_SELECT_ALL_GERENTE = "SELECT id_gerente, nome, CPF, telefone, cargo, login, senha FROM gerente";
-    private static final String SQL_UPDATE_GERENTE = "UPDATE caixa SET nome = ?, CPF = ?, telefone = ?, cargo = ?, login = ?, senha = ? WHERE gerente.id_gerente = ?";
+    private static final String SQL_UPDATE_GERENTE = "UPDATE gerente SET nome = ?, CPF = ?, telefone = ?, cargo = ?, login = ?, senha = ? WHERE gerente.id_gerente = ?";
     private static final String SQL_DELETE_GERENTE = "DELETE FROM gerente WHERE gerente.id_gerente = ?";
     private static final String SQL_FIND_BY_ID = "SELECT * FROM gerente WHERE gerente.id_gerente = ?";
 
-    public Produto create(Produto produto) {
+    public Gerente create(Gerente gerente) {
         PreparedStatement stmt = null;
         Connection connection = ConnectionFactory.getConnection();
         ResultSet generatedKeys = null;
 
         try {
-            stmt = connection.prepareStatement(SQL_INSERT_PRODUTO, PreparedStatement.RETURN_GENERATED_KEYS);
+            stmt = connection.prepareStatement(SQL_INSERT_GERENTE, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            stmt.setString(1, produto.getNome());
-            stmt.setDouble(2, produto.getPreco());
-            stmt.setString(3, produto.getTipo());
+            stmt.setString(1, gerente.getNome());
+            stmt.setString(2, gerente.getCPF());
+            stmt.setString(3, gerente.getTelefone());
+            stmt.setString(4, gerente.getCargo());
+            stmt.setString(5, gerente.getLogin());
+            stmt.setString(6, gerente.getSenha());
 
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
                 generatedKeys = stmt.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    produto.setIdProduto(generatedKeys.getLong(1));
-                    JOptionPane.showMessageDialog(null, "Produto criado com sucesso! ID: " + produto.getIdProduto());
+                    gerente.setId(generatedKeys.getLong(1));
+                    javax.swing.JOptionPane.showMessageDialog(null, "Gerente criado com sucesso! ID: " + gerente.getId());
                 } else {
-                    JOptionPane.showMessageDialog(null, "Falha ao obter o ID!");
+                    JOptionPane.showMessageDialog(null, "Falha ao obter o ID do gerente!");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Falha ao criar o produto! Nenhuma linha foi afetada!");
+                JOptionPane.showMessageDialog(null, "Falha ao criar o gerente! Nenhuma linha foi afetada!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o Produto!" + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o gerente!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, generatedKeys);
         }
-        return produto;
+        return gerente;
     }
 
-    public List<Produto> read() {
-        List<Produto> produtos = new ArrayList<>();
+    public List<Gerente> read() {
+        List<Gerente> gerentes = new ArrayList<>();
 
         PreparedStatement stmt = null;
         Connection connection = ConnectionFactory.getConnection();
         ResultSet rs = null;
 
         try {
-            stmt = connection.prepareStatement(SQL_SELECT_ALL_PRODUTOS);
+            stmt = connection.prepareStatement(SQL_SELECT_ALL_GERENTE);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                Produto produto = new Produto();
+                Gerente gerente = new Gerente();
 
-                produto.setIdProduto(rs.getLong("id_produto"));
-                produto.setNome(rs.getString("nome"));
-                produto.setPreco(rs.getDouble("preco"));
-                produto.setTipo(rs.getString("tipo"));
+                gerente.setId(rs.getLong("id_gerente"));
+                gerente.setNome(rs.getString("nome"));
+                gerente.setCPF(rs.getString("CPF"));
+                gerente.setTelefone(rs.getString("telefone"));
+                gerente.setCargo(rs.getString("cargo"));
+                gerente.setLogin(rs.getString("login"));
+                gerente.setSenha(rs.getString("senha"));
 
-                produtos.add(produto);
+                gerentes.add(gerente);
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos produtos!" + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos gerentes!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, rs);
         }
-        return produtos;
+        return gerentes;
     }
 
-    public boolean update(Produto produto) {
+    public boolean update(Gerente gerente) {
         PreparedStatement stmt = null;
         Connection connection = ConnectionFactory.getConnection();
 
-        if (produto == null || produto.getIdProduto() == null || produto.getIdProduto() <= 0L) {
-            throw new IllegalArgumentException("Produto para atualização é nulo ou não tem um ID válido!");
+        if (gerente == null || gerente.getId() == null || gerente.getId() <= 0L) {
+            throw new IllegalArgumentException("Gerente é nulo ou não tem um ID válido!");
         }
 
         try {
-            stmt = connection.prepareStatement(SQL_UPDATE_PRODUTO);
+            stmt = connection.prepareStatement(SQL_UPDATE_GERENTE);
 
-            stmt.setString(1, produto.getNome());
-            stmt.setDouble(2, produto.getPreco());
-            stmt.setString(3, produto.getTipo());
-            stmt.setLong(4, produto.getIdProduto());
+            stmt.setString(1, gerente.getNome());
+            stmt.setString(2, gerente.getCPF());
+            stmt.setString(3, gerente.getTelefone());
+            stmt.setString(4, gerente.getCargo());
+            stmt.setString(5, gerente.getLogin());
+            stmt.setString(6, gerente.getSenha());
+            stmt.setLong(7, gerente.getId());
 
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Produto atualizado com sucesso!");
+                JOptionPane.showMessageDialog(null, "Gerente atualizado com sucesso!");
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "Nenhum produto foi encontrado ou os dados são os mesmos!");
+                JOptionPane.showMessageDialog(null, "Nenhum gerente foi encontrado ou os dados são os mesmos!");
                 return false;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao atualizar o Produto!" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar o gerente!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
         }
@@ -127,55 +139,55 @@ public class GerenteDAO {
 
         if (id <= 0) {
             throw new IllegalArgumentException("O id precisa ser maior que 0");
-//            JOptionPane.showMessageDialog(null, "O ID precisa ser maior que 0!");
         }
 
         try {
-            stmt = connection.prepareStatement(SQL_DELETE_PRODUTO);
+            stmt = connection.prepareStatement(SQL_DELETE_GERENTE);
             stmt.setLong(1, id);
 
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Produto excluido com sucesso!");
+                JOptionPane.showMessageDialog(null, "Gerente excluido com sucesso!");
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "Nenhum produto com o ID correspondente foi encontrado!");
+                JOptionPane.showMessageDialog(null, "Nenhum gerente com o ID correspondente foi encontrado!");
                 return false;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir o produto!" + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao excluir o gerente!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
         }
         return false;
     }
 
-    public Produto findById(Long idProduto) {
-
+    public Gerente findById(Long id) {
         PreparedStatement stmt = null;
         Connection connection = ConnectionFactory.getConnection();
         ResultSet rs = null;
-        Produto produto = new Produto();
+        Gerente gerente = new Gerente();
 
         try {
             stmt = connection.prepareStatement(SQL_FIND_BY_ID);
-            stmt.setLong(1, idProduto);
+            stmt.setLong(1, id);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                produto.setIdProduto(rs.getLong("id_produto"));
-                produto.setNome(rs.getString("nome"));
-                produto.setPreco(rs.getDouble("preco"));
-                produto.setTipo(rs.getString("tipo"));
+                gerente.setId(rs.getLong("id_gerente"));
+                gerente.setNome(rs.getString("nome"));
+                gerente.setCPF(rs.getString("CPF"));
+                gerente.setTelefone(rs.getString("telefone"));
+                gerente.setCargo(rs.getString("cargo"));
+                gerente.setLogin(rs.getString("login"));
+                gerente.setSenha(rs.getString("senha"));
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos produtos!" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos gerentes!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, rs);
         }
-        return produto;
+        return gerente;
     }
-
 }

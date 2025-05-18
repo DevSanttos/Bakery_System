@@ -13,6 +13,7 @@ package model.bean;
     private String nome;
     private double preco;
     private String tipo;
+    private int quantidadeEstoque;
     
     private boolean disponivelParaTroca;
     private int pontosNecessarios;
@@ -29,6 +30,8 @@ package model.bean;
     
     public Produto() {
     }
+
+
 
     public String getNome() {
         return nome;

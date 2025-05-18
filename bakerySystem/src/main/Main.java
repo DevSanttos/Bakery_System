@@ -7,36 +7,70 @@ package main;
 
 import connection.ConnectionFactory;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-import model.bean.Caixa;
-import model.bean.Cliente;
-import model.bean.Produto;
-import model.dao.CaixaDAO;
-import model.dao.ClienteDAO;
-import model.dao.ProdutoDAO;
+import model.bean.*;
+import model.dao.*;
+
 /**
  *
  * @author GUILHERME
  */
 public class Main {
     
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         Connection conexao = null;
-        System.out.println(conexao = (Connection) ConnectionFactory.getConnection());
-        
-        CaixaDAO dao = new CaixaDAO();
-        ProdutoDAO daoProduto = new ProdutoDAO();
-        
-        Caixa caixa = new Caixa("Santos", "14375229632", "999999999", "caixa01", "joantahn", "123");
-        
-        Caixa novoCaixa = dao.findById(5L);
-        System.out.println(dao.update(novoCaixa));
-        System.out.println(novoCaixa.getNome());
-        System.out.println(novoCaixa.getId());
-        System.out.println(novoCaixa.getTelefone());
+        conexao = (Connection) ConnectionFactory.getConnection();
 
-      
-        
-        
-    }  
+          Cliente cliente = new Cliente("Jonathan", "88888888888", "999999999", 0);
+//        ClienteDAO clienteDAO = new ClienteDAO();
+//
+//        clienteDAO.create(cliente);
+//        System.out.println("Lendo a tabela cliente: " + clienteDAO.read());
+
+          Venda venda = new Venda();
+        VendaDAO vendaDAO = new VendaDAO();
+
+        System.out.println(vendaDAO.read());
+
+
+
+
+//        try {
+//            vendaDAO.create(venda);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//        try {
+//            System.out.println("Lendo a tabela venda: " + vendaDAO.read(1L, conexao));
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//
+//        Produto produto = new Produto("Arroz", 20, "Branco");
+//        ProdutoDAO produtoDAO = new ProdutoDAO();
+//        produtoDAO.create(produto);
+//        System.out.println("Lendo a tabela Produto: " + produtoDAO.read());
+//
+//        List<ItemVenda> itens = new ArrayList<ItemVenda>();
+//
+//        ItemVenda itv = new ItemVenda();
+//        itv.setProduto(produto);
+//        itv.setQuantidade(1);
+//        itv.setPrecoUnitario(produto.getPreco());
+//        itv.setVenda(venda);
+//        itens.add(itv);
+//        ItemVendaDAO itemVendaDAO = new ItemVendaDAO();
+//        itemVendaDAO.create(itv, conexao);
+
+
+
+
+
+
+    }
 }

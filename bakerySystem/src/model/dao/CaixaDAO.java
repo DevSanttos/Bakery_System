@@ -6,6 +6,7 @@ package model.dao;
 
 import connection.ConnectionFactory;
 import model.bean.Caixa;
+import model.bean.Cliente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +23,7 @@ import javax.swing.JOptionPane;
 public class CaixaDAO {
 
     private static final String SQL_INSERT_CAIXA = "INSERT INTO caixa (nome, CPF, telefone, cargo, login, senha) VALUES (?, ?, ?, ?, ?, ?)";
-    private static final String SQL_SELECT_ALL_CAIXA = "SELECT id_caixa, nome, CPF, telefone, cargo, login, senha FROM caixa";
+    private static final String SQL_SELECT_ALL_CAIXA = "SELECT * FROM caixa";
     private static final String SQL_UPDATE_CAIXA = "UPDATE caixa SET nome = ?, CPF = ?, telefone = ?, cargo = ?, login = ?, senha = ? WHERE caixa.id_caixa = ?";
     private static final String SQL_DELETE_CAIXA = "DELETE FROM caixa WHERE caixa.id_caixa = ?";
     private static final String SQL_FIND_BY_ID = "SELECT * FROM caixa WHERE caixa.id_caixa = ?";
@@ -88,7 +89,7 @@ public class CaixaDAO {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos Caixas!" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos caixas!" + ex);
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, rs);
         }
