@@ -5,7 +5,6 @@ import model.bean.Cliente;
 import model.bean.ItemVenda;
 import model.bean.Produto;
 import model.bean.Venda;
-
 import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,12 +23,12 @@ public class VendaDAO {
     private static final String SQL_SELECT_ALL_VENDAS = "SELECT id_venda, data_venda, id_cliente FROM venda";
     private static final String SQL_UPDATE_VENDA = "UPDATE venda SET data_venda = ?, id_cliente = ? WHERE id_venda = ?";
     private static final String SQL_DELETE_VENDA = "DELETE FROM venda WHERE id_venda = ?";
-    private static final String SQL_FIND_VENDA_BY_ID = "SELECT id_venda, data_venda, id_cliente FROM venda WHERE id_venda = ?";
+    private static final String SQL_FIND_VENDA_BY_ID = "SELECT id_venda, data_venda, id_cliente FROM venda WHERE venda.id_venda = ?";
 
     // SQL para a tabela 'item_venda'
-    private static final String SQL_INSERT_ITEM_VENDA = "INSERT INTO item_venda (id_venda, id_produto, quantidade) VALUES (?, ?, ?)";
-    private static final String SQL_SELECT_ITEMS_BY_VENDA_ID = "SELECT id_item_venda, id_produto, quantidade FROM item_venda WHERE id_venda = ?";
-    private static final String SQL_DELETE_ITEMS_BY_VENDA_ID = "DELETE FROM item_venda WHERE id_venda = ?";
+    private static final String SQL_INSERT_ITEM_VENDA = "INSERT INTO itemvenda (id_venda, id_produto, quantidade) VALUES (?, ?, ?)";
+    private static final String SQL_SELECT_ITEMS_BY_VENDA_ID = "SELECT id_item_venda, id_produto, quantidade FROM itemvenda WHERE itemvenda.id_venda = ?";
+    private static final String SQL_DELETE_ITEMS_BY_VENDA_ID = "DELETE FROM itemvenda WHERE itemvenda.id_venda = ?";
 
     // DAOs para entidades relacionadas
     private ClienteDAO clienteDAO;
@@ -40,13 +39,6 @@ public class VendaDAO {
         this.produtoDAO = new ProdutoDAO();
     }
 
-    /**
-     * Cria uma nova venda no banco de dados, incluindo seus itens.
-     *
-     * @param venda O objeto Venda a ser persistido.
-     * @return O objeto Venda com seu ID e IDs dos itens preenchidos, ou null em
-     * caso de falha.
-     */
     public Venda create(Venda venda) {
         Connection connection = ConnectionFactory.getConnection();
         PreparedStatement stmtVenda = null;
@@ -61,7 +53,6 @@ public class VendaDAO {
 
         try {
             // Inserir Venda principal
-            // Idealmente, usar transação explícita (connection.setAutoCommit(false))
             stmtVenda = connection.prepareStatement(SQL_INSERT_VENDA, Statement.RETURN_GENERATED_KEYS);
             stmtVenda.setDate(1, venda.getDataVendaSQL()); // Usa o método que retorna java.sql.Date
 
@@ -75,7 +66,6 @@ public class VendaDAO {
 
             if (affectedRowsVenda == 0) {
                 JOptionPane.showMessageDialog(null, "Falha ao criar a venda! Nenhuma linha afetada na tabela 'venda'.");
-                // connection.rollback(); // Se transacional
                 return null;
             }
 
@@ -84,7 +74,6 @@ public class VendaDAO {
                 venda.setIdVenda(generatedKeysVenda.getLong(1));
             } else {
                 JOptionPane.showMessageDialog(null, "Falha ao obter o ID da venda após inserção!");
-                // connection.rollback(); // Se transacional
                 return null;
             }
 
@@ -96,9 +85,7 @@ public class VendaDAO {
 
                     if (item.getProduto() == null || item.getProduto().getIdProduto() == null) {
                         JOptionPane.showMessageDialog(null, "Item da venda sem produto associado ou ID do produto ausente. Item não inserido.");
-                        // connection.rollback(); // Falha crítica
-                        // return null; // Aborta criação da venda
-                        continue; // Pula este item problemático (decisão de design)
+                         return null;
                     }
 
                     stmtItemVenda.setLong(1, venda.getIdVenda());
@@ -108,9 +95,7 @@ public class VendaDAO {
                     int affectedRowsItem = stmtItemVenda.executeUpdate();
                     if (affectedRowsItem == 0) {
                         JOptionPane.showMessageDialog(null, "Falha ao inserir item da venda para o produto: " + item.getProduto().getNome() + ". A venda pode estar incompleta.");
-                        // connection.rollback(); // Falha crítica, idealmente abortaria toda a venda
-                        // Para simplificar, pode-se optar por continuar ou retornar erro.
-                        // Se retornar null, a venda principal já foi inserida. Exigiria rollback.
+                        throw new SQLException("Falha ao inserir item da venda.");
                     } else {
                         ResultSet generatedKeysItem = stmtItemVenda.getGeneratedKeys();
                         try {
@@ -127,16 +112,13 @@ public class VendaDAO {
                     }
                 }
             }
-            // connection.commit(); // Se transacional
             JOptionPane.showMessageDialog(null, "Venda criada com sucesso! ID: " + venda.getIdVenda());
             return venda;
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar a Venda: " + ex.getMessage());
-            // try { if (connection != null && !connection.getAutoCommit()) connection.rollback(); } catch (SQLException e) { /* log */ }
             return null;
         } finally {
-            // Fechar recursos na ordem inversa da abertura
             if (generatedKeysVenda != null) {
                 try {
                     generatedKeysVenda.close();
@@ -168,16 +150,6 @@ public class VendaDAO {
         }
     }
 
-    /**
-     * Carrega os itens de uma venda específica. Este é um método auxiliar para
-     * ser usado por read() e findById().
-     *
-     * @param venda Objeto Venda para o qual os itens serão carregados (deve ter
-     * ID).
-     * @param connection Conexão JDBC a ser utilizada.
-     * @return Lista de ItemVenda populada.
-     * @throws SQLException Se ocorrer um erro de SQL.
-     */
     private List<ItemVenda> loadItensForVenda(Venda venda, Connection connection) throws SQLException {
         List<ItemVenda> itens = new ArrayList<>();
         PreparedStatement stmt = null;
@@ -228,11 +200,6 @@ public class VendaDAO {
         return itens;
     }
 
-    /**
-     * Retorna todas as vendas do banco de dados.
-     *
-     * @return Uma lista de objetos Venda.
-     */
     public List<Venda> read() {
         List<Venda> vendas = new ArrayList<>();
         Connection connection = ConnectionFactory.getConnection();
@@ -300,12 +267,6 @@ public class VendaDAO {
         return vendas;
     }
 
-    /**
-     * Busca uma venda específica pelo seu ID.
-     *
-     * @param idVenda O ID da venda a ser buscada.
-     * @return O objeto Venda encontrado, ou null se não existir.
-     */
     public Venda findById(Long idVenda) {
         Venda venda = null;
         Connection connection = ConnectionFactory.getConnection();
@@ -347,7 +308,7 @@ public class VendaDAO {
                 List<ItemVenda> itens = loadItensForVenda(venda, connection);
                 venda.setItens(itens);
             } else {
-                // JOptionPane.showMessageDialog(null, "Nenhuma venda encontrada com o ID: " + idVenda); // Opcional
+                 JOptionPane.showMessageDialog(null, "Nenhuma venda encontrada com o ID: " + idVenda); // Opcional
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar Venda por ID: " + ex.getMessage());
@@ -377,13 +338,7 @@ public class VendaDAO {
         return venda;
     }
 
-    /**
-     * Atualiza uma venda existente no banco de dados. Os itens da venda são
-     * substituídos pelos novos itens fornecidos.
-     *
-     * @param venda O objeto Venda com os dados atualizados.
-     * @return true se a atualização foi bem-sucedida, false caso contrário.
-     */
+
     public boolean update(Venda venda) {
         if (venda == null || venda.getIdVenda() == null || venda.getIdVenda() <= 0L) {
             JOptionPane.showMessageDialog(null, "Venda para atualização é nula ou não tem um ID válido!");
@@ -396,7 +351,6 @@ public class VendaDAO {
         PreparedStatement stmtInsertItem = null;
 
         try {
-            // Idealmente, usar transação explícita (connection.setAutoCommit(false))
 
             // 1. Atualizar dados da Venda principal
             stmtUpdateVenda = connection.prepareStatement(SQL_UPDATE_VENDA);
@@ -409,13 +363,10 @@ public class VendaDAO {
             stmtUpdateVenda.setLong(3, venda.getIdVenda());
 
             int affectedRowsVenda = stmtUpdateVenda.executeUpdate();
-            // affectedRowsVenda pode ser 0 se os dados forem os mesmos ou se o ID não existir.
-            // Considerar se "nenhuma linha afetada" é um erro ou não.
-            // if (affectedRowsVenda == 0) {
-            //     JOptionPane.showMessageDialog(null, "Nenhuma venda foi encontrada com o ID " + venda.getIdVenda() + " para atualizar, ou os dados são os mesmos.");
-            //     // connection.rollback(); // Se transacional e nada foi alterado/encontrado
-            //     // return false; // Depende da lógica desejada
-            // }
+            if (affectedRowsVenda == 0) {
+                JOptionPane.showMessageDialog(null, "Nenhuma venda foi encontrada com o ID " + venda.getIdVenda() + " para atualizar, ou os dados são os mesmos.");
+                return false;
+            }
 
             // 2. Remover ItensVenda antigos associados a esta Venda
             stmtDeleteItens = connection.prepareStatement(SQL_DELETE_ITEMS_BY_VENDA_ID);
@@ -430,9 +381,7 @@ public class VendaDAO {
 
                     if (item.getProduto() == null || item.getProduto().getIdProduto() == null) {
                         JOptionPane.showMessageDialog(null, "Item da venda (durante atualização) sem produto associado ou ID do produto ausente. Item não (re)inserido.");
-                        // connection.rollback(); // Falha crítica
-                        // return false;
-                        continue;
+                        return false;
                     }
 
                     stmtInsertItem.setLong(1, venda.getIdVenda());
@@ -442,7 +391,6 @@ public class VendaDAO {
                     int affectedRowsItem = stmtInsertItem.executeUpdate();
                     if (affectedRowsItem == 0) {
                         JOptionPane.showMessageDialog(null, "Falha ao (re)inserir item da venda: " + item.getProduto().getNome() + ". Atualização pode estar incompleta.");
-                        // connection.rollback(); // Falha crítica
                         return false;
                     }
                     ResultSet generatedKeysItem = stmtInsertItem.getGeneratedKeys();
@@ -459,13 +407,12 @@ public class VendaDAO {
                     }
                 }
             }
-            // if (!connection.getAutoCommit()) connection.commit();
+
             JOptionPane.showMessageDialog(null, "Venda atualizada com sucesso!");
             return true;
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar a Venda: " + ex.getMessage());
-            // try { if (connection != null && !connection.getAutoCommit()) connection.rollback(); } catch (SQLException e) { /* log */ }
             return false;
         } finally {
             if (stmtInsertItem != null) {
@@ -499,15 +446,9 @@ public class VendaDAO {
         }
     }
 
-    /**
-     * Exclui uma venda e seus itens associados do banco de dados.
-     *
-     * @param idVenda O ID da venda a ser excluída.
-     * @return true se a exclusão foi bem-sucedida, false caso contrário.
-     */
+
     public boolean delete(Long idVenda) {
         if (idVenda == null || idVenda <= 0) {
-            // Seguindo ProdutoDAO que lança IllegalArgumentException
             throw new IllegalArgumentException("O ID da Venda para exclusão é inválido: " + idVenda);
         }
 
@@ -516,13 +457,10 @@ public class VendaDAO {
         PreparedStatement stmtDeleteVenda = null;
 
         try {
-            // Idealmente, usar transação explícita (connection.setAutoCommit(false))
-
             // 1. Excluir ItensVenda associados
-            // (Se o BD tiver ON DELETE CASCADE configurado na FK, este passo pode ser redundante, mas é mais seguro explicitamente)
             stmtDeleteItens = connection.prepareStatement(SQL_DELETE_ITEMS_BY_VENDA_ID);
             stmtDeleteItens.setLong(1, idVenda);
-            stmtDeleteItens.executeUpdate(); // Não verificamos affectedRows aqui, pois pode não haver itens.
+            stmtDeleteItens.executeUpdate();
 
             // 2. Excluir a Venda principal
             stmtDeleteVenda = connection.prepareStatement(SQL_DELETE_VENDA);
@@ -530,18 +468,15 @@ public class VendaDAO {
             int affectedRowsVenda = stmtDeleteVenda.executeUpdate();
 
             if (affectedRowsVenda > 0) {
-                // if (!connection.getAutoCommit()) connection.commit();
                 JOptionPane.showMessageDialog(null, "Venda ID " + idVenda + " excluída com sucesso!");
                 return true;
             } else {
-                // if (!connection.getAutoCommit()) connection.rollback(); // Nada foi excluído, talvez rollback
                 JOptionPane.showMessageDialog(null, "Nenhuma venda com o ID " + idVenda + " foi encontrada para exclusão.");
                 return false;
             }
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir a Venda ID " + idVenda + ": " + ex.getMessage());
-            // try { if (connection != null && !connection.getAutoCommit()) connection.rollback(); } catch (SQLException e) { /* log */ }
             return false;
         } finally {
             if (stmtDeleteItens != null) {

@@ -13,8 +13,16 @@ package model.bean;
     private String nome;
     private double preco;
     private String tipo;
-    private int quantidadeEstoque;
-    
+    private int quantidade;
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
     private boolean disponivelParaTroca;
     private int pontosNecessarios;
     private StatusResgate statusResgate;

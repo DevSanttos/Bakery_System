@@ -14,10 +14,7 @@ import java.util.List;
 import model.bean.*;
 import model.dao.*;
 
-/**
- *
- * @author GUILHERME
- */
+
 public class Main {
 
     public static void main(String[] args) {
@@ -27,8 +24,7 @@ public class Main {
         VendaDAO vendaDAO = new VendaDAO();
 
         // Criar clientes e produtos para testes
-        Cliente cliente1 = new Cliente();
-        cliente1.setNome("João da Silva");
+        Cliente cliente1 = new Cliente("Dagoberto", "89089089089", "45989890990", 0);
         new ClienteDAO().create(cliente1); // Persiste o cliente para ter um ID
 
         Produto produto1 = new Produto();
@@ -44,15 +40,22 @@ public class Main {
         new ProdutoDAO().create(produto2); // Persiste o produto para ter um ID
 
         // Teste do método create
-        System.out.println("--- Teste do método create ---");
+        System.out.println("--- Teste do método create em venda ---");
         Venda novaVenda = new Venda();
         novaVenda.setDataVenda(LocalDate.now());
         novaVenda.setCliente(cliente1);
+        System.out.println("Objeto venda, com data e cliente, criado com sucesso na memória local!");
+
         List<ItemVenda> itensNovaVenda = new ArrayList<>();
+        System.out.println("Lista de ItemVenda criada com sucesso!");
+
         ItemVenda item1 = new ItemVenda();
         item1.setProduto(produto1);
         item1.setQuantidade(1);
+        System.out.println("Objeto ItemVenda criado com sucesso, com o produto adicionado e quantidade setada!");
         itensNovaVenda.add(item1);
+        System.out.println("Objeto ItemVenda adicionado à lista de ItemVenda com sucesso!");
+
         ItemVenda item2 = new ItemVenda();
         item2.setProduto(produto2);
         item2.setQuantidade(2);
@@ -92,8 +95,7 @@ public class Main {
             System.out.println("--- Teste do método update ---");
             if (vendaEncontrada != null) {
                 vendaEncontrada.setDataVenda(LocalDate.now().plusDays(1));
-                Cliente cliente2 = new Cliente();
-                cliente2.setNome("Maria Souza");
+                Cliente cliente2 = new Cliente("Maria Souza", "89089089089", "34989898778", 0);
                 new ClienteDAO().create(cliente2); // Persiste outro cliente
                 vendaEncontrada.setCliente(cliente2);
                 List<ItemVenda> itensAtualizados = new ArrayList<>();
@@ -168,8 +170,7 @@ public class Main {
         if (produto2 != null && produto2.getIdProduto() != null) {
             new ProdutoDAO().delete(produto2.getIdProduto());
         }
-        Cliente cliente2 = new Cliente();
-        cliente2.setNome("Maria Souza");
+        Cliente cliente2 = new Cliente("Maria Souza", "89089089089", "34989898778", 0);
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente2Persistido = clienteDAO.findByName("Maria Souza");
         if (cliente2Persistido != null) {

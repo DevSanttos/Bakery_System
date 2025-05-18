@@ -26,6 +26,7 @@ public class ClienteDAO {
     private static final String SQL_UPDATE_CLIENTE = "UPDATE cliente SET nome = ?, CPF = ?, telefone = ?, totPontosAcumulados = ? WHERE cliente.id_cliente = ?";
     private static final String SQL_DELETE_CLIENTE = "DELETE FROM cliente WHERE cliente.id_cliente = ?";
     private static final String SQL_FIND_BY_ID = "SELECT * FROM cliente WHERE cliente.id_cliente = ?";
+    private static final String SQL_FIND_BY_NOME = "SELECT * FROM cliente WHERE nome = ?";
 
     public Cliente create(Cliente cliente) {
         PreparedStatement stmt = null;
@@ -168,7 +169,7 @@ public class ClienteDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                cliente.setId(rs.getLong("id_produto"));
+                cliente.setId(rs.getLong("id_cliente"));
                 cliente.setNome(rs.getString("nome"));
                 cliente.setCPF(rs.getString("CPF"));
                 cliente.setTelefone(rs.getString("telefone"));
@@ -183,4 +184,30 @@ public class ClienteDAO {
         return cliente;
     }
 
+    public Cliente findByName(String nomeCliente) {
+        PreparedStatement stmt = null;
+        Connection connection = ConnectionFactory.getConnection();
+        ResultSet rs = null;
+        Cliente cliente = new Cliente();
+
+        try {
+            stmt = connection.prepareStatement(SQL_FIND_BY_NOME);
+            stmt.setString(1, nomeCliente);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                cliente.setId(rs.getLong("id_produto"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setCPF(rs.getString("CPF"));
+                cliente.setTelefone(rs.getString("telefone"));
+                cliente.setTotalPontosAcumulados(rs.getInt("totPontosAcumulados"));
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos produtos!" + ex.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt, rs);
+        }
+        return cliente;
+    }
 }
