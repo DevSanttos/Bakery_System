@@ -10,9 +10,9 @@ package model.bean;
  */
 public abstract class Funcionario extends Pessoa {
     
-    protected String cargo;
-    protected String login;
-    protected String senha;
+    private String cargo;
+    private String login;
+    private String senha;
     
     public Funcionario(String nome, String CPF, String telefone, String cargo, String login, String senha){
         super(nome,CPF,telefone);
@@ -63,6 +63,6 @@ public abstract class Funcionario extends Pessoa {
     
     @Override
     public String toString(){
-        return "Cargo: "+ this.cargo + " Login: " + this.login + " Senha: " + this.senha;
+        return  super.toString() + "Cargo: "+ this.cargo + " Login: " + this.login + " Senha: " + this.senha;
     }
 }

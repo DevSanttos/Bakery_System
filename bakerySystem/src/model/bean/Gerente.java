@@ -13,6 +13,10 @@ public class Gerente extends Funcionario {
     public Gerente(String nome, String CPF, String telefone, String cargo, String login, String senha){
         super(nome,CPF,telefone,cargo,login,senha);
     }
+
+    public Gerente(){
+
+    }
     
    
     @Override

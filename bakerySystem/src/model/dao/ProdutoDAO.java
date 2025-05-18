@@ -91,7 +91,7 @@ public class ProdutoDAO {
     public boolean update(Produto produto) {
         PreparedStatement stmt = null;
         Connection connection = ConnectionFactory.getConnection();
-        
+
         if (produto == null || produto.getIdProduto() == null || produto.getIdProduto() <= 0L) {
             throw new IllegalArgumentException("Produto para atualização é nulo ou não tem um ID válido!");
         }
@@ -126,7 +126,7 @@ public class ProdutoDAO {
         Connection connection = ConnectionFactory.getConnection();
 
         if (id <= 0) {
-            throw new IllegalArgumentException("O id precisa ser maior que 0");   
+            throw new IllegalArgumentException("O id precisa ser maior que 0");
 //            JOptionPane.showMessageDialog(null, "O ID precisa ser maior que 0!");
         }
 
@@ -147,23 +147,22 @@ public class ProdutoDAO {
             JOptionPane.showMessageDialog(null, "Erro ao excluir o produto!" + ex);
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
-        } 
+        }
         return false;
     }
+
     public Produto findById(Long idProduto) {
-        
 
         PreparedStatement stmt = null;
         Connection connection = ConnectionFactory.getConnection();
         ResultSet rs = null;
         Produto produto = new Produto();
-       
+
         try {
             stmt = connection.prepareStatement(SQL_FIND_BY_ID);
             stmt.setLong(1, idProduto);
             rs = stmt.executeQuery();
-            
-            
+
             while (rs.next()) {
                 produto.setIdProduto(rs.getLong("id_produto"));
                 produto.setNome(rs.getString("nome"));
@@ -178,5 +177,4 @@ public class ProdutoDAO {
         }
         return produto;
     }
-    
 }

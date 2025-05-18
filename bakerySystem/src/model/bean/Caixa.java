@@ -14,7 +14,7 @@ public class Caixa extends Funcionario {
         super(nome,CPF,telefone,cargo,login,senha);
     }
 
-    public Caixa() {
+    public Caixa (){
 
     }
 
