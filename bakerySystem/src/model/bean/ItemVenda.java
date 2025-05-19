@@ -8,7 +8,6 @@ public class ItemVenda {
     private int quantidade;
     private double precoUnitario;
 
-    public ItemVenda() {}
 
     public ItemVenda(Long idItemVenda, Venda venda, Produto produto, int quantidade) {
         this.idItemVenda = idItemVenda;
@@ -17,6 +16,8 @@ public class ItemVenda {
         this.quantidade = quantidade;
         this.precoUnitario = produto.getPreco(); // captura o preço no momento da venda
     }
+    
+    public ItemVenda() {}
 
     public Long getIdItemVenda() {
         return idItemVenda;

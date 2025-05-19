@@ -4,6 +4,9 @@
  */
 package main;
 
+import model.dao.impl.ProdutoDAOImpl;
+import model.dao.impl.ClienteDAOImpl;
+import model.dao.impl.VendaDAOImpl;
 import connection.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.bean.*;
-import model.dao.*;
-
 
 public class Main {
 
@@ -21,23 +22,23 @@ public class Main {
         Connection conexao = null;
         conexao = (Connection) ConnectionFactory.getConnection();
 
-        VendaDAO vendaDAO = new VendaDAO();
+        VendaDAOImpl vendaDAO = new VendaDAOImpl();
 
         // Criar clientes e produtos para testes
         Cliente cliente1 = new Cliente("Dagoberto", "89089089089", "45989890990", 0);
-        new ClienteDAO().create(cliente1); // Persiste o cliente para ter um ID
+        new ClienteDAOImpl().create(cliente1); // Persiste o cliente para ter um ID
 
         Produto produto1 = new Produto();
         produto1.setNome("Notebook");
         produto1.setPreco(2500.00);
         produto1.setQuantidade(10);
-        new ProdutoDAO().create(produto1); // Persiste o produto para ter um ID
+        new ProdutoDAOImpl().create(produto1); // Persiste o produto para ter um ID
 
         Produto produto2 = new Produto();
         produto2.setNome("Mouse");
         produto2.setPreco(25.00);
         produto2.setQuantidade(50);
-        new ProdutoDAO().create(produto2); // Persiste o produto para ter um ID
+        new ProdutoDAOImpl().create(produto2); // Persiste o produto para ter um ID
 
         // Teste do método create
         System.out.println("--- Teste do método create em venda ---");
@@ -59,12 +60,16 @@ public class Main {
         ItemVenda item2 = new ItemVenda();
         item2.setProduto(produto2);
         item2.setQuantidade(2);
+        System.out.println("venda associada ao item2: " + item2.getVenda());
         itensNovaVenda.add(item2);
         novaVenda.setItens(itensNovaVenda);
-
+        
         Venda vendaCriada = vendaDAO.create(novaVenda);
+        
         if (vendaCriada != null && vendaCriada.getIdVenda() != null) {
             System.out.println("Venda criada com sucesso! ID: " + vendaCriada.getIdVenda());
+            System.out.println("Quantidade de itens presente na venda: " + vendaCriada.getItens().size());
+
             for (ItemVenda item : vendaCriada.getItens()) {
                 System.out.println("  Item ID: " + item.getIdItemVenda() + ", Produto: " + item.getProduto().getNome() + ", Quantidade: " + item.getQuantidade());
             }
@@ -83,7 +88,7 @@ public class Main {
                 System.out.println("Venda encontrada com ID: " + vendaEncontrada.getIdVenda() + ", Data: " + vendaEncontrada.getDataVenda() + ", Cliente: " + (vendaEncontrada.getCliente() != null ? vendaEncontrada.getCliente().getNome() : "Nenhum"));
                 if (vendaEncontrada.getItens() != null) {
                     for (ItemVenda item : vendaEncontrada.getItens()) {
-                        System.out.println("  Item ID: " + item.getIdItemVenda() + ", Produto: " + item.getProduto().getNome() + ", Quantidade: " + item.getQuantidade());
+                        System.out.println("  Item ID: " + item.getIdItemVenda() + ", Produto: " + item.getProduto().getNome() + ", Quantidade: " + item.getQuantidade() + ", Venda associada: " + (item.getVenda() != null ? item.getVenda() : "Nenhum"));
                     }
                 }
             } else {
@@ -95,9 +100,12 @@ public class Main {
             System.out.println("--- Teste do método update ---");
             if (vendaEncontrada != null) {
                 vendaEncontrada.setDataVenda(LocalDate.now().plusDays(1));
+                
                 Cliente cliente2 = new Cliente("Maria Souza", "89089089089", "34989898778", 0);
-                new ClienteDAO().create(cliente2); // Persiste outro cliente
+                new ClienteDAOImpl().create(cliente2); // Persiste outro cliente
+                
                 vendaEncontrada.setCliente(cliente2);
+                
                 List<ItemVenda> itensAtualizados = new ArrayList<>();
                 ItemVenda item3 = new ItemVenda();
                 item3.setProduto(produto1);
@@ -113,7 +121,7 @@ public class Main {
                         System.out.println("Dados da venda atualizada: Data: " + vendaAtualizada.getDataVenda() + ", Cliente: " + (vendaAtualizada.getCliente() != null ? vendaAtualizada.getCliente().getNome() : "Nenhum"));
                         if (vendaAtualizada.getItens() != null) {
                             for (ItemVenda item : vendaAtualizada.getItens()) {
-                                System.out.println("  Item ID: " + item.getIdItemVenda() + ", Produto: " + item.getProduto().getNome() + ", Quantidade: " + item.getQuantidade());
+                                System.out.println("Item ID: " + item.getIdItemVenda() + ", Produto: " + item.getProduto().getNome() + ", Quantidade: " + item.getQuantidade());
                             }
                         }
                     }
@@ -126,6 +134,7 @@ public class Main {
             // Teste do método read
             System.out.println("--- Teste do método read ---");
             List<Venda> todasVendas = vendaDAO.read();
+            
             if (!todasVendas.isEmpty()) {
                 System.out.println("Lista de todas as vendas:");
                 for (Venda venda : todasVendas) {
@@ -162,19 +171,28 @@ public class Main {
 
         // Limpeza (opcional, dependendo do ambiente de teste)
         if (cliente1 != null && cliente1.getId() != null) {
-            new ClienteDAO().delete(cliente1.getId());
+            new ClienteDAOImpl().delete(cliente1.getId());
+            System.out.println("cliente1 deletado com sucesso!");
         }
         if (produto1 != null && produto1.getIdProduto() != null) {
-            new ProdutoDAO().delete(produto1.getIdProduto());
+            new ProdutoDAOImpl().delete(produto1.getIdProduto());
+            System.out.println("produto1 deletado com sucesso!");
         }
         if (produto2 != null && produto2.getIdProduto() != null) {
-            new ProdutoDAO().delete(produto2.getIdProduto());
+            new ProdutoDAOImpl().delete(produto2.getIdProduto());
+            System.out.println("produto2 deletado com sucesso!");
         }
-        Cliente cliente2 = new Cliente("Maria Souza", "89089089089", "34989898778", 0);
-        ClienteDAO clienteDAO = new ClienteDAO();
+
+        Cliente cliente2 = new Cliente("Maria Souza", "13333333333", "34989898778", 0);
+        ClienteDAOImpl clienteDAO = new ClienteDAOImpl();
+
         Cliente cliente2Persistido = clienteDAO.findByName("Maria Souza");
         if (cliente2Persistido != null) {
             clienteDAO.delete(cliente2Persistido.getId());
+            System.out.println("cliente persistido deletado");
+        } else {
+            System.out.println("Sucesso!");
         }
+        
     }
 }
