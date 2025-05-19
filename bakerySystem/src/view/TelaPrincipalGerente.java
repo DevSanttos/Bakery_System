@@ -6,8 +6,10 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.GroupLayout;
 import javax.swing.UIManager;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -23,17 +25,20 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null); 
         
+        
+        
+    }
+    
+    private void personalizarTabela() {
         tabelaFuncionarios.getTableHeader().setBackground(new java.awt.Color(164,113,72)); 
         tabelaFuncionarios.getTableHeader().setForeground(java.awt.Color.WHITE); // Letras brancas
         tabelaFuncionarios.getTableHeader().setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14)); // Fonte
         
-        botaoCadFunc.setPreferredSize(new Dimension(130, 80));
-        botaoCadProd.setMaximumSize(new Dimension(130, 80));
-        botaoEstoque.setMinimumSize(new Dimension(130, 80));
-        
-        this.setResizable(false);
-        this.setSize(650, 400);
-        this.setLocationRelativeTo(null);
+        JTableHeader header = tabelaFuncionarios.getTableHeader();
+        header.setBackground(new Color(191, 131, 74));
+        header.setForeground(Color.WHITE);             
+        header.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        header.setOpaque(false);
     }
 
 
@@ -56,7 +61,7 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Padaria Rezende's Gerente");
-        setPreferredSize(new java.awt.Dimension(650, 400));
+        setBounds(new java.awt.Rectangle(0, 0, 600, 350));
         setResizable(false);
         setSize(new java.awt.Dimension(650, 400));
 
@@ -140,9 +145,17 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(164, 87, 44));
         jLabel4.setText("Estoque");
 
+        jScrollPane2.setBackground(new java.awt.Color(164, 113, 72));
+        jScrollPane2.setForeground(new java.awt.Color(164, 113, 72));
+        jScrollPane2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
         tabelaFuncionarios.setBackground(new java.awt.Color(164, 113, 72));
         tabelaFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -152,9 +165,28 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
             new String [] {
                 "Nome", "Telefone", "Cargo"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaFuncionarios.setFocusable(false);
         tabelaFuncionarios.setGridColor(new java.awt.Color(164, 113, 72));
         tabelaFuncionarios.setSelectionBackground(new java.awt.Color(164, 113, 72));
+        tabelaFuncionarios.setSelectionForeground(new java.awt.Color(164, 113, 72));
+        tabelaFuncionarios.setShowHorizontalLines(true);
+        tabelaFuncionarios.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tabelaFuncionarios);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -216,7 +248,7 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
