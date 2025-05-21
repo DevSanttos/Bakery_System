@@ -17,16 +17,9 @@ import javax.swing.table.JTableHeader;
  */
 public class TelaPrincipalGerente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaPrincipalGerente
-     */
     public TelaPrincipalGerente() {
         initComponents();
-        pack();
-        setLocationRelativeTo(null); 
-        
-        
-        
+        setLocationRelativeTo(null); // Centraliza
     }
     
     private void personalizarTabela() {

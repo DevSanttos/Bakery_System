@@ -42,8 +42,9 @@ public class TelaLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Padaria Rezendes's");
         setBackground(new java.awt.Color(250, 250, 250));
-        setBounds(new java.awt.Rectangle(0, 0, 600, 350));
+        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setResizable(false);
+        setSize(new java.awt.Dimension(0, 0));
 
         jPanel1.setBackground(new java.awt.Color(245, 235, 221));
 
