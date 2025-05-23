@@ -118,7 +118,7 @@ public class TelaCadastrarProd extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(92, 184, 92));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(60, 60, 60));
-        jButton1.setText("Cadastrar");
+        jButton1.setText("Cadastrar produto");
 
         jTextPane4.setMinimumSize(new java.awt.Dimension(60, 20));
         jTextPane4.setPreferredSize(new java.awt.Dimension(60, 20));
