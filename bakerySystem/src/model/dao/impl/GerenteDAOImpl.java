@@ -54,10 +54,10 @@ public class GerenteDAOImpl implements GerenteDAO{
                     gerente.setId(generatedKeys.getLong(1));
                     javax.swing.JOptionPane.showMessageDialog(null, "Gerente criado com sucesso! ID: " + gerente.getId());
                 } else {
-                    JOptionPane.showMessageDialog(null, "Falha ao obter o ID do gerente!");
+                    throw new RuntimeException("Falha ao obter o ID do gerente!");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Falha ao criar o gerente! Nenhuma linha foi afetada!");
+                throw new RuntimeException("Falha ao criar o gerente! Nenhuma linha foi afetada!");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar o gerente!" + ex.getMessage());
@@ -93,7 +93,7 @@ public class GerenteDAOImpl implements GerenteDAO{
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos gerentes!" + ex.getMessage());
+            throw new RuntimeException("Falha ao consultar gerentes!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, rs);
         }
@@ -123,18 +123,16 @@ public class GerenteDAOImpl implements GerenteDAO{
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Gerente atualizado com sucesso!");
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "Nenhum gerente foi encontrado ou os dados são os mesmos!");
-                return false;
+                //JOptionPane.showMessageDialog(null, "Nenhum gerente foi encontrado ou os dados são os mesmos!");
+                throw new RuntimeException("Nenhum gerente encontrado, ou os dados são os mesmos!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao atualizar o gerente!" + ex.getMessage());
+            throw new RuntimeException("Erro ao atualizar o gerente!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
         }
-        return false;
     }
 
     @Override
@@ -160,11 +158,10 @@ public class GerenteDAOImpl implements GerenteDAO{
                 return false;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir o gerente!" + ex.getMessage());
+            throw new RuntimeException("Falha ao excluir o gerente!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
         }
-        return false;
     }
 
     @Override
@@ -190,7 +187,7 @@ public class GerenteDAOImpl implements GerenteDAO{
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos gerentes!" + ex.getMessage());
+            throw new RuntimeException("Erro ao tentar realizar a query dos gerentes!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, rs);
         }

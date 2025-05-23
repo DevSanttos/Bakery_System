@@ -6,6 +6,10 @@ package service;
 
 import model.bean.Gerente;
 import model.dao.GerenteDAO;
+import model.dao.impl.GerenteDAOImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,7 +22,7 @@ public class GerenteService {
         this.gerenteDAO = gerenteDAO;
     }
     
-    public Gerente createProduto(Gerente gerente){
+    public Gerente createGerente(Gerente gerente){
         if (gerente == null) {
             throw new IllegalArgumentException("O gerente não pode ser nulo.");
         }
@@ -54,16 +58,63 @@ public class GerenteService {
         }
     }
     
-    public boolean readProduto(){
-        return true;
+    public List<Gerente> readGerente() {
+        return gerenteDAO.read();
     }
     
-    public boolean updateProduto(){
-        return true;
+    public boolean updateGerente(Gerente gerente){
+        if (gerente == null) {
+            throw new IllegalArgumentException("O gerente não pode ser nulo.");
+        }
+
+        if (gerente.getNome() == null || gerente.getNome().trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome do gerente é necessário para sua atualização.");
+        }
+
+        if (gerente.getCPF() == null || gerente.getCPF().length() > 14 || gerente.getCPF().length() < 11 || gerente.getCPF().trim().isEmpty()) {
+            throw new IllegalArgumentException("O CPF do gerente é necessário para sua atualização.");
+        }
+
+        if (gerente.getTelefone() == null || gerente.getTelefone().trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome do gerente é necessário para sua atualização.");
+        }
+
+        if (gerente.getCargo() == null || gerente.getCargo().trim().isEmpty()) {
+            throw new IllegalArgumentException("O cargo do gerente é necessário para sua atualização.");
+        }
+
+        if (gerente.getLogin() == null || gerente.getLogin().trim().isEmpty()) {
+            throw new IllegalArgumentException("O login do gerente é necessário para sua atualização.");
+        }
+
+        if (gerente.getSenha() == null || gerente.getSenha().trim().isEmpty()) {
+            throw new IllegalArgumentException("A senha do gerente é necessária para sua atualização.");
+        }
+
+        try {
+            return gerenteDAO.update(gerente);
+        } catch (RuntimeException ex) {
+            throw new IllegalArgumentException("Erro ao atualizar o gerente." + ex.getMessage());
+        }
     }
     
-    public boolean deleteProduto(){
-        return true;
+    public boolean deleteGerente(Long id){
+        if(id == null || id <= 0) {
+            throw new RuntimeException("Não há gerentes com ID negativo ou nulo.");
+        } try {
+            return gerenteDAO.delete(id);
+        } catch (RuntimeException ex) {
+            throw new RuntimeException("Erro ao excluir o gerente!" + ex.getMessage());
+        }
     }
-    
+
+    public Gerente findById(Long id){
+        if(id == null || id <= 0) {
+            throw new RuntimeException("Não há gerentes com ID negativo ou nulo.");
+        } try {
+            return gerenteDAO.findById(id);
+        } catch (RuntimeException ex){
+            throw new RuntimeException("Erro ao encontrar o gerente pelo ID!" + ex.getMessage());
+        }
+    }
 }

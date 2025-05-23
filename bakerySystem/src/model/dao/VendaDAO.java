@@ -16,7 +16,7 @@ import model.bean.Venda;
  */
 public interface VendaDAO {
     Venda create(Venda venda);
-    List<ItemVenda> loadItensForVenda(Venda venda, Connection connection) throws SQLException;
+    List<ItemVenda> loadItensForVenda(Venda venda) throws SQLException;
     List<Venda> read();
     Venda findById(Long idVenda);
     boolean update(Venda venda);

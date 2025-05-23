@@ -9,7 +9,7 @@ package model.bean;
  *
  * @author joseo
  */
-public abstract class Pessoa {
+public class Pessoa {
     protected Long id;
     protected String nome;
     protected String CPF;

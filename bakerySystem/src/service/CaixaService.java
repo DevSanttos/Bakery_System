@@ -4,14 +4,116 @@
  */
 package service;
 
+import model.bean.Caixa;
+import model.bean.Gerente;
+import model.dao.CaixaDAO;
+
+import java.util.List;
+
 /**
  *
  * @author jonat
  */
 public class CaixaService {
-    
-    public boolean cadastrarCliente(){
-        return true;
+    private final CaixaDAO caixaDAO;
+
+    public CaixaService(CaixaDAO caixaDAO) {
+        this.caixaDAO = caixaDAO;
     }
-    
+
+    public Caixa createCaixa(Caixa caixa){
+        if (caixa == null) {
+            throw new IllegalArgumentException("O caixa não pode ser nulo.");
+        }
+
+        if (caixa.getNome() == null || caixa.getNome().trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome do caixa é necessário para sua criação.");
+        }
+
+        if (caixa.getCPF() == null || caixa.getCPF().length() > 14 || caixa.getCPF().length() < 11 || caixa.getCPF().trim().isEmpty()) {
+            throw new IllegalArgumentException("O CPF do caixa é necessário para sua criação.");
+        }
+
+        if (caixa.getTelefone() == null || caixa.getTelefone().trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome do caixa é necessário para sua criação.");
+        }
+
+        if (caixa.getCargo() == null || caixa.getCargo().trim().isEmpty()) {
+            throw new IllegalArgumentException("O cargo do caixa é necessário para sua criação.");
+        }
+
+        if (caixa.getLogin() == null || caixa.getLogin().trim().isEmpty()) {
+            throw new IllegalArgumentException("O login do caixa é necessário para sua criação.");
+        }
+
+        if (caixa.getSenha() == null || caixa.getSenha().trim().isEmpty()) {
+            throw new IllegalArgumentException("A senha do caixa é necessária para sua criação.");
+        }
+
+        try {
+            return caixaDAO.create(caixa);
+        } catch (RuntimeException ex) {
+            throw new IllegalArgumentException("Erro ao criar o caixa." + ex.getMessage());
+        }
+    }
+
+    public List<Caixa> readCaixa() {
+        return caixaDAO.read();
+    }
+
+    public boolean updateCaixa(Caixa caixa){
+        if (caixa == null) {
+            throw new IllegalArgumentException("O caixa não pode ser nulo.");
+        }
+
+        if (caixa.getNome() == null || caixa.getNome().trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome do caixa é necessário para sua atualização.");
+        }
+
+        if (caixa.getCPF() == null || caixa.getCPF().length() > 14 || caixa.getCPF().length() < 11 || caixa.getCPF().trim().isEmpty()) {
+            throw new IllegalArgumentException("O CPF do caixa é necessário para sua atualização.");
+        }
+
+        if (caixa.getTelefone() == null || caixa.getTelefone().trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome do caixa é necessário para sua atualização.");
+        }
+
+        if (caixa.getCargo() == null || caixa.getCargo().trim().isEmpty()) {
+            throw new IllegalArgumentException("O cargo do caixa é necessário para sua atualização.");
+        }
+
+        if (caixa.getLogin() == null || caixa.getLogin().trim().isEmpty()) {
+            throw new IllegalArgumentException("O login do caixa é necessário para sua atualização.");
+        }
+
+        if (caixa.getSenha() == null || caixa.getSenha().trim().isEmpty()) {
+            throw new IllegalArgumentException("A senha do caixa é necessária para sua atualização.");
+        }
+
+        try {
+            return caixaDAO.update(caixa);
+        } catch (RuntimeException ex) {
+            throw new IllegalArgumentException("Erro ao atualizar o caixa." + ex.getMessage());
+        }
+    }
+
+    public boolean deleteCaixa(Long id){
+        if(id == null || id <= 0) {
+            throw new RuntimeException("Não há caixas com ID negativo ou nulo.");
+        } try {
+            return caixaDAO.delete(id);
+        } catch (RuntimeException ex) {
+            throw new RuntimeException("Erro ao excluir o caixa!" + ex.getMessage());
+        }
+    }
+
+    public Caixa findById(Long id){
+        if(id == null || id <= 0) {
+            throw new RuntimeException("Não há caixas com ID negativo ou nulo.");
+        } try {
+            return caixaDAO.findById(id);
+        } catch (RuntimeException ex){
+            throw new RuntimeException("Erro ao encontrar o caixa pelo ID!" + ex.getMessage());
+        }
+    }
 }

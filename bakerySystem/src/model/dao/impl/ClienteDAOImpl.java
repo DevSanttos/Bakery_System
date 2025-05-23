@@ -147,18 +147,15 @@ public class ClienteDAOImpl implements ClienteDAO{
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Cliente excluido com sucesso!");
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "Nenhum cliente com o ID correspondente foi encontrado!");
-                return false;
+                throw new RuntimeException("Nenhum cliente com o ID correspondente foi encontrado!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir o cliente!" + ex);
+            throw new RuntimeException("Erro ao excluir o cliente!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
         }
-        return false;
     }
 
     @Override
@@ -183,7 +180,7 @@ public class ClienteDAOImpl implements ClienteDAO{
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos produtos!" + ex.getMessage());
+            throw new RuntimeException("Erro ao tentar realizar a query dos produtos!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, rs);
         }

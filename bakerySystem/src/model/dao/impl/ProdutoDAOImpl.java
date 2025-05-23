@@ -46,15 +46,14 @@ public class ProdutoDAOImpl implements ProdutoDAO {
                 generatedKeys = stmt.getGeneratedKeys();
                 if (generatedKeys.next()) {
                     produto.setIdProduto(generatedKeys.getLong(1));
-                    JOptionPane.showMessageDialog(null, "Produto criado com sucesso! ID: " + produto.getIdProduto());
                 } else {
-                    JOptionPane.showMessageDialog(null, "Falha ao obter o ID!");
+                    throw new RuntimeException("Falha ao obter o ID para a criação do produto");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Falha ao criar o produto! Nenhuma linha foi afetada!");
+                throw new RuntimeException("Falha ao criar o produto! Nenhuma linha foi afetada");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o Produto!" + ex);
+            throw new RuntimeException("Erro ao cadastrar o produto", ex);
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, generatedKeys);
         }
@@ -84,7 +83,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos produtos!" + ex);
+            throw new RuntimeException("Erro ao realizar a query dos produtos!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, rs);
         }
@@ -111,14 +110,12 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Produto atualizado com sucesso!");
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "Nenhum produto foi encontrado ou os dados são os mesmos!");
-                return false;
+                throw new RuntimeException("Nenhum produto foi encontrado ou os dados são os mesmos!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao atualizar o Produto!" + ex.getMessage());
+            System.out.println("Erro ao atualizar o Produto!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
         }
@@ -132,7 +129,6 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
         if (id <= 0) {
             throw new IllegalArgumentException("O id precisa ser maior que 0");
-//            JOptionPane.showMessageDialog(null, "O ID precisa ser maior que 0!");
         }
 
         try {
@@ -142,14 +138,12 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Produto excluido com sucesso!");
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "Nenhum produto com o ID correspondente foi encontrado!");
-                return false;
+                throw new RuntimeException("Nenhum produto com o ID correspondente foi encontrado!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir o produto!" + ex);
+            System.out.println("Erro ao excluir produto: " + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
         }
@@ -177,7 +171,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos produtos!" + ex.getMessage());
+            System.out.println("Erro ao tentar realizar a query dos produtos!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, rs);
         }

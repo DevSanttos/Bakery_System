@@ -11,8 +11,6 @@ public class Venda {
     private Cliente cliente;
     private List<ItemVenda> itens;
 
-
-
     public Venda(LocalDate dataVenda, Cliente cliente) {
         this.dataVenda = dataVenda != null ? dataVenda : LocalDate.now();
         this.cliente = cliente;
