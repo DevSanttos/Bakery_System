@@ -62,16 +62,6 @@ public class Main {
 //        System.out.println(vendaService.readVenda());
 
         System.out.println(vendaService.deleteVenda(1L));
-
-
-
-
-
-
-
-
-
-
     }
 }
 
