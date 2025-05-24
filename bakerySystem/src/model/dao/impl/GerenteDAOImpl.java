@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-import model.bean.Caixa;
 import model.bean.Gerente;
-import model.bean.Produto;
 import model.dao.GerenteDAO;
 
 /**
@@ -29,6 +27,7 @@ public class GerenteDAOImpl implements GerenteDAO{
     private static final String SQL_UPDATE_GERENTE = "UPDATE gerente SET nome = ?, CPF = ?, telefone = ?, cargo = ?, login = ?, senha = ? WHERE gerente.id_gerente = ?";
     private static final String SQL_DELETE_GERENTE = "DELETE FROM gerente WHERE gerente.id_gerente = ?";
     private static final String SQL_FIND_BY_ID = "SELECT * FROM gerente WHERE gerente.id_gerente = ?";
+    private static final String SQL_FIND_BY_LOGIN_AND_PASSWORD = "SELECT id_gerente, login, senha FROM gerente WHERE gerente.login = ? AND gerente.senha = ?";
 
     @Override
     public Gerente create(Gerente gerente) {
@@ -188,6 +187,34 @@ public class GerenteDAOImpl implements GerenteDAO{
 
         } catch (SQLException ex) {
             throw new RuntimeException("Erro ao tentar realizar a query dos gerentes!" + ex.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt, rs);
+        }
+        return gerente;
+    }
+
+    @Override
+    public Gerente findByLoginAndPassword(String login, String senha) {
+        PreparedStatement stmt = null;
+        Connection connection = ConnectionFactory.getConnection();
+        ResultSet rs = null;
+        Gerente gerente = new Gerente();
+
+        try {
+            stmt = connection.prepareStatement(SQL_FIND_BY_LOGIN_AND_PASSWORD);
+            stmt.setString(1, login);
+            stmt.setString(2, senha);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                gerente.setId(rs.getLong("id_gerente"));
+                gerente.setLogin(rs.getString("login"));
+                gerente.setSenha(rs.getString("senha"));
+            } else {
+                return null;
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException("Erro ao tentar realizar a consulta do respectivo gerente!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, rs);
         }

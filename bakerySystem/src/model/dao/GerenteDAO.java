@@ -17,5 +17,5 @@ public interface GerenteDAO {
     boolean update(Gerente gerente);
     boolean delete(Long id);
     Gerente findById(Long id);
-    
+    Gerente findByLoginAndPassword(String LoginInformado, String senhaInformada);
 }

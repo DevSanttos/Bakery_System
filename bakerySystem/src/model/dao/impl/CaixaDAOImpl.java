@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+
+import model.bean.Gerente;
 import model.dao.CaixaDAO;
 
 /**
@@ -28,6 +30,7 @@ public class CaixaDAOImpl implements CaixaDAO {
     private static final String SQL_UPDATE_CAIXA = "UPDATE caixa SET nome = ?, CPF = ?, telefone = ?, cargo = ?, login = ?, senha = ? WHERE caixa.id_caixa = ?";
     private static final String SQL_DELETE_CAIXA = "DELETE FROM caixa WHERE caixa.id_caixa = ?";
     private static final String SQL_FIND_BY_ID = "SELECT * FROM caixa WHERE caixa.id_caixa = ?";
+    private static final String SQL_FIND_BY_LOGIN_AND_PASSWORD = "SELECT id_caixa, login, senha FROM caixa WHERE caixa.login = ? AND caixa.senha = ?";
 
     @Override
     public Caixa create(Caixa caixa) {
@@ -190,6 +193,34 @@ public class CaixaDAOImpl implements CaixaDAO {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos caixas!" + ex.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt, rs);
+        }
+        return caixa;
+    }
+
+    @Override
+    public Caixa findByLoginAndPassword(String login, String senha) {
+        PreparedStatement stmt = null;
+        Connection connection = ConnectionFactory.getConnection();
+        ResultSet rs = null;
+        Caixa caixa = new Caixa();
+
+        try {
+            stmt = connection.prepareStatement(SQL_FIND_BY_LOGIN_AND_PASSWORD);
+            stmt.setString(1, login);
+            stmt.setString(2, senha);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                caixa.setId(rs.getLong("id_caixa"));
+                caixa.setLogin(rs.getString("login"));
+                caixa.setSenha(rs.getString("senha"));
+            } else {
+                return null;
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException("Erro ao tentar realizar a consulta do respectivo caixa!" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, rs);
         }

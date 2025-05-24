@@ -21,7 +21,7 @@ import model.dao.ProdutoDAO;
  */
 public class ProdutoDAOImpl implements ProdutoDAO {
 
-    private static final String SQL_INSERT_PRODUTO = "INSERT INTO produto (nome, preco, tipo) VALUES (?, ?, ?)";
+    private static final String SQL_INSERT_PRODUTO = "INSERT INTO produto (nome, preco, tipo, quantidade) VALUES (?, ?, ?, ?)";
     private static final String SQL_SELECT_ALL_PRODUTOS = "SELECT id_produto, nome, preco, tipo FROM produto";
     private static final String SQL_UPDATE_PRODUTO = "UPDATE produto SET nome = ?, preco = ?, tipo = ? WHERE produto.id_produto = ?";
     private static final String SQL_DELETE_PRODUTO = "DELETE FROM produto WHERE produto.id_produto = ?";
@@ -39,6 +39,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             stmt.setString(1, produto.getNome());
             stmt.setDouble(2, produto.getPreco());
             stmt.setString(3, produto.getTipo());
+            stmt.setInt(4, produto.getQuantidade());
 
             int affectedRows = stmt.executeUpdate();
 

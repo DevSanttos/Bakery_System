@@ -6,7 +6,7 @@ package model.dao;
 
 import java.util.List;
 import model.bean.Caixa;
-
+import model.bean.Gerente;
 
 
 /**
@@ -20,4 +20,5 @@ public interface CaixaDAO {
     boolean update(Caixa caixa);
     boolean delete(Long id);
     Caixa findById(Long id);
+    Caixa findByLoginAndPassword(String LoginInformado, String senhaInformada);
 }

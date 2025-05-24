@@ -116,4 +116,22 @@ public class CaixaService {
             throw new RuntimeException("Erro ao encontrar o caixa pelo ID!" + ex.getMessage());
         }
     }
+
+    public boolean findByLoginAndPassword(String login, String senha) {
+        if (login == null || login.isEmpty()) {
+            throw new IllegalArgumentException("Informe um login válido.");
+        }
+
+        if (senha == null || senha.isEmpty()) {
+            throw new IllegalArgumentException("Informe uma senha válida.");
+        }
+        try {
+            if (caixaDAO.findByLoginAndPassword(login, senha) != null) {
+                return true;
+            }
+        } catch (RuntimeException ex) {
+            throw new RuntimeException("Erro ao buscar pelo ID do caixa: " + ex.getMessage());
+        }
+        return false;
+    }
 }
