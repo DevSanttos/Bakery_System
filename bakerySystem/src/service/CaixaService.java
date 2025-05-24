@@ -155,4 +155,39 @@ public class CaixaService {
             throw new RuntimeException("Erro ao criar cliente! " + ex.getMessage());
         }
     }
+
+    public boolean updateCliente (Long id, String nome, String CPF, String telefone) {
+        ClienteDAO clienteDAO = new ClienteDAOImpl();
+        ClienteService clienteService = new ClienteService(clienteDAO);
+        Cliente clienteDoBD = clienteService.findById(id);
+
+        if(nome != null && !nome.trim().isEmpty()){
+            clienteDoBD.setNome(nome);
+        }
+        if(CPF != null && !CPF.trim().isEmpty()){
+            clienteDoBD.setCPF(CPF);
+        }
+        if(telefone != null && !telefone.trim().isEmpty()) {
+            clienteDoBD.setTelefone(telefone);
+        }
+
+        if(clienteDoBD == null){
+            throw new RuntimeException("Não é possível atualizar um cliente nulo.");
+        }
+        if(clienteDoBD.getNome() == null || clienteDoBD.getNome().trim().isEmpty()) {
+            throw new RuntimeException("Não é possível atualizar o nome do cliente para um nome vazio ou nulo.");
+        }
+        if(clienteDoBD.getCPF() == null || clienteDoBD.getCPF().trim().isEmpty()) {
+            throw new RuntimeException("Não é possível atualizar o CPF do cliente para vazio ou nulo.");
+        }
+        if(clienteDoBD.getTelefone() == null || clienteDoBD.getTelefone().trim().isEmpty()) {
+            throw new RuntimeException("Não é possível atualizar o telefone do cliente para um número vazio ou nulo.");
+        }
+
+        try{
+            return clienteService.updateCliente(clienteDoBD);
+        } catch (RuntimeException ex){
+            throw new RuntimeException("Erro ao atualizar cliente! " + ex.getMessage());
+        }
+    }
 }

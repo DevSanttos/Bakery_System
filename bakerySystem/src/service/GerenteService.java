@@ -9,8 +9,10 @@ import model.bean.Gerente;
 import model.bean.Produto;
 import model.dao.CaixaDAO;
 import model.dao.GerenteDAO;
+import model.dao.ProdutoDAO;
 import model.dao.impl.CaixaDAOImpl;
 import model.dao.impl.GerenteDAOImpl;
+import model.dao.impl.ProdutoDAOImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,36 +154,130 @@ public class GerenteService {
             CaixaDAO caixaDAO = new CaixaDAOImpl();
             CaixaService caixaService = new CaixaService(caixaDAO);
             Caixa caixa = new Caixa(nome, CPF, telefone, cargo, login, senha);
-            caixaService.createCaixa(caixa);
-            return caixa;
+            return caixaService.createCaixa(caixa);
+
         } catch (RuntimeException ex){
             throw new RuntimeException("Erro ao criar caixa! " + ex.getMessage());
         }
     }
 
-//    public boolean updateCaixa(Caixa caixa){
-//
-//    }
+    public boolean updateCaixa(Long id, String nome, String CPF, String telefone, String cargo, String login, String senha){
+        CaixaDAO caixaDAO = new CaixaDAOImpl();
+        CaixaService caixaService = new CaixaService(caixaDAO);
+        Caixa caixaDoBD = caixaService.findById(id);
 
-//    public Produto createProduto(String nome, double preco, String tipo, int quantidade) {
-//        if (nome == null || nome.isEmpty()) {
-//            throw new IllegalArgumentException("Informe um nome válido.");
-//        }
-//        if (preco <= 0) {
-//            throw new IllegalArgumentException("Informe um preco válido.");
-//        }
-//        if (tipo == null || tipo.isEmpty()) {
-//            throw new IllegalArgumentException("Informe uma senha válida.");
-//        }
-//        if (quantidade < 0) {
-//            throw new IllegalArgumentException("Informe uma quantidade válida.");
-//        }
-//
-////        try {
-////
-////            }
-////        } catch (RuntimeException ex) {
-////            throw new RuntimeException("Erro ao buscar pelo ID do gerente: " + ex.getMessage());
-////        }
-//    }
+        if(nome != null && !nome.trim().isEmpty()){
+            caixaDoBD.setNome(nome);
+        }
+        if(CPF != null && !CPF.trim().isEmpty()){
+            caixaDoBD.setCPF(CPF);
+        }
+        if(telefone != null && !telefone.trim().isEmpty()){
+            caixaDoBD.setTelefone(telefone);
+        }
+        if(cargo != null && !cargo.trim().isEmpty()){
+            caixaDoBD.setCargo(cargo);
+        }
+        if(login != null && !login.trim().isEmpty()){
+            caixaDoBD.setLogin(login);
+        }
+        if(senha != null && !senha.trim().isEmpty()){
+            caixaDoBD.setSenha(senha);
+        }
+
+        if(caixaDoBD == null){
+            throw new RuntimeException("Não é possível atualizar um caixa nulo.");
+        }
+        if(caixaDoBD.getNome() == null || caixaDoBD.getNome().trim().isEmpty()){
+            throw new RuntimeException("Não é possível atualizar o nome do caixa para um nome vazio ou nulo.");
+        }
+        if(caixaDoBD.getCPF() == null || caixaDoBD.getCPF().trim().isEmpty()){
+            throw new RuntimeException("Não é possível atualizar o CPF do caixa para vazio ou nulo.");
+        }
+        if(caixaDoBD.getTelefone() == null || caixaDoBD.getTelefone().trim().isEmpty()){
+            throw new RuntimeException("Não é possível atualizar o telefone do caixa para um número vazio ou nulo.");
+        }
+        if(caixaDoBD.getCargo() == null || caixaDoBD.getCargo().trim().isEmpty()){
+            throw new RuntimeException("Não é possível atualizar o cargo do caixa para vazio ou nulo.");
+        }
+        if(caixaDoBD.getLogin() == null || caixaDoBD.getLogin().trim().isEmpty()){
+            throw new RuntimeException("Não é possível atualizar o login do caixa para vazio ou nulo.");
+        }
+        if(caixaDoBD.getSenha() == null || caixaDoBD.getSenha().trim().isEmpty()){
+            throw new RuntimeException("Não é possível atualizar a senha do caixa para vazio ou nulo.");
+        }
+
+        try{
+            return caixaService.updateCaixa(caixaDoBD);
+        } catch (RuntimeException ex){
+            throw new RuntimeException("Erro ao atualizar caixa! " + ex.getMessage());
+        }
+    }
+
+    public boolean deleteCaixa(Long id){
+        CaixaDAO caixaDAO = new CaixaDAOImpl();
+        CaixaService caixaService = new CaixaService(caixaDAO);
+
+        if(id == null || id == 0){
+            throw new RuntimeException("Não é possível deletar um caixa com ID nulo ou igual a zero");
+        }
+
+        try{
+            return caixaService.deleteCaixa(id);
+        } catch (RuntimeException ex){
+            throw new RuntimeException("Erro ao deletar caixa! " + ex.getMessage());
+        }
+    }
+
+    public Produto createProduto(String nome, double preco, String tipo, int quantidade) {
+        if (nome == null || nome.isEmpty()) {
+            throw new IllegalArgumentException("Informe um nome válido.");
+        }
+        if (preco <= 0) {
+            throw new IllegalArgumentException("Informe um preco válido.");
+        }
+        if (tipo == null || tipo.isEmpty()) {
+            throw new IllegalArgumentException("Informe uma senha válida.");
+        }
+        if (quantidade < 0) {
+            throw new IllegalArgumentException("Informe uma quantidade válida.");
+        }
+
+        try {
+            Produto produto = new Produto(nome, preco, tipo, quantidade);
+            ProdutoDAO produtoDAO = new ProdutoDAOImpl();
+            ProdutoService produtoService = new ProdutoService(produtoDAO);
+
+            return produtoService.createProduto(produto);
+        } catch (RuntimeException ex) {
+            throw new RuntimeException("Erro ao criar produto! " + ex.getMessage());
+        }
+    }
+
+    public boolean updateProduto(Long idProduto) {
+        if (idProduto == null || idProduto <= 0) {
+            throw new IllegalArgumentException("Informe um ID válido.");
+        }
+
+        try {
+            ProdutoDAO produtoDAO = new ProdutoDAOImpl();
+            ProdutoService produtoService = new ProdutoService(produtoDAO);
+
+            Produto produto = produtoService.findById(idProduto);
+
+            if (produto == null) {
+                throw new RuntimeException("Erro ao realizar a busca pelo produto com ID: " + idProduto);
+            } else {
+
+                produtoService.updateProduto(produto);
+                return true;
+            }
+        } catch (RuntimeException ex) {
+            throw new RuntimeException("Erro ao atualizar produto! " + ex.getMessage());
+        }
+
+
+    }
+
+
 }

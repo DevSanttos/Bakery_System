@@ -4,12 +4,15 @@
  */
 package model.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author joseo
  */
 public class Cliente extends Pessoa {
-    
+
     private int totalPontosAcumulados;
     
     public Cliente(String nome, String CPF, String telefone){
@@ -28,7 +31,7 @@ public class Cliente extends Pessoa {
     public void setTotalPontosAcumulados(int totalPontosAcumulados) {
         this.totalPontosAcumulados = totalPontosAcumulados;
     }
-    
+
     @Override
     public String toString(){
         return super.toString() + " Total de pontos acumulados: "+ this.getTotalPontosAcumulados();

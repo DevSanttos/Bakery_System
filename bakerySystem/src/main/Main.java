@@ -32,14 +32,18 @@ public class Main {
 //        Produto produto = new Produto("Bolo", 5.0, "Quitanda");
 //        Produto produto1 = new Produto("Quindim", 15.0, "Quitanda");
 
-        ClienteDAO clienteDao = new ClienteDAOImpl();
-        ClienteService clienteService =  new ClienteService(clienteDao);
+            ClienteDAO clienteDAO = new ClienteDAOImpl();
+            ClienteService clienteService = new ClienteService(clienteDAO);
 
-        Cliente cliente = new Cliente("Carlos Eduardo", "10010010032", "47996391631");
+            Cliente cliente2 = new Cliente("Cristiano Ronaldo", "33344455589", "4796212121");
+//            System.out.println(clienteService.createCliente(cliente2));
 
-        System.out.println(clienteService.createCliente(cliente));
 
+            Cliente novoCliente = clienteService.findById(3L);
+            novoCliente.setNome("Messi");
+            clienteService.updateCliente(novoCliente);
 
+        System.out.println(clienteService.readCliente());
 //        produtoService.createProduto(produto);
 //        produtoService.createProduto(produto1);
 //
@@ -69,6 +73,13 @@ public class Main {
 //        System.out.println(vendaService.updateVenda(venda1));
 //        System.out.println(vendaService.readVenda());
 
+        ProdutoDAO produtoDAO = new ProdutoDAOImpl();
+        ProdutoService produtoService = new ProdutoService(produtoDAO);
+
+
+        Produto novoProduto = produtoService.findById(1L);
+        novoProduto.setNome("Messi");
+        produtoService.updateProduto(novoProduto);
 
     }
 }

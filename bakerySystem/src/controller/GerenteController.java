@@ -1,5 +1,6 @@
 package controller;
 
+import model.bean.Produto;
 import service.CaixaService;
 import model.bean.Caixa;
 import model.bean.Gerente;
@@ -43,5 +44,16 @@ public class GerenteController {
         return gerenteService.createCaixa(nome, CPF, telefone, cargo, login, senha);
     }
 
+    public Produto createProduto(String nome, double preco, String tipo, int quantidade) {
+        return gerenteService.createProduto(nome, preco, tipo, quantidade);
+    }
+
+    public boolean updateCaixa(Long id, String nome, String CPF, String telefone, String cargo, String login, String senha){
+        return gerenteService.updateCaixa(id, nome, CPF, telefone, cargo, login, senha);
+    }
+
+    public boolean deleteCaixa(Long id){
+        return gerenteService.deleteCaixa(id);
+    }
 
 }
