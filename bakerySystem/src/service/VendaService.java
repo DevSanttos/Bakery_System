@@ -124,7 +124,7 @@ public class VendaService {
     }
 
 
-    //Estamos com um problema para adicionar a lista de produtos a esse preset da venda(Basicamente o que precisa ser presetado antes de ralizar a venda)
+    //Estamos com um problema para adicionar a lista de produtos a esse preset da venda(Basicamente o que precisa ser presetado antes de realizar a venda)
     public Venda setarVenda(Long idCliente, List<Produto> produtos) {
         //se id null, realizar a venda para a Pessoa que não é cliente
         if (idCliente == null || idCliente <= 0) {
