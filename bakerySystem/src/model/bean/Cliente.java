@@ -12,9 +12,9 @@ public class Cliente extends Pessoa {
     
     private int totalPontosAcumulados;
     
-    public Cliente(String nome, String CPF, String telefone, int totalPontosAcumulados){
+    public Cliente(String nome, String CPF, String telefone){
         super(nome,CPF,telefone);
-        this.setTotalPontosAcumulados(totalPontosAcumulados);
+        this.setTotalPontosAcumulados(0);
     }
 
     public Cliente(){

@@ -39,9 +39,9 @@ public class GerenteController {
         return gerenteService.findByLoginAndPassword(login, senha);
     }
 
-//    public Caixa cadastrarCaixa(String nome, String CPF, String telefone, String cargo, String login, String senha){
-//
-//    }
+    public Caixa createCaixa(String nome, String CPF, String telefone, String cargo, String login, String senha){
+        return gerenteService.createCaixa(nome, CPF, telefone, cargo, login, senha);
+    }
 
 
 }

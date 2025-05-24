@@ -22,7 +22,7 @@ import model.dao.ClienteDAO;
  */
 public class ClienteDAOImpl implements ClienteDAO{
 
-    private static final String SQL_INSERT_CLIENTE = "INSERT INTO cliente (nome, CPF, telefone, totPontosAcumulados) VALUES (?, ?, ?, ?)";
+    private static final String SQL_INSERT_CLIENTE = "INSERT INTO cliente (nome, CPF, telefone) VALUES (?, ?, ?)";
     private static final String SQL_SELECT_ALL_CLIENTES = "SELECT * FROM cliente";
     private static final String SQL_UPDATE_CLIENTE = "UPDATE cliente SET nome = ?, CPF = ?, telefone = ?, totPontosAcumulados = ? WHERE cliente.id_cliente = ?";
     private static final String SQL_DELETE_CLIENTE = "DELETE FROM cliente WHERE cliente.id_cliente = ?";
@@ -41,7 +41,6 @@ public class ClienteDAOImpl implements ClienteDAO{
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getCPF());
             stmt.setString(3, cliente.getTelefone());
-            stmt.setInt(4, cliente.getTotalPontosAcumulados());
 
             int affectedRows = stmt.executeUpdate();
 

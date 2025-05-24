@@ -23,14 +23,22 @@ public class Main {
         Connection conexao = null;
 
         //testando a implementação da classe VendaService
-        VendaDAO vendaDAO = new VendaDAOImpl();
-        VendaService vendaService =  new VendaService(vendaDAO);
+//        VendaDAO vendaDAO = new VendaDAOImpl();
+//        VendaService vendaService =  new VendaService(vendaDAO);
+//
+//        ProdutoDAO produtoDao = new ProdutoDAOImpl();
+//        ProdutoService produtoService =  new ProdutoService(produtoDao);
+//
+//        Produto produto = new Produto("Bolo", 5.0, "Quitanda");
+//        Produto produto1 = new Produto("Quindim", 15.0, "Quitanda");
 
-        ProdutoDAO produtoDao = new ProdutoDAOImpl();
-        ProdutoService produtoService =  new ProdutoService(produtoDao);
+        ClienteDAO clienteDao = new ClienteDAOImpl();
+        ClienteService clienteService =  new ClienteService(clienteDao);
 
-        Produto produto = new Produto("Bolo", 5.0, "Quitanda");
-        Produto produto1 = new Produto("Quindim", 15.0, "Quitanda");
+        Cliente cliente = new Cliente("Carlos Eduardo", "10010010032", "47996391631");
+
+        System.out.println(clienteService.createCliente(cliente));
+
 
 //        produtoService.createProduto(produto);
 //        produtoService.createProduto(produto1);

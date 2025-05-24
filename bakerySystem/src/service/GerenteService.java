@@ -7,7 +7,9 @@ package service;
 import model.bean.Caixa;
 import model.bean.Gerente;
 import model.bean.Produto;
+import model.dao.CaixaDAO;
 import model.dao.GerenteDAO;
+import model.dao.impl.CaixaDAOImpl;
 import model.dao.impl.GerenteDAOImpl;
 
 import java.util.ArrayList;
@@ -143,15 +145,43 @@ public class GerenteService {
         String [] atr = new String [6];
         for(int i = 0; i <= atr.length; i++ ){
             if(atr[i] == null || atr[i].trim().isEmpty()){
-                throw new RuntimeException("Atributo nulo ou vazio não possibilita a criação de um caixa.");
+                throw new RuntimeException("Atributo nulo ou vazio não possibilita a criação de um CaixaService.");
             }
         }
         try {
-            Caixa
+            CaixaDAO caixaDAO = new CaixaDAOImpl();
+            CaixaService caixaService = new CaixaService(caixaDAO);
+            Caixa caixa = new Caixa(nome, CPF, telefone, cargo, login, senha);
+            caixaService.createCaixa(caixa);
+            return caixa;
+        } catch (RuntimeException ex){
+            throw new RuntimeException("Erro ao criar caixa! " + ex.getMessage());
         }
     }
 
-    public Produto createProduto(Long idProduto, String nome, double preco, String tipo, int quantidade) {
+//    public boolean updateCaixa(Caixa caixa){
+//
+//    }
 
-    }
+//    public Produto createProduto(String nome, double preco, String tipo, int quantidade) {
+//        if (nome == null || nome.isEmpty()) {
+//            throw new IllegalArgumentException("Informe um nome válido.");
+//        }
+//        if (preco <= 0) {
+//            throw new IllegalArgumentException("Informe um preco válido.");
+//        }
+//        if (tipo == null || tipo.isEmpty()) {
+//            throw new IllegalArgumentException("Informe uma senha válida.");
+//        }
+//        if (quantidade < 0) {
+//            throw new IllegalArgumentException("Informe uma quantidade válida.");
+//        }
+//
+////        try {
+////
+////            }
+////        } catch (RuntimeException ex) {
+////            throw new RuntimeException("Erro ao buscar pelo ID do gerente: " + ex.getMessage());
+////        }
+//    }
 }

@@ -13,16 +13,17 @@ package model.bean;
     private String nome;
     private double preco;
     private String tipo;
-    private int quantidade;
 
     private boolean disponivelParaTroca;
     private int pontosNecessarios;
     private StatusResgate statusResgate;
+    private int quantidade;
 
-    public Produto(String nome, double preco, String tipo) {
+    public Produto(String nome, double preco, String tipo, int quantidade) {
         this.setNome(nome);
         this.setPreco(preco);
         this.setTipo(tipo);
+        this.setQuantidade(quantidade);
         this.setDisponivelParaTroca(false);
         this.setPontosNecessarios(0);
         this.setStatusResgate(statusResgate.NAO_REALIZADO);

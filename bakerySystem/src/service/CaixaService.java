@@ -5,8 +5,11 @@
 package service;
 
 import model.bean.Caixa;
+import model.bean.Cliente;
 import model.bean.Gerente;
 import model.dao.CaixaDAO;
+import model.dao.ClienteDAO;
+import model.dao.impl.ClienteDAOImpl;
 
 import java.util.List;
 
@@ -133,5 +136,23 @@ public class CaixaService {
             throw new RuntimeException("Erro ao buscar pelo ID do caixa: " + ex.getMessage());
         }
         return false;
+    }
+
+    public Cliente createCliente (String nome, String cpf, String telefone) {
+        String [] atr = new String [3];
+        for(int i = 0; i <= atr.length; i++ ){
+            if(atr[i] == null || atr[i].trim().isEmpty()){
+                throw new RuntimeException("Atributo nulo ou vazio não possibilita a criação de um caixa.");
+            }
+        }
+        try {
+            ClienteDAO clienteDAO = new ClienteDAOImpl();
+            ClienteService clienteService = new ClienteService(clienteDAO);
+            Cliente cliente = new Cliente(nome, cpf, telefone);
+            clienteService.createCliente(cliente);
+            return cliente;
+        } catch (RuntimeException ex){
+            throw new RuntimeException("Erro ao criar cliente! " + ex.getMessage());
+        }
     }
 }
