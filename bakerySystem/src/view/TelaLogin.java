@@ -4,14 +4,26 @@
  */
 package view;
 
+import controller.CaixaController;
+import controller.GerenteController;
 import java.awt.Color;
+import javax.swing.JOptionPane;
+import model.dao.GerenteDAO;
+import model.dao.impl.GerenteDAOImpl;
+import service.GerenteService;
 
 /**
  *
  * @author onata
  */
 public class TelaLogin extends javax.swing.JFrame {
-
+    
+    
+    GerenteDAO gerenteDAO = new GerenteDAOImpl();
+    GerenteService gerenteService = new GerenteService(gerenteDAO);
+    GerenteController gerenteController = new GerenteController(gerenteService);
+    
+    
     public TelaLogin() {
         initComponents();
         pack();
@@ -38,6 +50,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        campoteste = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Padaria Rezendes's");
@@ -102,6 +115,12 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
+        campoteste.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campotesteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -122,6 +141,10 @@ public class TelaLogin extends javax.swing.JFrame {
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addComponent(campoteste, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,7 +163,9 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(campoteste, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,8 +192,27 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_usuarioFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String login = usuarioField.getText();
+//        String textFieldPassword = String.valueOf(senhaField.getPassword());
+        String senha = campoteste.getText();
+        
+        try {
+            if (gerenteController.findByLoginAndPassword(login, senha)) {
+                TelaPrincipalGerente telaPrincipalGerente = new TelaPrincipalGerente();
+                telaPrincipalGerente.setVisible(true);
+                this.dispose();     
+            }
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, "Login ou senha estão inválidos!");
+        }
+        catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro inesperado!");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void campotesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campotesteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campotesteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,6 +250,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField campoteste;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

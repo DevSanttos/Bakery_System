@@ -7,6 +7,7 @@ package main;
 import model.dao.*;
 import model.dao.impl.*;
 import connection.ConnectionFactory;
+import controller.GerenteController;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -32,18 +33,23 @@ public class Main {
 //        Produto produto = new Produto("Bolo", 5.0, "Quitanda");
 //        Produto produto1 = new Produto("Quindim", 15.0, "Quitanda");
 
-            ClienteDAO clienteDAO = new ClienteDAOImpl();
-            ClienteService clienteService = new ClienteService(clienteDAO);
-
-            Cliente cliente2 = new Cliente("Cristiano Ronaldo", "33344455589", "4796212121");
-//            System.out.println(clienteService.createCliente(cliente2));
-
-
-            Cliente novoCliente = clienteService.findById(3L);
-            novoCliente.setNome("Messi");
-            clienteService.updateCliente(novoCliente);
-
-        System.out.println(clienteService.readCliente());
+//            ClienteDAO clienteDAO = new ClienteDAOImpl();
+//            ClienteService clienteService = new ClienteService(clienteDAO);
+//
+//            Cliente cliente2 = new Cliente("Cristiano Ronaldo", "33344455589", "4796212121");
+////            System.out.println(clienteService.createCliente(cliente2));
+//
+//
+//            Cliente novoCliente = clienteService.findById(3L);
+//            novoCliente.setNome("Messi");
+//            clienteService.updateCliente(novoCliente);
+//
+//        System.out.println(clienteService.readCliente());
+            
+        
+        
+        
+        
 //        produtoService.createProduto(produto);
 //        produtoService.createProduto(produto1);
 //
@@ -73,13 +79,7 @@ public class Main {
 //        System.out.println(vendaService.updateVenda(venda1));
 //        System.out.println(vendaService.readVenda());
 
-        ProdutoDAO produtoDAO = new ProdutoDAOImpl();
-        ProdutoService produtoService = new ProdutoService(produtoDAO);
-
-
-        Produto novoProduto = produtoService.findById(1L);
-        novoProduto.setNome("Messi");
-        produtoService.updateProduto(novoProduto);
+     
 
     }
 }
