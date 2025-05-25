@@ -150,11 +150,14 @@ public class GerenteService {
             if (gerenteDAO.findByLoginAndPassword(login, senha) != null) {
                 return true;
             } else {
-                throw new IllegalArgumentException("Senha inválida");
+                if(caixaDAO.findByLoginAndPassword(login, senha) != null){
+                    return true;
+                }
             }
         } catch (RuntimeException ex) {
             throw new RuntimeException("Erro ao buscar pelo ID do gerente: " + ex.getMessage());
         }
+        return false;
     }
 
     public Caixa createCaixa (String nome, String CPF, String telefone, String cargo, String login, String senha) {

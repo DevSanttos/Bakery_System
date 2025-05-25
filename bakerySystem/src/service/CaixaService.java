@@ -9,7 +9,9 @@ import model.bean.Cliente;
 import model.bean.Gerente;
 import model.dao.CaixaDAO;
 import model.dao.ClienteDAO;
+import model.dao.GerenteDAO;
 import model.dao.impl.ClienteDAOImpl;
+import model.dao.impl.GerenteDAOImpl;
 
 import java.util.List;
 
@@ -19,6 +21,8 @@ import java.util.List;
  */
 public class CaixaService {
     private final CaixaDAO caixaDAO;
+    GerenteDAO gerenteDAO = new GerenteDAOImpl();
+    GerenteService gerenteService = new GerenteService(gerenteDAO);
 
     public CaixaService(CaixaDAO caixaDAO) {
         this.caixaDAO = caixaDAO;
@@ -131,11 +135,15 @@ public class CaixaService {
         try {
             if (caixaDAO.findByLoginAndPassword(login, senha) != null) {
                 return true;
+            } else{
+                if(gerenteService.findByLoginAndPassword(login, senha)){
+                    return true;
+                }
             }
         } catch (RuntimeException ex) {
             throw new RuntimeException("Erro ao buscar pelo ID do caixa: " + ex.getMessage());
         }
-        return false;
+        return true;
     }
 
     public Cliente createCliente (String nome, String cpf, String telefone) {
