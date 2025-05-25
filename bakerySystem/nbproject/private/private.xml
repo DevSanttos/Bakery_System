@@ -8,6 +8,14 @@
             <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/dao/impl/ProdutoDAOImpl.java</file>
             <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/dao/CaixaDAO.java</file>
             <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/dao/impl/VendaDAOImpl.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/controller/ProdutoController.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/service/ProdutoService.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/main/Main.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/dao/ProdutoDAO.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/bean/Produto.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/dao/impl/GerenteDAOImpl.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/service/CaixaService.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/service/GerenteService.java</file>
         </group>
     </open-files>
 </project-private>
