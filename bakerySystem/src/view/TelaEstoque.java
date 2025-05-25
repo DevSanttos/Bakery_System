@@ -25,6 +25,7 @@ public class TelaEstoque extends javax.swing.JFrame {
     public TelaEstoque() {
         initComponents();
         setLocationRelativeTo(null); // Centraliza
+        readTable();
     }
 
     /**

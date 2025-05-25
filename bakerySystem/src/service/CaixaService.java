@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class CaixaService {
     private final CaixaDAO caixaDAO;
-    GerenteDAO gerenteDAO = new GerenteDAOImpl();
+    
     
 
     public CaixaService(CaixaDAO caixaDAO) {
@@ -135,13 +135,11 @@ public class CaixaService {
         try {
             if (caixaDAO.findByLoginAndPassword(login, senha) != null) {
                 return true;
-            } else{
-                gerenteDAO.findByLoginAndPassword(login, senha);
-            }
+            } else
+                throw new RuntimeException("O login ou a senha inseridos não coincidem com nenhum registro no banco de dados!");
         } catch (RuntimeException ex) {
             throw new RuntimeException("Erro ao buscar pelo ID do caixa: " + ex.getMessage());
         }
-        return true;
     }
 
     public Cliente createCliente (String nome, String cpf, String telefone) {

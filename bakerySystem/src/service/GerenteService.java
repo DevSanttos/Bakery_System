@@ -149,11 +149,7 @@ public class GerenteService {
         try {
             if (gerenteDAO.findByLoginAndPassword(login, senha) != null) {
                 return true;
-            } else {
-                if(caixaDAO.findByLoginAndPassword(login, senha) != null){
-                    return true;    
-                }
-            }
+            } 
         } catch (RuntimeException ex) {
             throw new RuntimeException("Erro ao buscar pelo ID do gerente: " + ex.getMessage());
         }
