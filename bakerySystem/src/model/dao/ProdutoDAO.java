@@ -17,4 +17,8 @@ public interface ProdutoDAO {
     boolean update(Produto produto);
     boolean delete(Long id);
     Produto findById(Long idProduto);   
+
+    @Override
+    public String toString();
+    
 }

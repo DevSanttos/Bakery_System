@@ -221,6 +221,11 @@ public class TelaEstoque extends javax.swing.JFrame {
         checkBoxDisponivelTroca.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         checkBoxDisponivelTroca.setForeground(new java.awt.Color(164, 87, 44));
         checkBoxDisponivelTroca.setText("Disponível pra troca?");
+        checkBoxDisponivelTroca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxDisponivelTrocaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -327,7 +332,21 @@ public class TelaEstoque extends javax.swing.JFrame {
              
              Produto produto = new Produto(novoNome, novoPreco, novoTipo, novaQuantidade);
              
-             gerenteController.updateProduto(idProduto, novoNome, novoPreco, novoTipo, novaQuantidade, false, PROPERTIES, StatusResgate.PENDENTE);
+             
+             boolean marcado = checkBoxDisponivelTroca.isSelected();
+             int novoPontosNec;
+             
+             if(marcado){
+                    novoPontosNec = Integer.valueOf(campoPontosNecessarios.getText());
+             } else {
+                 novoPontosNec = 0;
+                 JOptionPane.showMessageDialog(null, "Não é possível alterar os pontos necessários para a troca se o produto não estiver disponível para a troca.");
+             }
+             
+             produto.setPontosNecessarios(novoPontosNec);
+             produto.setDisponivelParaTroca(marcado);
+             
+             gerenteController.updateProduto(idProduto, novoNome, novoPreco, novoTipo, novaQuantidade, marcado, novoPontosNec, null);
              readTable();
        } catch(NumberFormatException  ex) {
            JOptionPane.showMessageDialog(null, "Erro de formato nos dados. Verifique Preço e Quantidade.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -352,32 +371,49 @@ public class TelaEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaExibicaoKeyPressed
 
     
-    
     public void readTable() {
-        DefaultTableModel modelo = (DefaultTableModel) tabelaExibicao.getModel();
-        modelo.setNumRows(0);
+    DefaultTableModel modelo = (DefaultTableModel) tabelaExibicao.getModel();
+    modelo.setNumRows(0);
 
-        for (Produto p : produtoController.readProduto()) {
-            modelo.addRow(new Object[]{
-                p.getIdProduto(),
-                p.getNome(),
-                p.getPreco(),
-                p.getTipo(),
-                p.getQuantidade(),
-                p.isDisponivelParaTroca(),
-                p.getPontosNecessarios()
-            });
+    try {
+        List<Produto> produtos = produtoController.readProduto();
+        if (produtos != null) { // Importante verificar se não é nulo
+            for (Produto p : produtos) {
+                modelo.addRow(new Object[]{
+                    p.getIdProduto(),
+                    p.getNome(),
+                    p.getPreco(),
+                    p.getTipo(),
+                    p.getQuantidade(),
+                    p.isDisponivelParaTroca(),
+                    p.getPontosNecessarios()
+                });
+            }
+        } else {
+            System.out.println("ProdutoController.readProduto() retornou null.");
+            // Ou JOptionPane.showMessageDialog(this, "Não foi possível carregar os produtos.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
+    } catch (Exception e) {
+        System.err.println("Erro ao carregar produtos na tabela: " + e.getMessage());
+        e.printStackTrace(); // Imprime o stack trace para depuração
+        // JOptionPane.showMessageDialog(this, "Erro ao carregar produtos: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
     }
+}
     
     private void tabelaExibicaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaExibicaoKeyReleased
         if (tabelaExibicao.getSelectedRow() != -1) {
+            
+            
             
             campoNome.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 1).toString());
             campoPreco.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 2).toString());
             campoTipo.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
             campoQuantidade.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 4).toString());
-            checkBoxDisponivelTroca.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 5).toString());
+            
+            int linhaSelecionada = tabelaExibicao.getSelectedRow();
+            boolean disponivel = (boolean) tabelaExibicao.getValueAt(linhaSelecionada, 5);
+            checkBoxDisponivelTroca.setSelected(disponivel);
+
             campoPontosNecessarios.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 6).toString());
         }
     }//GEN-LAST:event_tabelaExibicaoKeyReleased
@@ -418,10 +454,18 @@ public class TelaEstoque extends javax.swing.JFrame {
             campoPreco.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 2).toString());
             campoTipo.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
             campoQuantidade.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 4).toString());
-            checkBoxDisponivelTroca.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 5).toString());
+            
+            int linhaSelecionada = tabelaExibicao.getSelectedRow();
+            boolean disponivel = (boolean) tabelaExibicao.getValueAt(linhaSelecionada, 5);
+            checkBoxDisponivelTroca.setSelected(disponivel);
+
             campoPontosNecessarios.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 6).toString());
         }
     }//GEN-LAST:event_tabelaExibicaoMouseClicked
+
+    private void checkBoxDisponivelTrocaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxDisponivelTrocaActionPerformed
+        
+    }//GEN-LAST:event_checkBoxDisponivelTrocaActionPerformed
 
     /**
      * @param args the command line arguments

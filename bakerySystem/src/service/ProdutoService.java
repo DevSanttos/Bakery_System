@@ -96,5 +96,10 @@ public class ProdutoService {
             throw new RuntimeException("Erro ao excluir produto ", ex);
         }
     }
-    
+
+    @Override
+    public String toString() {
+        return "ProdutoService{" + "produtoDAO=" + produtoDAO + '}';
+    }
+        
 }

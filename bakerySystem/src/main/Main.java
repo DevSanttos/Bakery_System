@@ -31,8 +31,10 @@ public class Main {
         CaixaService caixaService =  new CaixaService(caixaDAO);
         CaixaController caixaController = new CaixaController(caixaService);
 
-        System.out.println(gerenteController.deleteCliente(3L));
-
+        ProdutoDAO produtoDao = new ProdutoDAOImpl();
+        ProdutoService produtoService = new ProdutoService(produtoDao);
+        
+        System.out.println(produtoService.readProduto());
 
     }
 }

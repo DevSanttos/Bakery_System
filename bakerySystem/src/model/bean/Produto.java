@@ -98,6 +98,6 @@ package model.bean;
 
     @Override
     public String toString() {
-        return "Produto{" + "idProduto=" + idProduto + ", nome=" + nome + ", preco=" + preco + ", tipo=" + tipo + ", disponivelParaTroca=" + disponivelParaTroca + ", pontosNecessarios=" + pontosNecessarios + ", statusResgate=" + statusResgate + '}';
+        return "Produto{" + "idProduto=" + idProduto + ", nome=" + nome + ", preco=" + preco + ", tipo=" + tipo + ", disponivelParaTroca=" + disponivelParaTroca + ", pontosNecessarios=" + pontosNecessarios + ", statusResgate=" + statusResgate + ", quantidade" + quantidade + '}';
     }
 }
