@@ -4,18 +4,26 @@
  */
 package view;
 
+import controller.GerenteController;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.GroupLayout;
 import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
+import model.dao.GerenteDAO;
+import model.dao.impl.GerenteDAOImpl;
+import service.GerenteService;
 
 /**
  *
  * @author onata
  */
 public class TelaPrincipalGerente extends javax.swing.JFrame {
+    
+    GerenteDAO gerenteDAO = new GerenteDAOImpl();
+    GerenteService gerenteService = new GerenteService(gerenteDAO);
+    GerenteController gerenteController = new GerenteController(gerenteService);
 
     public TelaPrincipalGerente() {
         initComponents();
@@ -248,11 +256,15 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoCadFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadFuncActionPerformed
-        // TODO add your handling code here:
+        TelaCadastrarFunc telaCadastrarFunc = new TelaCadastrarFunc();
+        telaCadastrarFunc.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_botaoCadFuncActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        TelaLogin telaLogin = new TelaLogin();
+        telaLogin.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void botaoCadProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadProdActionPerformed

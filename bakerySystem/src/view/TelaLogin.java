@@ -60,7 +60,6 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        campoteste = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Padaria Rezendes's");
@@ -93,7 +92,6 @@ public class TelaLogin extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(164, 113, 72));
 
         usuarioField.setBackground(new java.awt.Color(164, 113, 72));
-        usuarioField.setText("Nome de usuário");
         usuarioField.setBorder(null);
         usuarioField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,7 +100,6 @@ public class TelaLogin extends javax.swing.JFrame {
         });
 
         senhaField.setBackground(new java.awt.Color(164, 113, 72));
-        senhaField.setText("Senha");
         senhaField.setBorder(null);
 
         jSeparator1.setBackground(new java.awt.Color(204, 204, 204));
@@ -122,12 +119,6 @@ public class TelaLogin extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        campoteste.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campotesteActionPerformed(evt);
             }
         });
 
@@ -151,10 +142,6 @@ public class TelaLogin extends javax.swing.JFrame {
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addComponent(campoteste, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,9 +160,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(campoteste, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -213,8 +198,8 @@ public class TelaLogin extends javax.swing.JFrame {
                 this.dispose();
             } else {
                 if (gerenteController.findByLoginAndPassword(login, senha)) {
-                    TelaPrincipalGerente telaPrincipalGerente = new TelaPrincipalGerente();
-                    telaPrincipalGerente.setVisible(true);
+                    TelaPrincipalFuncionario telaPrincipalFuncionario = new TelaPrincipalFuncionario();
+                    telaPrincipalFuncionario.setVisible(true);
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null,"Login ou senha incorretos");
@@ -227,10 +212,6 @@ public class TelaLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro inesperado!");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void campotesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campotesteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campotesteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -268,7 +249,6 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField campoteste;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

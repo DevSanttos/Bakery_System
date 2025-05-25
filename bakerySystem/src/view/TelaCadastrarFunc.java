@@ -4,12 +4,21 @@
  */
 package view;
 
+import controller.GerenteController;
+import javax.swing.JOptionPane;
+import model.dao.GerenteDAO;
+import model.dao.impl.GerenteDAOImpl;
+import service.GerenteService;
+
 /**
  *
  * @author onata
  */
 public class TelaCadastrarFunc extends javax.swing.JFrame {
-
+    
+    GerenteDAO gerenteDAO = new GerenteDAOImpl();
+    GerenteService gerenteService = new GerenteService(gerenteDAO);
+    GerenteController gerenteController = new GerenteController(gerenteService);
     /**
      * Creates new form TelaCadastrarFunc
      */
@@ -36,17 +45,17 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        campoCPF = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane2 = new javax.swing.JTextPane();
+        campoNome = new javax.swing.JTextPane();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane3 = new javax.swing.JTextPane();
+        campoTelefone = new javax.swing.JTextPane();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextPane4 = new javax.swing.JTextPane();
+        campoCargo = new javax.swing.JTextPane();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTextPane5 = new javax.swing.JTextPane();
+        campoSenha = new javax.swing.JTextPane();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTextPane6 = new javax.swing.JTextPane();
+        campoLogin = new javax.swing.JTextPane();
         jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
@@ -86,22 +95,27 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(164, 87, 44));
         jLabel5.setText("CPF");
 
-        jScrollPane1.setViewportView(jTextPane1);
+        jScrollPane1.setViewportView(campoCPF);
 
-        jScrollPane2.setViewportView(jTextPane2);
+        jScrollPane2.setViewportView(campoNome);
 
-        jScrollPane3.setViewportView(jTextPane3);
+        jScrollPane3.setViewportView(campoTelefone);
 
-        jScrollPane4.setViewportView(jTextPane4);
+        jScrollPane4.setViewportView(campoCargo);
 
-        jScrollPane5.setViewportView(jTextPane5);
+        jScrollPane5.setViewportView(campoSenha);
 
-        jScrollPane6.setViewportView(jTextPane6);
+        jScrollPane6.setViewportView(campoLogin);
 
         jButton1.setBackground(new java.awt.Color(92, 184, 92));
         jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(60, 60, 60));
-        jButton1.setText("Cadastrar novo funcionário");
+        jButton1.setText("Cadastrar novo caixa");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(164, 113, 72));
         jPanel3.setPreferredSize(new java.awt.Dimension(650, 60));
@@ -121,7 +135,7 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(245, 235, 221));
-        jLabel10.setText("Cadastro de funcionário");
+        jLabel10.setText("Cadastro de caixa");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -234,8 +248,29 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
+        TelaPrincipalGerente telaPrincipalGerente = new TelaPrincipalGerente();
+        telaPrincipalGerente.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String nome = campoNome.getText();
+        String CPF = campoCPF.getText();
+        String telefone = campoTelefone.getText();
+        String cargo = campoCargo.getText();
+        String login = campoLogin.getText();
+        String senha = campoSenha.getText();
+        
+        try {
+            gerenteController.createCaixa(nome, CPF, telefone, cargo, login, senha);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, "Campos inválidos!");
+        }
+        catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o caixa!");
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,6 +308,12 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextPane campoCPF;
+    private javax.swing.JTextPane campoCargo;
+    private javax.swing.JTextPane campoLogin;
+    private javax.swing.JTextPane campoNome;
+    private javax.swing.JTextPane campoSenha;
+    private javax.swing.JTextPane campoTelefone;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel10;
@@ -291,11 +332,5 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextPane jTextPane2;
-    private javax.swing.JTextPane jTextPane3;
-    private javax.swing.JTextPane jTextPane4;
-    private javax.swing.JTextPane jTextPane5;
-    private javax.swing.JTextPane jTextPane6;
     // End of variables declaration//GEN-END:variables
 }
