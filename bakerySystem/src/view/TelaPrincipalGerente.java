@@ -268,7 +268,9 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void botaoCadProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadProdActionPerformed
-        // TODO add your handling code here:
+        TelaCadastrarProd telaCadastrarProd = new TelaCadastrarProd();
+        telaCadastrarProd.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_botaoCadProdActionPerformed
 
     private void botaoEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEstoqueActionPerformed
