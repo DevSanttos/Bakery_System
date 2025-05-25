@@ -1,6 +1,7 @@
 package controller;
 
 import model.bean.Produto;
+import model.bean.StatusResgate;
 import service.CaixaService;
 import model.bean.Caixa;
 import model.bean.Gerente;
@@ -16,20 +17,8 @@ public class GerenteController {
         this.gerenteService = gerenteService;
     }
 
-    public Gerente createGerente(Gerente gerente) {
-        return gerenteService.createGerente(gerente);
-    }
-
     public List<Gerente> readGerente() {
         return gerenteService.readGerente();
-    }
-
-    public boolean updateGerente(Gerente gerente) {
-        return gerenteService.updateGerente(gerente);
-    }
-
-    public boolean deleteGerente(Long id) {
-        return gerenteService.deleteGerente(id);
     }
 
     public Gerente findById(Long id) {
@@ -40,20 +29,31 @@ public class GerenteController {
         return gerenteService.findByLoginAndPassword(login, senha);
     }
 
-    public Caixa createCaixa(String nome, String CPF, String telefone, String cargo, String login, String senha){
+    public Caixa createCaixa(String nome, String CPF, String telefone, String cargo, String login, String senha) {
         return gerenteService.createCaixa(nome, CPF, telefone, cargo, login, senha);
+    }
+
+    public boolean updateCaixa(Long idCaixa, String nome, String CPF, String telefone, String cargo, String login, String senha) {
+        return gerenteService.updateCaixa(idCaixa, nome, CPF, telefone, cargo, login, senha);
+    }
+
+    public boolean deleteCaixa(Long id) {
+        return gerenteService.deleteCaixa(id);
     }
 
     public Produto createProduto(String nome, double preco, String tipo, int quantidade) {
         return gerenteService.createProduto(nome, preco, tipo, quantidade);
     }
 
-    public boolean updateCaixa(Long id, String nome, String CPF, String telefone, String cargo, String login, String senha){
-        return gerenteService.updateCaixa(id, nome, CPF, telefone, cargo, login, senha);
+    public boolean updateProduto(Long idProduto, String nome, double preco, String tipo, int quantidade, boolean disponivelParaTroca, int pontosNecessarios, StatusResgate statusResgate) {
+        return gerenteService.updateProduto(idProduto, nome, preco, tipo, quantidade, disponivelParaTroca, pontosNecessarios, statusResgate);
     }
 
-    public boolean deleteCaixa(Long id){
-        return gerenteService.deleteCaixa(id);
+    public boolean deleteProduto(Long idProduto) {
+        return gerenteService.deleteProduto(idProduto);
     }
 
+    public boolean deleteCliente(Long idCliente) {
+        return gerenteService.deleteCliente(idCliente);
+    }
 }

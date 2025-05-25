@@ -11,11 +11,9 @@ import model.dao.VendaDAO;
 import model.dao.impl.ClienteDAOImpl;
 import model.dao.impl.ProdutoDAOImpl;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Formattable;
 import java.util.List;
 
 
@@ -23,13 +21,18 @@ import java.util.List;
 public class VendaService {
 
     private final VendaDAO vendaDAO;
-    private final ClienteDAO clienteDAO;
-    private final ProdutoDAO produtoDAO;
 
-    public VendaService(VendaDAO vendaDAO, ClienteDAO clienteDAO, ProdutoDAO produtoDAO) {
+    ClienteDAO clienteDAO = new ClienteDAOImpl();
+    ClienteService clienteService = new ClienteService(clienteDAO);
+
+    ProdutoDAO produtoDAO = new ProdutoDAOImpl();
+    ProdutoService produtoService = new ProdutoService(produtoDAO);
+
+    List<Produto> produtoList = new ArrayList<>();
+    double subtotal = 0;
+
+    public VendaService(VendaDAO vendaDAO) {
         this.vendaDAO = vendaDAO;
-        this.clienteDAO = clienteDAO;
-        this.produtoDAO = produtoDAO;
     }
 
     public Venda createVenda(Venda venda) {
@@ -76,7 +79,7 @@ public class VendaService {
         }
     }
 
-    public Venda findById(Long id){
+    public Venda findById(Long id) {
         if(id == null || id <= 0){
             throw new RuntimeException("Não é possível encontrar vendas com ID nulo ou menor do que zero.");
         }
@@ -112,56 +115,84 @@ public class VendaService {
         }
     }
 
-    public void addItensAoCarrinho(Long idInformado) {
-        List<Produto> produtos = new ArrayList<>();
+    public void addProdutoAoCarrinho(Long idInformado) {
         if (idInformado <= 0) {
             throw new IllegalArgumentException("O ID precisa ser válido.");
         }
-
-        ProdutoService produtoService = new ProdutoService(produtoDAO);
-        Produto novoProduto = produtoService.findById(idInformado);
-        produtos.add(novoProduto);
+        produtoList.add(produtoService.findById(idInformado));
     }
 
 
-    //Estamos com um problema para adicionar a lista de produtos a esse preset da venda(Basicamente o que precisa ser presetado antes de realizar a venda)
-    public Venda setarVenda(Long idCliente, List<Produto> produtos) {
+    public Venda realizarVenda(Long idCliente) {
         //se id null, realizar a venda para a Pessoa que não é cliente
         if (idCliente == null || idCliente <= 0) {
             throw new IllegalArgumentException("ID inválido.");
         }
 
         Cliente cliente = clienteDAO.findById(idCliente);
-        // retirar do estoque
-        // add quant pontos à cliente
 
         Venda venda = new Venda(LocalDate.now(), cliente);
 
-        List<ItemVenda> itemVendas = new ArrayList<>();
+        List<ItemVenda> itensVenda = new ArrayList<>();
 
-        for (int i = 0; i < produtos.size(); i++) {
+        for (Produto produto : produtoList) {
             ItemVenda itemVenda = new ItemVenda();
-            itemVenda.setProduto(produtos.get(i));
-            itemVendas.add(itemVenda);
+            itemVenda.setProduto(produto);
+            itensVenda.add(itemVenda);
         }
-        venda.setItens(itemVendas);
-        if (cliente == null) {
-            createVenda(venda);
+
+        atualizaEstoqueProdutos(itensVenda);
+        venda.setItens(itensVenda);
+        venda.setValorTotal(calcSubtotal(itensVenda));
+
+        if(cliente.getId() != null) {
+            cliente.setTotalPontosAcumulados(((int) calcSubtotal(itensVenda)) / 2);
         }
-        return venda;
+
+
+        return createVenda(venda);
     }
 
+    public double calcSubtotal(List<ItemVenda> itensVenda) {
+        for (ItemVenda itemVenda : itensVenda) {
+            subtotal += itemVenda.getPrecoUnitario();
+        }
+        return subtotal;
+    }
 
-
-    public boolean atualizaEstoqueProdutos(){
-        return true;
+    public void atualizaEstoqueProdutos(List<ItemVenda> itensVenda) {
+        for (Produto produto : produtoList) {
+            for (ItemVenda itemVenda : itensVenda) {
+                if (itemVenda.getProduto().equals(produto)) {
+                    Produto novoProduto = produtoService.findById(produto.getIdProduto());
+                    novoProduto.setQuantidade(novoProduto.getQuantidade() - itemVenda.getQuantidade());
+                    produtoService.updateProduto(novoProduto);
+                }
+            }
+        }
     }
     
-    public int calculaPontosCompra(){
-        return 1;
-    }
-    
-    public boolean realizarTrocaPontos(){
-        return true;
+    public boolean realizarResgatePorPontos(Long idProduto, Long idCliente) {
+        if (idCliente == null || idCliente <= 0) {
+            throw new IllegalArgumentException("ID do cliente não pode ser nulo.");
+        }
+        Cliente cliente = clienteService.findById(idCliente);
+        if (cliente != null && cliente.getId() != null) {
+            if (idProduto != null && idProduto > 0) {
+                Produto produto = produtoService.findById(idProduto);
+                if (produto.isDisponivelParaTroca()) {
+                    if (produto.getQuantidade() > 0) {
+                        if (produto.getPontosNecessarios() <= cliente.getTotalPontosAcumulados()) {
+                            cliente.setTotalPontosAcumulados(cliente.getTotalPontosAcumulados() - produto.getPontosNecessarios());
+                            produto.setStatusResgate(StatusResgate.REALIZADO);
+                            produto.setQuantidade(produto.getQuantidade() - 1);
+                            produtoService.updateProduto(produto);
+                        }
+                    }
+                } else {
+                    System.out.println("Produto não disponivel para troca!");
+                }
+            } throw new RuntimeException("O ID do produto é nulo ou menor que 0.");
+        } throw new RuntimeException("O ID do cliente é nulo ou menor que 0.");
     }
 }

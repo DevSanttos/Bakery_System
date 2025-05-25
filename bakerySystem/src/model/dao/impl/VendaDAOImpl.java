@@ -294,7 +294,6 @@ public class VendaDAOImpl implements VendaDAO {
             if (rsVenda.next()) {
                 venda = new Venda();
                 venda.setIdVenda(rsVenda.getLong("id_venda"));
-
                 Date sqlDate = rsVenda.getDate("data_venda");
                 if (sqlDate != null) {
                     venda.setDataVenda(sqlDate.toLocalDate());

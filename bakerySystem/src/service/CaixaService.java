@@ -139,11 +139,14 @@ public class CaixaService {
     }
 
     public Cliente createCliente (String nome, String cpf, String telefone) {
-        String [] atr = new String [3];
-        for(int i = 0; i <= atr.length; i++ ){
-            if(atr[i] == null || atr[i].trim().isEmpty()){
-                throw new RuntimeException("Atributo nulo ou vazio não possibilita a criação de um caixa.");
-            }
+        if(nome == null || nome.trim().isEmpty()) {
+            throw new RuntimeException("Não é possível criar um cliente com nome nulo!");
+        }
+        if(cpf == null || cpf.trim().isEmpty()) {
+            throw new RuntimeException("Não é possível criar um cliente com cpf nulo!");
+        }
+        if(telefone == null || telefone.trim().isEmpty()) {
+            throw new RuntimeException("Não é possível criar um cliente com telefone nulo!");
         }
         try {
             ClienteDAO clienteDAO = new ClienteDAOImpl();

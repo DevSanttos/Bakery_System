@@ -74,16 +74,6 @@ public class ClienteService {
         }
     }
 
-    public boolean deleteCliente(Long id){
-        if(id == null || id <= 0) {
-            throw new RuntimeException("Não há clientes com ID negativo ou nulo.");
-        } try {
-            return clienteDAO.delete(id);
-        } catch (RuntimeException ex) {
-            throw new RuntimeException("Erro ao excluir o cliente!" + ex.getMessage());
-        }
-    }
-
     public Cliente findById(Long id){
         if(id == null || id <= 0) {
             throw new RuntimeException("Não há clientes com ID negativo ou nulo.");

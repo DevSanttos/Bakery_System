@@ -10,6 +10,7 @@ public class Venda {
     private LocalDate dataVenda;
     private Cliente cliente;
     private List<ItemVenda> itens;
+    private double valorTotal;
 
     public Venda(LocalDate dataVenda, Cliente cliente) {
         this.dataVenda = dataVenda != null ? dataVenda : LocalDate.now();
@@ -20,6 +21,14 @@ public class Venda {
     public Venda() {
         this.dataVenda = LocalDate.now();
         this.itens = new ArrayList<>();
+    }
+
+    public double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
     public Long getIdVenda() {

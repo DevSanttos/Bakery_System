@@ -4,6 +4,7 @@
  */
 package main;
 
+import controller.CaixaController;
 import model.dao.*;
 import model.dao.impl.*;
 import connection.ConnectionFactory;
@@ -21,65 +22,17 @@ import service.*;
 public class Main {
 
     public static void main(String[] args) {
-        Connection conexao = null;
 
-        //testando a implementação da classe VendaService
-//        VendaDAO vendaDAO = new VendaDAOImpl();
-//        VendaService vendaService =  new VendaService(vendaDAO);
-//
-//        ProdutoDAO produtoDao = new ProdutoDAOImpl();
-//        ProdutoService produtoService =  new ProdutoService(produtoDao);
-//
-//        Produto produto = new Produto("Bolo", 5.0, "Quitanda");
-//        Produto produto1 = new Produto("Quindim", 15.0, "Quitanda");
+        GerenteDAO gerenteDAO = new GerenteDAOImpl();
+        GerenteService gerenteService = new GerenteService(gerenteDAO);
+        GerenteController gerenteController = new GerenteController(gerenteService);
 
-//            ClienteDAO clienteDAO = new ClienteDAOImpl();
-//            ClienteService clienteService = new ClienteService(clienteDAO);
-//
-//            Cliente cliente2 = new Cliente("Cristiano Ronaldo", "33344455589", "4796212121");
-////            System.out.println(clienteService.createCliente(cliente2));
-//
-//
-//            Cliente novoCliente = clienteService.findById(3L);
-//            novoCliente.setNome("Messi");
-//            clienteService.updateCliente(novoCliente);
-//
-//        System.out.println(clienteService.readCliente());
-            
-        
-        
-        
-        
-//        produtoService.createProduto(produto);
-//        produtoService.createProduto(produto1);
-//
-////        Cliente cliente = new Cliente("Jonathan", "11111111111", "888888888", 10);
-//        Venda venda = new Venda(LocalDate.now(),null);
-//
-//
-//        List<ItemVenda> itensVenda = new ArrayList<>();
-//
-//        ItemVenda itemVenda1 = new ItemVenda();
-//        itemVenda1.setProduto(produto);
-//        ItemVenda itemVenda2 = new ItemVenda();
-//        itemVenda2.setProduto(produto1);
-//
-//        itensVenda.add(itemVenda1);
-//        itensVenda.add(itemVenda2);
-//
-//        venda.setItens(itensVenda);
-//
-//        vendaService.createVenda(venda);
-//        System.out.println(vendaService.loadItensForVenda(vendaService.findById(1L)));
-//        Venda venda1 = vendaService.findById(1L);
-//        Produto produto2 = produtoService.findById(8L);
-//        produto2.setNome("TV LG 52'");
-//        produto2.setTipo("Televizaum");
-//        produtoService.updateProduto(produto2);
-//        System.out.println(vendaService.updateVenda(venda1));
-//        System.out.println(vendaService.readVenda());
+        CaixaDAO caixaDAO = new CaixaDAOImpl();
+        CaixaService caixaService =  new CaixaService(caixaDAO);
+        CaixaController caixaController = new CaixaController(caixaService);
 
-     
+        System.out.println(gerenteController.deleteCliente(3L));
+
 
     }
 }

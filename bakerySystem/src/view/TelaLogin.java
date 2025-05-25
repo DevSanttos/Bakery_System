@@ -5,11 +5,17 @@
 package view;
 
 import controller.CaixaController;
+import controller.ClienteController;
 import controller.GerenteController;
-import java.awt.Color;
+
+import java.awt.*;
 import javax.swing.JOptionPane;
+
+import model.dao.ClienteDAO;
 import model.dao.GerenteDAO;
+import model.dao.impl.ClienteDAOImpl;
 import model.dao.impl.GerenteDAOImpl;
+import service.ClienteService;
 import service.GerenteService;
 
 /**
@@ -22,6 +28,10 @@ public class TelaLogin extends javax.swing.JFrame {
     GerenteDAO gerenteDAO = new GerenteDAOImpl();
     GerenteService gerenteService = new GerenteService(gerenteDAO);
     GerenteController gerenteController = new GerenteController(gerenteService);
+
+    ClienteDAO clienteDAO = new ClienteDAOImpl();
+    ClienteService clienteService = new ClienteService(clienteDAO);
+    ClienteController clienteController = new ClienteController(clienteService);
     
     
     public TelaLogin() {
@@ -193,14 +203,22 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String login = usuarioField.getText();
-//        String textFieldPassword = String.valueOf(senhaField.getPassword());
-        String senha = campoteste.getText();
+        String senha = String.valueOf(senhaField.getPassword());
+
         
         try {
             if (gerenteController.findByLoginAndPassword(login, senha)) {
                 TelaPrincipalGerente telaPrincipalGerente = new TelaPrincipalGerente();
                 telaPrincipalGerente.setVisible(true);
-                this.dispose();     
+                this.dispose();
+            } else {
+                if (gerenteController.findByLoginAndPassword(login, senha)) {
+                    TelaPrincipalGerente telaPrincipalGerente = new TelaPrincipalGerente();
+                    telaPrincipalGerente.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null,"Login ou senha incorretos");
+                }
             }
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, "Login ou senha estão inválidos!");

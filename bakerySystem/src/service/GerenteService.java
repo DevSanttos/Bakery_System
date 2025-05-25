@@ -7,10 +7,13 @@ package service;
 import model.bean.Caixa;
 import model.bean.Gerente;
 import model.bean.Produto;
+import model.bean.StatusResgate;
 import model.dao.CaixaDAO;
+import model.dao.ClienteDAO;
 import model.dao.GerenteDAO;
 import model.dao.ProdutoDAO;
 import model.dao.impl.CaixaDAOImpl;
+import model.dao.impl.ClienteDAOImpl;
 import model.dao.impl.GerenteDAOImpl;
 import model.dao.impl.ProdutoDAOImpl;
 
@@ -23,9 +26,19 @@ import java.util.List;
 public class GerenteService {
     private final GerenteDAO gerenteDAO;
 
+    ProdutoDAO produtoDAO = new ProdutoDAOImpl();
+    ProdutoService produtoService = new ProdutoService(produtoDAO);
+
+    CaixaDAO caixaDAO = new CaixaDAOImpl();
+    CaixaService caixaService = new CaixaService(caixaDAO);
+
+    ClienteDAO clienteDAO = new ClienteDAOImpl();
+    ClienteService clienteService = new ClienteService(clienteDAO);
+
     public GerenteService(GerenteDAO gerenteDAO) {
         this.gerenteDAO = gerenteDAO;
     }
+
 
     public Gerente createGerente(Gerente gerente) {
         if (gerente == null) {
@@ -145,15 +158,26 @@ public class GerenteService {
     }
 
     public Caixa createCaixa (String nome, String CPF, String telefone, String cargo, String login, String senha) {
-        String [] atr = new String [6];
-        for(int i = 0; i <= atr.length; i++ ){
-            if(atr[i] == null || atr[i].trim().isEmpty()){
-                throw new RuntimeException("Atributo nulo ou vazio não possibilita a criação de um CaixaService.");
-            }
+        if(nome == null || nome.trim().isEmpty()) {
+            throw new RuntimeException("Não é possível criar um caixa com nome vazio ou nulo!");
         }
+        if(CPF == null || CPF.trim().isEmpty()) {
+            throw new RuntimeException("Não é possível criar um caixa com CPF vazio ou nulo!");
+        }
+        if(telefone == null || telefone.trim().isEmpty()) {
+            throw new RuntimeException("Não é possível criar um caixa com telefone vazio ou nulo!");
+        }
+        if(cargo == null || cargo.trim().isEmpty()){
+            throw new RuntimeException("Não é possível criar um caixa com cargo vazio ou nulo!");
+        }
+        if(login == null || login.trim().isEmpty()) {
+            throw new RuntimeException("Não é possível criar um caixa com login vazio ou nulo!");
+        }
+        if(senha == null || senha.trim().isEmpty()) {
+            throw new RuntimeException("Não é possível criar um caixa com senha vazia ou nula!");
+        }
+
         try {
-            CaixaDAO caixaDAO = new CaixaDAOImpl();
-            CaixaService caixaService = new CaixaService(caixaDAO);
             Caixa caixa = new Caixa(nome, CPF, telefone, cargo, login, senha);
             return caixaService.createCaixa(caixa);
 
@@ -162,10 +186,8 @@ public class GerenteService {
         }
     }
 
-    public boolean updateCaixa(Long id, String nome, String CPF, String telefone, String cargo, String login, String senha){
-        CaixaDAO caixaDAO = new CaixaDAOImpl();
-        CaixaService caixaService = new CaixaService(caixaDAO);
-        Caixa caixaDoBD = caixaService.findById(id);
+    public boolean updateCaixa(Long idCaixa, String nome, String CPF, String telefone, String cargo, String login, String senha){
+        Caixa caixaDoBD = caixaService.findById(idCaixa);
 
         if(nome != null && !nome.trim().isEmpty()){
             caixaDoBD.setNome(nome);
@@ -187,25 +209,25 @@ public class GerenteService {
         }
 
         if(caixaDoBD == null){
-            throw new RuntimeException("Não é possível atualizar um caixa nulo.");
+            throw new IllegalArgumentException("Não é possível atualizar um caixa nulo.");
         }
         if(caixaDoBD.getNome() == null || caixaDoBD.getNome().trim().isEmpty()){
-            throw new RuntimeException("Não é possível atualizar o nome do caixa para um nome vazio ou nulo.");
+            throw new IllegalArgumentException("Não é possível atualizar o nome do caixa para um nome vazio ou nulo.");
         }
         if(caixaDoBD.getCPF() == null || caixaDoBD.getCPF().trim().isEmpty()){
-            throw new RuntimeException("Não é possível atualizar o CPF do caixa para vazio ou nulo.");
+            throw new IllegalArgumentException("Não é possível atualizar o CPF do caixa para vazio ou nulo.");
         }
         if(caixaDoBD.getTelefone() == null || caixaDoBD.getTelefone().trim().isEmpty()){
-            throw new RuntimeException("Não é possível atualizar o telefone do caixa para um número vazio ou nulo.");
+            throw new IllegalArgumentException("Não é possível atualizar o telefone do caixa para um número vazio ou nulo.");
         }
         if(caixaDoBD.getCargo() == null || caixaDoBD.getCargo().trim().isEmpty()){
-            throw new RuntimeException("Não é possível atualizar o cargo do caixa para vazio ou nulo.");
+            throw new IllegalArgumentException("Não é possível atualizar o cargo do caixa para vazio ou nulo.");
         }
         if(caixaDoBD.getLogin() == null || caixaDoBD.getLogin().trim().isEmpty()){
-            throw new RuntimeException("Não é possível atualizar o login do caixa para vazio ou nulo.");
+            throw new IllegalArgumentException("Não é possível atualizar o login do caixa para vazio ou nulo.");
         }
         if(caixaDoBD.getSenha() == null || caixaDoBD.getSenha().trim().isEmpty()){
-            throw new RuntimeException("Não é possível atualizar a senha do caixa para vazio ou nulo.");
+            throw new IllegalArgumentException("Não é possível atualizar a senha do caixa para vazio ou nulo.");
         }
 
         try{
@@ -216,9 +238,6 @@ public class GerenteService {
     }
 
     public boolean deleteCaixa(Long id){
-        CaixaDAO caixaDAO = new CaixaDAOImpl();
-        CaixaService caixaService = new CaixaService(caixaDAO);
-
         if(id == null || id == 0){
             throw new RuntimeException("Não é possível deletar um caixa com ID nulo ou igual a zero");
         }
@@ -255,20 +274,44 @@ public class GerenteService {
         }
     }
 
-    public boolean updateProduto(Long idProduto) {
+    public boolean updateProduto(Long idProduto, String nome, double preco, String tipo, int quantidade, boolean disponivelParaTroca, int pontosNecessarios, StatusResgate statusResgate) {
         if (idProduto == null || idProduto <= 0) {
             throw new IllegalArgumentException("Informe um ID válido.");
         }
 
         try {
-            ProdutoDAO produtoDAO = new ProdutoDAOImpl();
-            ProdutoService produtoService = new ProdutoService(produtoDAO);
-
             Produto produto = produtoService.findById(idProduto);
-
-            if (produto == null) {
-                throw new RuntimeException("Erro ao realizar a busca pelo produto com ID: " + idProduto);
+            if (produto.getIdProduto() == null) {
+                throw new IllegalArgumentException("Erro ao realizar a busca pelo produto com ID: " + idProduto);
             } else {
+
+                if (nome == null || nome.trim().isEmpty()) {
+                    throw new IllegalArgumentException("O nome não pode ser nulo ou estar vazio");
+                }
+
+                if (preco < 0) {
+                    throw new IllegalArgumentException("O preço não pode ser negativo.");
+                }
+
+                if (tipo == null || tipo.trim().isEmpty()) {
+                    throw new IllegalArgumentException("O tipo não pode ser nulo ou estar vazio");
+                }
+
+                if (quantidade < 0) {
+                    throw new IllegalArgumentException("A quantidade não pode ser negativa");
+                }
+
+                if (pontosNecessarios < 0) {
+                    throw new IllegalArgumentException("A quantidade de pontos necessários não pode ser negativa");
+                }
+
+                produto.setNome(nome);
+                produto.setPreco(preco);
+                produto.setTipo(tipo);
+                produto.setQuantidade(quantidade);
+                produto.setDisponivelParaTroca(disponivelParaTroca);
+                produto.setPontosNecessarios(pontosNecessarios);
+                produto.setStatusResgate(statusResgate);
 
                 produtoService.updateProduto(produto);
                 return true;
@@ -276,9 +319,28 @@ public class GerenteService {
         } catch (RuntimeException ex) {
             throw new RuntimeException("Erro ao atualizar produto! " + ex.getMessage());
         }
-
-
     }
 
+    public boolean deleteProduto(Long idProduto){
+        if(idProduto == null || idProduto == 0){
+            throw new IllegalArgumentException("Não é possível deletar um produto com ID nulo ou igual a zero");
+        }
 
+        try{
+            return produtoService.deleteProduto(idProduto);
+        } catch (RuntimeException ex){
+            throw new RuntimeException("Erro ao deletar caixa! " + ex.getMessage());
+        }
+    }
+
+    public boolean deleteCliente(Long idCliente){
+        if(idCliente == null || idCliente == 0){
+            throw new RuntimeException("Não é possível deletar um cliente com ID nulo ou igual a zero");
+        }
+        try{
+            return clienteDAO.delete(idCliente);
+        } catch (RuntimeException ex){
+            throw new RuntimeException("Erro ao deletar caixa! " + ex.getMessage());
+        }
+    }
 }

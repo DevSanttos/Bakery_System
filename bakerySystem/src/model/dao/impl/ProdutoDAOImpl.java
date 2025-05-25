@@ -22,8 +22,8 @@ import model.dao.ProdutoDAO;
 public class ProdutoDAOImpl implements ProdutoDAO {
 
     private static final String SQL_INSERT_PRODUTO = "INSERT INTO produto (nome, preco, tipo, quantidade) VALUES (?, ?, ?, ?)";
-    private static final String SQL_SELECT_ALL_PRODUTOS = "SELECT id_produto, nome, preco, tipo FROM produto";
-    private static final String SQL_UPDATE_PRODUTO = "UPDATE produto SET nome = ?, preco = ?, tipo = ? WHERE produto.id_produto = ?";
+    private static final String SQL_SELECT_ALL_PRODUTOS = "SELECT id_produto, nome, preco, tipo, quantidade FROM produto";
+    private static final String SQL_UPDATE_PRODUTO = "UPDATE produto SET nome = ?, preco = ?, tipo = ?, quantidade = ?, disponivel_para_troca = ?, pontos_necessarios = ?, status_resgate = ? WHERE produto.id_produto = ?";
     private static final String SQL_DELETE_PRODUTO = "DELETE FROM produto WHERE produto.id_produto = ?";
     private static final String SQL_FIND_BY_ID = "SELECT * FROM produto WHERE produto.id_produto = ?";
 
@@ -106,7 +106,11 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             stmt.setString(1, produto.getNome());
             stmt.setDouble(2, produto.getPreco());
             stmt.setString(3, produto.getTipo());
-            stmt.setLong(4, produto.getIdProduto());
+            stmt.setInt(4, produto.getQuantidade());
+            stmt.setBoolean(5, produto.isDisponivelParaTroca());
+            stmt.setInt(6, produto.getPontosNecessarios());
+            stmt.setString(7, String.valueOf(produto.getStatusResgate()));
+            stmt.setLong(8, produto.getIdProduto());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -164,11 +168,12 @@ public class ProdutoDAOImpl implements ProdutoDAO {
             stmt.setLong(1, idProduto);
             rs = stmt.executeQuery();
 
-            while (rs.next()) {
+            if (rs.next()) {
                 produto.setIdProduto(rs.getLong("id_produto"));
                 produto.setNome(rs.getString("nome"));
                 produto.setPreco(rs.getDouble("preco"));
                 produto.setTipo(rs.getString("tipo"));
+                produto.setQuantidade(rs.getInt("quantidade"));
             }
 
         } catch (SQLException ex) {

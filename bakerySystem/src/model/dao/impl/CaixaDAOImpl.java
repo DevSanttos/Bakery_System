@@ -56,13 +56,13 @@ public class CaixaDAOImpl implements CaixaDAO {
                     caixa.setId(generatedKeys.getLong(1));
                     javax.swing.JOptionPane.showMessageDialog(null, "Caixa criado com sucesso! ID: " + caixa.getId());
                 } else {
-                    JOptionPane.showMessageDialog(null, "Falha ao obter o ID!");
+                    System.out.println("Falha ao obter o ID!");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Falha ao criar o caixa! Nenhuma linha foi afetada!");
+                throw new SQLException("Falha ao obter o ID!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o caixa!" + ex.getMessage());
+            throw new RuntimeException("Erro ao cadastrar o caixa!", ex);
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, generatedKeys);
         }
@@ -95,7 +95,7 @@ public class CaixaDAOImpl implements CaixaDAO {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos caixas!" + ex);
+            throw new RuntimeException("Erro ao obter os dados do caixa", ex);
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, rs);
         }
@@ -125,18 +125,16 @@ public class CaixaDAOImpl implements CaixaDAO {
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Caixa atualizado com sucesso!");
+                System.out.println("Caixa atualizado com sucesso!");
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "Nenhum caixa foi encontrado ou os dados são os mesmos!");
-                return false;
+                throw new RuntimeException("Nenhum caixa foi encontrado ou os dados são os mesmos.");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao atualizar o caixa!" + ex.getMessage());
+            throw new RuntimeException("Erro ao atualizar o caixa!", ex);
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
         }
-        return false;
     }
 
     @Override
@@ -155,18 +153,16 @@ public class CaixaDAOImpl implements CaixaDAO {
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Caixa excluido com sucesso!");
+                System.out.println("Caixa deletado com sucesso!");
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "Nenhum caixa com o ID correspondente foi encontrado!");
-                return false;
+                throw new IllegalArgumentException("Nenhum caixa com ID correspondente foi encontrado!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir o caixa!" + ex);
+            throw new RuntimeException("Erro ao deletar o caixa!", ex);
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
         }
-        return false;
     }
     
     @Override
@@ -192,7 +188,7 @@ public class CaixaDAOImpl implements CaixaDAO {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao tentar realizar a query dos caixas!" + ex.getMessage());
+            throw new RuntimeException("Erro ao obter o caixa!", ex);
         } finally {
             ConnectionFactory.closeConnection(connection, stmt, rs);
         }
@@ -226,6 +222,4 @@ public class CaixaDAOImpl implements CaixaDAO {
         }
         return caixa;
     }
-
-
 }
