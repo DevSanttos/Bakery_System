@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/onata/OneDrive/Documentos/Bakery_System/bakerySystem/src/view/TelaLogin.java</file>
-            <file>file:/C:/Users/onata/OneDrive/Documentos/Bakery_System/bakerySystem/src/view/TelaEstoque.java</file>
-            <file>file:/C:/Users/onata/OneDrive/Documentos/Bakery_System/bakerySystem/src/view/TelaPrincipalGerente.java</file>
+            <file>file:/C:/Users/jonat/OneDrive/Documentos/MeusProjetos/Bakery_System/bakerySystem/src/controller/GerenteController.java</file>
+            <file>file:/C:/Users/jonat/OneDrive/Documentos/MeusProjetos/Bakery_System/bakerySystem/src/view/TelaEstoque.java</file>
+            <file>file:/C:/Users/jonat/OneDrive/Documentos/MeusProjetos/Bakery_System/bakerySystem/src/controller/ProdutoController.java</file>
         </group>
     </open-files>
 </project-private>
