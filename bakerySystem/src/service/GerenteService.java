@@ -151,7 +151,7 @@ public class GerenteService {
                 return true;
             } else {
                 if(caixaDAO.findByLoginAndPassword(login, senha) != null){
-                    return true;
+                    return true;    
                 }
             }
         } catch (RuntimeException ex) {

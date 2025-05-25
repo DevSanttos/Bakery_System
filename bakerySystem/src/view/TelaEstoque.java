@@ -4,12 +4,21 @@
  */
 package view;
 
+import controller.ProdutoController;
+import javax.swing.table.DefaultTableModel;
+import model.bean.Produto;
+import model.dao.ProdutoDAO;
+import model.dao.impl.ProdutoDAOImpl;
+import service.ProdutoService;
+
 /**
  *
  * @author onata
  */
 public class TelaEstoque extends javax.swing.JFrame {
-
+    ProdutoDAO produtoDAO = new ProdutoDAOImpl();
+    ProdutoService produtoService = new ProdutoService(produtoDAO);
+    ProdutoController produtoController = new ProdutoController(produtoService);
     /**
      * Creates new form TelaEstoque
      */
@@ -29,48 +38,47 @@ public class TelaEstoque extends javax.swing.JFrame {
 
         jRadioButton1 = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        botaoAtualizar = new javax.swing.JButton();
+        botaoDeletar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        tabelaExibicao = new javax.swing.JTable();
+        campoNome = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        campoPreco = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        campoTipo = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        campoQuantidade = new javax.swing.JTextField();
+        campoPontosNecessarios = new javax.swing.JTextField();
+        checkBoxDisponivelTroca = new javax.swing.JCheckBox();
 
         jRadioButton1.setText("jRadioButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(650, 400));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(245, 235, 221));
 
-        jButton3.setBackground(new java.awt.Color(51, 102, 255));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(245, 235, 221));
-        jButton3.setText("Atualizar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        botaoAtualizar.setBackground(new java.awt.Color(51, 102, 255));
+        botaoAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        botaoAtualizar.setForeground(new java.awt.Color(245, 235, 221));
+        botaoAtualizar.setText("Atualizar");
+        botaoAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                botaoAtualizarActionPerformed(evt);
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(217, 83, 79));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(245, 235, 221));
-        jButton5.setText("Deletar");
+        botaoDeletar.setBackground(new java.awt.Color(217, 83, 79));
+        botaoDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        botaoDeletar.setForeground(new java.awt.Color(245, 235, 221));
+        botaoDeletar.setText("Deletar");
 
         jPanel2.setBackground(new java.awt.Color(164, 113, 72));
         jPanel2.setPreferredSize(new java.awt.Dimension(650, 60));
@@ -119,8 +127,8 @@ public class TelaEstoque extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTable1.setBackground(new java.awt.Color(164, 113, 72));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaExibicao.setBackground(new java.awt.Color(164, 113, 72));
+        tabelaExibicao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -142,11 +150,19 @@ public class TelaEstoque extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tabelaExibicao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tabelaExibicaoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelaExibicaoKeyReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelaExibicao);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        campoNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                campoNomeActionPerformed(evt);
             }
         });
 
@@ -170,9 +186,9 @@ public class TelaEstoque extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(164, 87, 44));
         jLabel12.setText("Quantidade");
 
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(164, 87, 44));
-        jCheckBox1.setText("Disponível pra troca?");
+        checkBoxDisponivelTroca.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkBoxDisponivelTroca.setForeground(new java.awt.Color(164, 87, 44));
+        checkBoxDisponivelTroca.setText("Disponível pra troca?");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -187,31 +203,31 @@ public class TelaEstoque extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(campoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox1)
+                                .addComponent(checkBoxDisponivelTroca)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(campoPontosNecessarios, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel10)
                                 .addGap(5, 5, 5)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(campoPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(campoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(88, 88, 88)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -225,23 +241,24 @@ public class TelaEstoque extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel12)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(campoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(campoPontosNecessarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(checkBoxDisponivelTroca)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton5))
+                    .addComponent(botaoAtualizar)
+                    .addComponent(botaoDeletar))
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -261,9 +278,9 @@ public class TelaEstoque extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         TelaPrincipalGerente telaPrincipalGerente = new TelaPrincipalGerente();
@@ -271,9 +288,42 @@ public class TelaEstoque extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void campoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_campoNomeActionPerformed
+
+    private void tabelaExibicaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaExibicaoKeyPressed
+        
+    }//GEN-LAST:event_tabelaExibicaoKeyPressed
+
+    public void readTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tabelaExibicao.getModel();
+        modelo.setNumRows(0);
+
+        for (Produto p : produtoController.readProduto()) {
+            modelo.addRow(new Object[]{
+                p.getIdProduto(),
+                p.getNome(),
+                p.getPreco(),
+                p.getTipo(),
+                p.getQuantidade(),
+                p.isDisponivelParaTroca(),
+                p.getQuantidade()
+            });
+        }
+    }
+    
+    private void tabelaExibicaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaExibicaoKeyReleased
+        if (tabelaExibicao.getSelectedRow() != -1) {
+            
+            campoNome.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 1).toString());
+            campoPreco.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 2).toString());
+            campoTipo.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
+            campoQuantidade.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
+            checkBoxDisponivelTroca.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
+            campoPontosNecessarios.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
+        }
+    }//GEN-LAST:event_tabelaExibicaoKeyReleased
 
     /**
      * @param args the command line arguments
@@ -311,10 +361,15 @@ public class TelaEstoque extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton botaoAtualizar;
+    private javax.swing.JButton botaoDeletar;
+    private javax.swing.JTextField campoNome;
+    private javax.swing.JTextField campoPontosNecessarios;
+    private javax.swing.JTextField campoPreco;
+    private javax.swing.JTextField campoQuantidade;
+    private javax.swing.JTextField campoTipo;
+    private javax.swing.JCheckBox checkBoxDisponivelTroca;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -326,11 +381,6 @@ public class TelaEstoque extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTable tabelaExibicao;
     // End of variables declaration//GEN-END:variables
 }
