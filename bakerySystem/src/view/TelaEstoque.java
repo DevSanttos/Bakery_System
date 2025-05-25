@@ -6,6 +6,10 @@ package view;
 
 import controller.GerenteController;
 import controller.ProdutoController;
+import java.awt.PopupMenu;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Produto;
@@ -310,33 +314,27 @@ public class TelaEstoque extends javax.swing.JFrame {
 
        int selectedRow = tabelaExibicao.getSelectedRow();
        if(selectedRow == -1){
-           JOptionPane.showMessageDialog(this, "asodoasd");
+           JOptionPane.showMessageDialog(this, "Selecione um produto para atualizar");
            return;
+       } try {
+            
+            Long idProduto = (Long) tabelaExibicao.getValueAt(selectedRow, 0);
+            
+             String novoNome = campoNome.getText();
+             double novoPreco = Double.parseDouble(campoPreco.getText());
+             String novoTipo = campoTipo.getText();
+             int novaQuantidade = Integer.parseInt(campoQuantidade.getText());
+             
+             Produto produto = new Produto(novoNome, novoPreco, novoTipo, novaQuantidade);
+             
+             gerenteController.updateProduto(idProduto, novoNome, novoPreco, novoTipo, novaQuantidade, false, PROPERTIES, StatusResgate.PENDENTE);
+             readTable();
+       } catch(NumberFormatException  ex) {
+           JOptionPane.showMessageDialog(null, "Erro de formato nos dados. Verifique Preço e Quantidade.", "Erro", JOptionPane.ERROR_MESSAGE);
+       } catch(Exception ex) {
+           JOptionPane.showMessageDialog(this, "Erro ao atualizar produto: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+           ex.printStackTrace();
        }
-       
-       
-
-//        if (tabelaExibicao.getSelectedRow() != -1) {
-//            
-//            Produto produto = new Produto();
-//            
-//            
-//            produto.setNome(campoNome.getText());
-//            produto.setPreco(Double.parseDouble(campoPreco.getText()));
-//            produto.setTipo(campoTipo.getText());
-//            produto.setQuantidade(Integer.parseInt(campoQuantidade.getText()));
-//            produto.setDisponivelParaTroca(checkBoxDisponivelTroca.isSelected());
-//            produto.setPontosNecessarios(Integer.parseInt(campoPontosNecessarios.getText()));
-//            
-//            produtoService.updateProduto(produto);
-//            
-//            campoNome.setText("");
-//            campoPreco.setText("");
-//            campoTipo.setText("");
-//            campoQuantidade.setText("");
-//            
-//            readTable();
-//        }
     }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -385,15 +383,31 @@ public class TelaEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaExibicaoKeyReleased
 
     private void botaoDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletarActionPerformed
-        if(tabelaExibicao.getSelectedRow() != -1) {
-            
-            
-//            gerenteController.deleteProduto();
-            JOptionPane.showMessageDialog(null, "Produto excluido com sucesso.");
-            
-            readTable();
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir");
+        int selectedRow = tabelaExibicao.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um produto para deletar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Tem certeza que deseja deletar este produto?",
+                "Confirmar Deleção",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                // Obtenha o ID do produto da tabela (primeira coluna)
+                Long idProduto = (Long) tabelaExibicao.getValueAt(selectedRow, 0);
+                
+                gerenteController.deleteProduto(idProduto);
+
+                JOptionPane.showMessageDialog(this, "Produto deletado com sucesso!");
+                readTable();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Erro ao deletar produto: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
         }
     }//GEN-LAST:event_botaoDeletarActionPerformed
 
