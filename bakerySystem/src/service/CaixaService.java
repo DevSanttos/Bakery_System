@@ -22,7 +22,7 @@ import java.util.List;
 public class CaixaService {
     private final CaixaDAO caixaDAO;
     GerenteDAO gerenteDAO = new GerenteDAOImpl();
-    GerenteService gerenteService = new GerenteService(gerenteDAO);
+    
 
     public CaixaService(CaixaDAO caixaDAO) {
         this.caixaDAO = caixaDAO;
@@ -136,9 +136,7 @@ public class CaixaService {
             if (caixaDAO.findByLoginAndPassword(login, senha) != null) {
                 return true;
             } else{
-                if(gerenteService.findByLoginAndPassword(login, senha)){
-                    return true;
-                }
+                gerenteDAO.findByLoginAndPassword(login, senha);
             }
         } catch (RuntimeException ex) {
             throw new RuntimeException("Erro ao buscar pelo ID do caixa: " + ex.getMessage());
