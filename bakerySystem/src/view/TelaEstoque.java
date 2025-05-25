@@ -4,11 +4,17 @@
  */
 package view;
 
+import controller.GerenteController;
 import controller.ProdutoController;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Produto;
+import model.bean.StatusResgate;
+import model.dao.GerenteDAO;
 import model.dao.ProdutoDAO;
+import model.dao.impl.GerenteDAOImpl;
 import model.dao.impl.ProdutoDAOImpl;
+import service.GerenteService;
 import service.ProdutoService;
 
 /**
@@ -19,6 +25,10 @@ public class TelaEstoque extends javax.swing.JFrame {
     ProdutoDAO produtoDAO = new ProdutoDAOImpl();
     ProdutoService produtoService = new ProdutoService(produtoDAO);
     ProdutoController produtoController = new ProdutoController(produtoService);
+    
+    GerenteDAO gerenteDAO = new GerenteDAOImpl();
+    GerenteService gerenteService = new GerenteService(gerenteDAO);
+    GerenteController gerenteController = new GerenteController(gerenteService);
     /**
      * Creates new form TelaEstoque
      */
@@ -80,6 +90,11 @@ public class TelaEstoque extends javax.swing.JFrame {
         botaoDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         botaoDeletar.setForeground(new java.awt.Color(245, 235, 221));
         botaoDeletar.setText("Deletar");
+        botaoDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoDeletarActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(164, 113, 72));
         jPanel2.setPreferredSize(new java.awt.Dimension(650, 60));
@@ -156,6 +171,11 @@ public class TelaEstoque extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tabelaExibicao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaExibicaoMouseClicked(evt);
             }
         });
         tabelaExibicao.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -287,7 +307,26 @@ public class TelaEstoque extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
-        // TODO add your handling code here:
+        if (tabelaExibicao.getSelectedRow() != -1) {
+            
+            Produto produto = new Produto();
+            
+            produto.setNome(campoNome.getText());
+            produto.setPreco(Double.parseDouble(campoPreco.getText()));
+            produto.setTipo(campoTipo.getText());
+            produto.setQuantidade(Integer.parseInt(campoQuantidade.getText()));
+            produto.setDisponivelParaTroca(checkBoxDisponivelTroca.isSelected());
+            produto.setPontosNecessarios(Integer.parseInt(campoPontosNecessarios.getText()));
+            
+            produtoService.updateProduto(produto);
+            
+            campoNome.setText("");
+            campoPreco.setText("");
+            campoTipo.setText("");
+            campoQuantidade.setText("");
+            
+            readTable();
+        }
     }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -316,7 +355,7 @@ public class TelaEstoque extends javax.swing.JFrame {
                 p.getTipo(),
                 p.getQuantidade(),
                 p.isDisponivelParaTroca(),
-                p.getQuantidade()
+                p.getPontosNecessarios()
             });
         }
     }
@@ -332,6 +371,31 @@ public class TelaEstoque extends javax.swing.JFrame {
             campoPontosNecessarios.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
         }
     }//GEN-LAST:event_tabelaExibicaoKeyReleased
+
+    private void botaoDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletarActionPerformed
+        if(tabelaExibicao.getSelectedRow() != -1) {
+            
+            
+//            gerenteController.deleteProduto();
+            JOptionPane.showMessageDialog(null, "Produto excluido com sucesso.");
+            
+            readTable();
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir");
+        }
+    }//GEN-LAST:event_botaoDeletarActionPerformed
+
+    private void tabelaExibicaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaExibicaoMouseClicked
+        if(tabelaExibicao.getSelectedRow() != -1) {
+            
+            campoNome.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 1).toString());
+            campoPreco.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 2).toString());
+            campoTipo.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
+            campoQuantidade.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 4).toString());
+            checkBoxDisponivelTroca.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 5).toString());
+            campoPontosNecessarios.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 6).toString());
+        }
+    }//GEN-LAST:event_tabelaExibicaoMouseClicked
 
     /**
      * @param args the command line arguments
