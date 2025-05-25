@@ -29,10 +29,10 @@ public class TelaEstoque extends javax.swing.JFrame {
     GerenteDAO gerenteDAO = new GerenteDAOImpl();
     GerenteService gerenteService = new GerenteService(gerenteDAO);
     GerenteController gerenteController = new GerenteController(gerenteService);
-    /**
-     * Creates new form TelaEstoque
-     */
+    
+    
     public TelaEstoque() {
+         
         initComponents();
         setLocationRelativeTo(null); // Centraliza
         readTable();
@@ -307,26 +307,36 @@ public class TelaEstoque extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
-        if (tabelaExibicao.getSelectedRow() != -1) {
-            
-            Produto produto = new Produto();
-            
-            produto.setNome(campoNome.getText());
-            produto.setPreco(Double.parseDouble(campoPreco.getText()));
-            produto.setTipo(campoTipo.getText());
-            produto.setQuantidade(Integer.parseInt(campoQuantidade.getText()));
-            produto.setDisponivelParaTroca(checkBoxDisponivelTroca.isSelected());
-            produto.setPontosNecessarios(Integer.parseInt(campoPontosNecessarios.getText()));
-            
-            produtoService.updateProduto(produto);
-            
-            campoNome.setText("");
-            campoPreco.setText("");
-            campoTipo.setText("");
-            campoQuantidade.setText("");
-            
-            readTable();
-        }
+
+       int selectedRow = tabelaExibicao.getSelectedRow();
+       if(selectedRow == -1){
+           JOptionPane.showMessageDialog(this, "asodoasd");
+           return;
+       }
+       
+       
+
+//        if (tabelaExibicao.getSelectedRow() != -1) {
+//            
+//            Produto produto = new Produto();
+//            
+//            
+//            produto.setNome(campoNome.getText());
+//            produto.setPreco(Double.parseDouble(campoPreco.getText()));
+//            produto.setTipo(campoTipo.getText());
+//            produto.setQuantidade(Integer.parseInt(campoQuantidade.getText()));
+//            produto.setDisponivelParaTroca(checkBoxDisponivelTroca.isSelected());
+//            produto.setPontosNecessarios(Integer.parseInt(campoPontosNecessarios.getText()));
+//            
+//            produtoService.updateProduto(produto);
+//            
+//            campoNome.setText("");
+//            campoPreco.setText("");
+//            campoTipo.setText("");
+//            campoQuantidade.setText("");
+//            
+//            readTable();
+//        }
     }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -343,6 +353,8 @@ public class TelaEstoque extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tabelaExibicaoKeyPressed
 
+    
+    
     public void readTable() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaExibicao.getModel();
         modelo.setNumRows(0);
@@ -366,9 +378,9 @@ public class TelaEstoque extends javax.swing.JFrame {
             campoNome.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 1).toString());
             campoPreco.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 2).toString());
             campoTipo.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
-            campoQuantidade.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
-            checkBoxDisponivelTroca.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
-            campoPontosNecessarios.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
+            campoQuantidade.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 4).toString());
+            checkBoxDisponivelTroca.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 5).toString());
+            campoPontosNecessarios.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 6).toString());
         }
     }//GEN-LAST:event_tabelaExibicaoKeyReleased
 
