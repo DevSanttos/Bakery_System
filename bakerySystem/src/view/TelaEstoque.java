@@ -76,6 +76,7 @@ public class TelaEstoque extends javax.swing.JFrame {
         jRadioButton1.setText("jRadioButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Padaria Rezende's Gerente");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(245, 235, 221));

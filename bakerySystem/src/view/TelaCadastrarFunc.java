@@ -67,6 +67,7 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Padaria Rezende's Gerente");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));

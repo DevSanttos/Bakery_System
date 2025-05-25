@@ -51,6 +51,7 @@ public class TelaCadastrarProd extends javax.swing.JFrame {
         label1.setText("label1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Padaria Rezende's Gerente");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setMinimumSize(new java.awt.Dimension(650, 400));
         setResizable(false);
