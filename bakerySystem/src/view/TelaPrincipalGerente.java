@@ -4,15 +4,23 @@
  */
 package view;
 
+import controller.CaixaController;
 import controller.GerenteController;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.List;
 import javax.swing.GroupLayout;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import model.bean.Caixa;
+import model.bean.Produto;
+import model.dao.CaixaDAO;
 import model.dao.GerenteDAO;
+import model.dao.impl.CaixaDAOImpl;
 import model.dao.impl.GerenteDAOImpl;
+import service.CaixaService;
 import service.GerenteService;
 
 /**
@@ -24,6 +32,10 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
     GerenteDAO gerenteDAO = new GerenteDAOImpl();
     GerenteService gerenteService = new GerenteService(gerenteDAO);
     GerenteController gerenteController = new GerenteController(gerenteService);
+    
+    CaixaDAO caixaDAO = new CaixaDAOImpl();
+    CaixaService caixaService = new CaixaService(caixaDAO);
+    CaixaController caixaController = new CaixaController(caixaService);
 
     public TelaPrincipalGerente() {
         initComponents();
@@ -126,7 +138,7 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(164, 87, 44));
         jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(164, 87, 44));
-        jLabel2.setText("Cadastrar Funcionário");
+        jLabel2.setText("Gerenciar Funcionário");
 
         botaoEstoque.setBackground(new java.awt.Color(164, 87, 44));
         botaoEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/icons8-boxes-64.png"))); // NOI18N
@@ -279,6 +291,30 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaoEstoqueActionPerformed
 
+     public void readTable() {
+    DefaultTableModel modelo = (DefaultTableModel) tabelaFuncionarios.getModel();
+    modelo.setNumRows(0);
+
+    try {
+        List<Caixa> caixas = caixaController.readCaixa();
+        if (caixas != null) { // Importante verificar se não é nulo
+            for (Caixa c : caixas) {
+                modelo.addRow(new Object[]{
+                    c.getNome(),
+                    c.getTelefone(),
+                    c.getCargo(),
+ 
+                });
+            }
+        } else {
+            System.out.println("ProdutoController.readProduto() retornou null.");
+        }
+    } catch (Exception e) {
+        System.err.println("Erro ao carregar produtos na tabela: " + e.getMessage());
+        e.printStackTrace();  
+    }
+}
+    
     /**
      * @param args the command line arguments
      */
