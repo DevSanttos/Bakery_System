@@ -10,11 +10,14 @@ import controller.GerenteController;
 
 import java.awt.*;
 import javax.swing.JOptionPane;
+import model.dao.CaixaDAO;
 
 import model.dao.ClienteDAO;
 import model.dao.GerenteDAO;
+import model.dao.impl.CaixaDAOImpl;
 import model.dao.impl.ClienteDAOImpl;
 import model.dao.impl.GerenteDAOImpl;
+import service.CaixaService;
 import service.ClienteService;
 import service.GerenteService;
 
@@ -33,6 +36,9 @@ public class TelaLogin extends javax.swing.JFrame {
     ClienteService clienteService = new ClienteService(clienteDAO);
     ClienteController clienteController = new ClienteController(clienteService);
     
+    CaixaDAO caixaDAO = new CaixaDAOImpl();
+    CaixaService caixaService = new CaixaService(caixaDAO);
+    CaixaController caixaController = new CaixaController(caixaService);
     
     public TelaLogin() {
         initComponents();
@@ -190,14 +196,13 @@ public class TelaLogin extends javax.swing.JFrame {
         String login = usuarioField.getText();
         String senha = String.valueOf(senhaField.getPassword());
 
-        
         try {
             if (gerenteController.findByLoginAndPassword(login, senha)) {
                 TelaPrincipalGerente telaPrincipalGerente = new TelaPrincipalGerente();
                 telaPrincipalGerente.setVisible(true);
                 this.dispose();
             } else {
-                if (gerenteController.findByLoginAndPassword(login, senha)) {
+                if (caixaController.findByLoginAndPassword(login, senha)) {
                     TelaPrincipalFuncionario telaPrincipalFuncionario = new TelaPrincipalFuncionario();
                     telaPrincipalFuncionario.setVisible(true);
                     this.dispose();
