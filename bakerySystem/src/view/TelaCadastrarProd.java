@@ -62,7 +62,7 @@ public class TelaCadastrarProd extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(campoNomeProd);
 
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(164, 87, 44));
         jLabel4.setText("Nome/Descrição");
 
@@ -114,8 +114,8 @@ public class TelaCadastrarProd extends javax.swing.JFrame {
         );
 
         jButton1.setBackground(new java.awt.Color(92, 184, 92));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(60, 60, 60));
+        jButton1.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(245, 235, 221));
         jButton1.setText("Cadastrar produto");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,18 +128,18 @@ public class TelaCadastrarProd extends javax.swing.JFrame {
         campoQtdeProd.setSelectionColor(new java.awt.Color(255, 0, 102));
         jScrollPane4.setViewportView(campoQtdeProd);
 
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(164, 87, 44));
         jLabel5.setText("Qtde");
 
         campoValorUnit.setMinimumSize(new java.awt.Dimension(60, 20));
         jScrollPane8.setViewportView(campoValorUnit);
 
-        jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(164, 87, 44));
         jLabel10.setText("Valor U.");
 
-        jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(164, 87, 44));
         jLabel11.setText("Categoria");
 

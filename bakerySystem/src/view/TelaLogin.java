@@ -120,6 +120,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/icons8-desbloquear-2-20.png"))); // NOI18N
 
         jButton1.setBackground(new java.awt.Color(245, 235, 221));
+        jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(51, 51, 51));
         jButton1.setText("Entrar");
         jButton1.setToolTipText("");
