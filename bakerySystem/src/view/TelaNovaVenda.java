@@ -4,6 +4,8 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author joseo
@@ -141,8 +143,8 @@ public class TelaNovaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCriarVenda1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        TelaNovaVenda telaNovaVenda = new TelaNovaVenda();
-        telaNovaVenda.setVisible(true);
+        TelaLogin telaLogin = new TelaLogin();
+        telaLogin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 

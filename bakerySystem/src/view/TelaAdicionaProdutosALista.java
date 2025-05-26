@@ -4,30 +4,35 @@
  */
 package view;
 
+import controller.ClienteController;
 import controller.ProdutoController;
 import controller.VendaController;
 import javax.swing.JOptionPane;
+import model.bean.Produto;
+import model.dao.ClienteDAO;
 import model.dao.ProdutoDAO;
 import model.dao.impl.VendaDAOImpl;
 import service.VendaService;
 import model.dao.VendaDAO;
+import model.dao.impl.ClienteDAOImpl;
 import model.dao.impl.ProdutoDAOImpl;
+import service.ClienteService;
 import service.ProdutoService;
-
-
 
 public class TelaAdicionaProdutosALista extends javax.swing.JFrame {
 
     VendaDAO vendaDao = new VendaDAOImpl();
     VendaService vendaService = new VendaService(vendaDao);
     VendaController vendaController = new VendaController(vendaService);
-    
+
     ProdutoDAO produtoDao = new ProdutoDAOImpl();
     ProdutoService produtoService = new ProdutoService(produtoDao);
     ProdutoController produtoController = new ProdutoController(produtoService);
-    
-    
-    
+
+    ClienteDAO clienteDAO = new ClienteDAOImpl();
+    ClienteService clienteService = new ClienteService(clienteDAO);
+    ClienteController clienteController = new ClienteController(clienteService);
+
     public TelaAdicionaProdutosALista() {
         initComponents();
         setLocationRelativeTo(null); // Centraliza
@@ -184,17 +189,36 @@ public class TelaAdicionaProdutosALista extends javax.swing.JFrame {
     }//GEN-LAST:event_campoIdProdutoActionPerformed
 
     private void botaoProsseguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProsseguirActionPerformed
-     
-        Long idCliente = Long.parseLong(JOptionPane.showInputDialog(null, "Insira o ID do cliente")); 
-        vendaController.realizarVenda(idCliente);
         TelaPrincipalFuncionario telaPrincipalFuncionario = new TelaPrincipalFuncionario();
         telaPrincipalFuncionario.setVisible(true);
         this.dispose();
+        Long armazenaIdCliente = Long.parseLong(JOptionPane.showInputDialog(null, "Informe o id do cliente, caso possua!"));
+        vendaController.realizarVenda(armazenaIdCliente);
     }//GEN-LAST:event_botaoProsseguirActionPerformed
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
-        vendaService.addProdutoAoCarrinho(Long.parseLong(campoIdProduto.getText()));
-        
+        try {
+            Long armazenaIdProduto = Long.valueOf(campoIdProduto.getText());
+
+            if (armazenaIdProduto == null || armazenaIdProduto <= 0) {
+                JOptionPane.showMessageDialog(null, "O ID informado é inválido");
+                return;
+            }
+
+            if (vendaController.addProdutoAoCarrinho(armazenaIdProduto).getIdProduto() == null) {
+                JOptionPane.showMessageDialog(null, "Produto não encontrado!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso!");
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Por favor, insira um valor válido");
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, "Campo inserido está incorreto!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao tentar inserir produto!");
+        }
+
+
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

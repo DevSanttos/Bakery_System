@@ -116,17 +116,25 @@ public class VendaService {
         }
     }
 
-    public void addProdutoAoCarrinho(Long idInformado) {
+    public Produto addProdutoAoCarrinho(Long idInformado) {
         if (idInformado <= 0) {
             throw new IllegalArgumentException("O ID precisa ser válido.");
         }
-        produtoList.add(produtoService.findById(idInformado));
+        
+        Produto produto = produtoService.findById(idInformado);
+        
+        if (produto == null) {
+            throw new RuntimeException("Erro ao encontrar o respectivo produto!");
+        }
+        produtoList.add(produto);
+        
+        return produto;
     }
 
 
-    public Venda realizarVenda(Long idCliente) {
+    public void realizarVenda(Long idCliente) {
         //se id null, realizar a venda para a Pessoa que não é cliente
-        if (idCliente == null || idCliente <= 0) {
+        if (idCliente <= 0) {
             throw new IllegalArgumentException("ID inválido.");
         }
 
@@ -152,8 +160,8 @@ public class VendaService {
         }
            
         //Apagar todos os produtos do carrinho
-
-        return createVenda(venda);
+        createVenda(venda);
+        produtoList.clear();
     }
 
     public double calcSubtotal(List<ItemVenda> itensVenda) {
@@ -201,10 +209,6 @@ public class VendaService {
 
     public List<Produto> getProdutoList() {
         return produtoList;
-    }
-    
-    public void addUmProduto(Long idProduto){
-        produtoList.add(produtoService.findById(idProduto));
     }
     
     

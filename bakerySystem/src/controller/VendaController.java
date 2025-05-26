@@ -5,8 +5,10 @@ import model.bean.Venda;
 import service.VendaService;
 
 import java.util.List;
+import model.bean.Produto;
 
 public class VendaController {
+
     private VendaService vendaService;
 
     public VendaController(VendaService vendaService) {
@@ -48,18 +50,19 @@ public class VendaController {
         return vendaService.updateVenda(venda);
     }
 
-    public void addProdutoAoCarrinho(Long idInformado) {
-        if(idInformado != null || idInformado > 0) {
-            vendaService.addProdutoAoCarrinho(idInformado);
-        } else
+    public Produto addProdutoAoCarrinho(Long idInformado) {
+        if (idInformado != null || idInformado > 0) {
+            return vendaService.addProdutoAoCarrinho(idInformado);
+        } else {
             throw new RuntimeException("Não é possível adicionar itens com ID nulo ou igual a zero!");
+        }
     }
 
-    public Venda realizarVenda(Long idCliente) {
+    public void realizarVenda(Long idCliente) {
         if (idCliente == null || idCliente <= 0) {
             throw new IllegalArgumentException("O ID do cliente não pode ser null ou negativo");
         }
-        return vendaService.realizarVenda(idCliente);
+        vendaService.realizarVenda(idCliente);
     }
 
     public double calcSubtotal(List<ItemVenda> itensVenda) {
