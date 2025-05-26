@@ -335,15 +335,21 @@ public class TelaEstoque extends javax.swing.JFrame {
              
              
              boolean marcado = checkBoxDisponivelTroca.isSelected();
-             int novoPontosNec;
+             int novoPontosNec = Integer.valueOf(campoPontosNecessarios.getText());
              
-             if(marcado){
-                    novoPontosNec = Integer.valueOf(campoPontosNecessarios.getText());
-             } else {
+             if(novoPontosNec < 0){
                  novoPontosNec = 0;
-                 JOptionPane.showMessageDialog(null, "Não é possível alterar os pontos necessários para a troca se o produto não estiver disponível para a troca.");
+                 JOptionPane.showMessageDialog(null, "O valor informado para 'Pontos necessários' é menor do que 0, logo o valor para o atributo em questão será alterado para 0.");
              }
-             
+             if(!marcado && novoPontosNec > 0){
+                    novoPontosNec = 0;
+                    JOptionPane.showMessageDialog(null, "'Disponível para a troca?' Está desmarcado, logo o valor de 'Pontos necessários' será alterado para 0 e o produto permanecerá indisponível para troca por pontos.");
+             }
+            
+             if(novoPontosNec <= 0 && marcado){
+                 marcado = false;
+                 JOptionPane.showMessageDialog(null, "Não é possível manter o produto disponível para troca com o valor de 'Pontos necessários' sendo menor ou igual a zero.");
+             }
              produto.setPontosNecessarios(novoPontosNec);
              produto.setDisponivelParaTroca(marcado);
              

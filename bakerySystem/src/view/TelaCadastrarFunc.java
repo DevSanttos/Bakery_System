@@ -351,6 +351,7 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
             campoCargo.setText("");
             campoLogin.setText("");
             campoSenha.setText("");
+            readTable();
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null, "Campos inválidos!");
         } catch (RuntimeException ex) {

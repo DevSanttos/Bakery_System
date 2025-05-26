@@ -204,8 +204,8 @@ public class TelaLogin extends javax.swing.JFrame {
                     this.dispose();
                 } else{
                 if (caixaController.findByLoginAndPassword(login, senha)) {
-                    TelaPrincipalFuncionario telaPrincipalFuncionario = new TelaPrincipalFuncionario();
-                    telaPrincipalFuncionario.setVisible(true);
+                    TelaNovaVenda telaNovaVenda = new TelaNovaVenda();
+                    telaNovaVenda.setVisible(true);
                 this.dispose();
                 }
              

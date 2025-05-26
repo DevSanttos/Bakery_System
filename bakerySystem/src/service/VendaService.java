@@ -28,7 +28,8 @@ public class VendaService {
     ProdutoDAO produtoDAO = new ProdutoDAOImpl();
     ProdutoService produtoService = new ProdutoService(produtoDAO);
 
-    List<Produto> produtoList = new ArrayList<>();
+    List<Produto> produtoList = new ArrayList();
+         
     double subtotal = 0;
 
     public VendaService(VendaDAO vendaDAO) {
@@ -134,6 +135,7 @@ public class VendaService {
         Venda venda = new Venda(LocalDate.now(), cliente);
 
         List<ItemVenda> itensVenda = new ArrayList<>();
+        
 
         for (Produto produto : produtoList) {
             ItemVenda itemVenda = new ItemVenda();
@@ -148,7 +150,8 @@ public class VendaService {
         if(cliente.getId() != null) {
             cliente.setTotalPontosAcumulados(((int) calcSubtotal(itensVenda)) / 2);
         }
-
+           
+        //Apagar todos os produtos do carrinho
 
         return createVenda(venda);
     }
@@ -195,4 +198,14 @@ public class VendaService {
             } throw new RuntimeException("O ID do produto é nulo ou menor que 0.");
         } throw new RuntimeException("O ID do cliente é nulo ou menor que 0.");
     }
+
+    public List<Produto> getProdutoList() {
+        return produtoList;
+    }
+    
+    public void addUmProduto(Long idProduto){
+        produtoList.add(produtoService.findById(idProduto));
+    }
+    
+    
 }
