@@ -4,10 +4,19 @@
  */
 package view;
 
+import controller.CaixaController;
 import controller.GerenteController;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.bean.Caixa;
+import model.bean.Cliente;
+import model.bean.Produto;
+import model.dao.CaixaDAO;
 import model.dao.GerenteDAO;
+import model.dao.impl.CaixaDAOImpl;
 import model.dao.impl.GerenteDAOImpl;
+import service.CaixaService;
 import service.GerenteService;
 
 /**
@@ -15,10 +24,15 @@ import service.GerenteService;
  * @author onata
  */
 public class TelaCadastrarFunc extends javax.swing.JFrame {
-    
+
     GerenteDAO gerenteDAO = new GerenteDAOImpl();
     GerenteService gerenteService = new GerenteService(gerenteDAO);
     GerenteController gerenteController = new GerenteController(gerenteService);
+    
+    CaixaDAO caixaDAO = new CaixaDAOImpl();
+    CaixaService caixaService = new CaixaService(caixaDAO);
+    CaixaController caixaController = new CaixaController(caixaService);
+
     /**
      * Creates new form TelaCadastrarFunc
      */
@@ -26,6 +40,7 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
         initComponents();
         pack();
         setLocationRelativeTo(null);
+        readTable();
     }
 
     /**
@@ -64,7 +79,7 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
         botaoAtualizar = new javax.swing.JButton();
         botaoDeletar = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaExibicao = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Padaria Rezende's Gerente");
@@ -189,18 +204,39 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaExibicao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "CPF", "Telefone", "Cargo", "Login", "Senha"
+                "Id", "Nome", "CPF", "Telefone", "Cargo", "Login", "Senha"
             }
-        ));
-        jScrollPane7.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Long.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabelaExibicao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaExibicaoMouseClicked(evt);
+            }
+        });
+        tabelaExibicao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tabelaExibicaoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelaExibicaoKeyReleased(evt);
+            }
+        });
+        jScrollPane7.setViewportView(tabelaExibicao);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -306,86 +342,164 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
         String cargo = campoCargo.getText();
         String login = campoLogin.getText();
         String senha = campoSenha.getText();
-        
+
         try {
             gerenteController.createCaixa(nome, CPF, telefone, cargo, login, senha);
+            campoNome.setText("");
+            campoCPF.setText("");
+            campoTelefone.setText("");
+            campoCargo.setText("");
+            campoLogin.setText("");
+            campoSenha.setText("");
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null, "Campos inválidos!");
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar o caixa!");
         }
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
 
-//        int selectedRow = tabelaExibicao.getSelectedRow();
-//        if(selectedRow == -1){
-//            JOptionPane.showMessageDialog(this, "Selecione um produto para atualizar");
-//            return;
-//        } try {
-//
-//            Long idProduto = (Long) tabelaExibicao.getValueAt(selectedRow, 0);
-//
-//            String novoNome = campoNome.getText();
-//            double novoPreco = Double.parseDouble(campoPreco.getText());
-//            String novoTipo = campoTipo.getText();
-//            int novaQuantidade = Integer.parseInt(campoQuantidade.getText());
-//
-//            Produto produto = new Produto(novoNome, novoPreco, novoTipo, novaQuantidade);
-//
-//            boolean marcado = checkBoxDisponivelTroca.isSelected();
-//            int novoPontosNec;
-//
-//            if(marcado){
-//                novoPontosNec = Integer.valueOf(campoPontosNecessarios.getText());
-//            } else {
-//                novoPontosNec = 0;
-//                JOptionPane.showMessageDialog(null, "Não é possível alterar os pontos necessários para a troca se o produto não estiver disponível para a troca.");
-//            }
-//
-//            produto.setPontosNecessarios(novoPontosNec);
-//            produto.setDisponivelParaTroca(marcado);
-//
-//            gerenteController.updateProduto(idProduto, novoNome, novoPreco, novoTipo, novaQuantidade, marcado, novoPontosNec, null);
-//            readTable();
-//        } catch(NumberFormatException  ex) {
-//            JOptionPane.showMessageDialog(null, "Erro de formato nos dados. Verifique Preço e Quantidade.", "Erro", JOptionPane.ERROR_MESSAGE);
-//        } catch(Exception ex) {
-//            JOptionPane.showMessageDialog(this, "Erro ao atualizar produto: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-//            ex.printStackTrace();
-//        }
+        int selectedRow = tabelaExibicao.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um produto para atualizar");
+            return;
+        }
+        try {
+
+            Long idFuncionario = (Long) tabelaExibicao.getValueAt(selectedRow, 0);
+
+            String novoNome = campoNome.getText();
+            String novoCPF = campoCPF.getText();
+            String novoTelefone = campoTelefone.getText();
+            String novoCargo = campoCargo.getText();
+            String novoLogin = campoLogin.getText();
+            String novaSenha = campoSenha.getText();
+
+            Caixa caixa = new Caixa(novoNome, novoCPF, novoTelefone, novoCargo, novoLogin, novaSenha);
+
+            gerenteController.updateCaixa(idFuncionario, novoNome, novoCPF, novoTelefone, novoCargo, novoLogin, novaSenha);
+            readTable();
+            
+            campoNome.setText("");
+            campoCPF.setText("");
+            campoTelefone.setText("");
+            campoCargo.setText("");
+            campoLogin.setText("");
+            campoSenha.setText("");
+                
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Erro de formato nos dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar caixa: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     private void botaoDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeletarActionPerformed
-//        int selectedRow = tabelaExibicao.getSelectedRow();
-//        if (selectedRow == -1) {
-//            JOptionPane.showMessageDialog(this, "Selecione um produto para deletar.", "Aviso", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
-//
-//        int confirm = JOptionPane.showConfirmDialog(this,
-//            "Tem certeza que deseja deletar este produto?",
-//            "Confirmar Deleção",
-//            JOptionPane.YES_NO_OPTION);
-//
-//        if (confirm == JOptionPane.YES_OPTION) {
-//            try {
-//                // Obtenha o ID do produto da tabela (primeira coluna)
-//                Long idProduto = (Long) tabelaExibicao.getValueAt(selectedRow, 0);
-//
-//                gerenteController.deleteProduto(idProduto);
-//
-//                JOptionPane.showMessageDialog(this, "Produto deletado com sucesso!");
-//                readTable();
-//
-//            } catch (Exception ex) {
-//                JOptionPane.showMessageDialog(this, "Erro ao deletar produto: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-//                ex.printStackTrace();
-//            }
-//        }
+        int selectedRow = tabelaExibicao.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um caixa para deletar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Tem certeza que deseja deletar este caixa?",
+                "Confirmar Deleção",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                // Obtenha o ID do produto da tabela (primeira coluna)
+                Long idCaixa = (Long) tabelaExibicao.getValueAt(selectedRow, 0);
+
+                gerenteController.deleteCaixa(idCaixa);
+
+                JOptionPane.showMessageDialog(this, "Caixa deletado com sucesso!");
+                readTable();
+                
+                campoNome.setText("");
+                campoCPF.setText("");
+                campoTelefone.setText("");
+                campoCargo.setText("");
+                campoLogin.setText("");
+                campoSenha.setText("");
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Erro ao deletar caixa: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_botaoDeletarActionPerformed
+
+    public void readTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tabelaExibicao.getModel();
+        modelo.setNumRows(0);
+
+        try {
+            List<Caixa> caixas = caixaController.readCaixa();
+            if (caixas != null) { // Importante verificar se não é nulo
+                for (Caixa c : caixas) {
+                    modelo.addRow(new Object[]{
+                        c.getId(),
+                        c.getNome(),
+                        c.getCPF(),
+                        c.getTelefone(),
+                        c.getCargo(),
+                        c.getLogin(),
+                        c.getSenha()
+                    });
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Não foi possível carregar os produtos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Imprime o stack trace para depuração
+             JOptionPane.showMessageDialog(this, "Erro ao carregar produtos: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void tabelaExibicaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaExibicaoKeyPressed
+        if (tabelaExibicao.getSelectedRow() != -1) {
+            
+            campoNome.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 1).toString());
+            campoCPF.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 2).toString());
+            campoTelefone.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
+            campoCargo.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 4).toString());
+            campoLogin.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 5).toString());
+            campoSenha.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 6).toString());
+            
+            int linhaSelecionada = tabelaExibicao.getSelectedRow();
+        }
+    }//GEN-LAST:event_tabelaExibicaoKeyPressed
+
+    private void tabelaExibicaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaExibicaoKeyReleased
+        if (tabelaExibicao.getSelectedRow() != -1) {
+            
+            campoNome.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 1).toString());
+            campoCPF.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 2).toString());
+            campoTelefone.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
+            campoCargo.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 4).toString());
+            campoLogin.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 5).toString());
+            campoSenha.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 6).toString());
+            
+            int linhaSelecionada = tabelaExibicao.getSelectedRow();
+        }
+    }//GEN-LAST:event_tabelaExibicaoKeyReleased
+
+    private void tabelaExibicaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaExibicaoMouseClicked
+        if (tabelaExibicao.getSelectedRow() != -1) {
+            
+            campoNome.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 1).toString());
+            campoCPF.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 2).toString());
+            campoTelefone.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 3).toString());
+            campoCargo.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 4).toString());
+            campoLogin.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 5).toString());
+            campoSenha.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 6).toString());
+            
+            int linhaSelecionada = tabelaExibicao.getSelectedRow();
+        }
+    }//GEN-LAST:event_tabelaExibicaoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -450,6 +564,6 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabelaExibicao;
     // End of variables declaration//GEN-END:variables
 }

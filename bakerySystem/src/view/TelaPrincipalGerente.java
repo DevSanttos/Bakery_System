@@ -40,6 +40,7 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
     public TelaPrincipalGerente() {
         initComponents();
         setLocationRelativeTo(null); // Centraliza
+        readTable();
     }
     
     private void personalizarTabela() {
@@ -69,7 +70,7 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
         botaoEstoque = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane7 = new javax.swing.JScrollPane();
         tabelaFuncionarios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -103,7 +104,7 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 474, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 478, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addGap(20, 20, 20))
         );
@@ -158,49 +159,39 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(164, 87, 44));
         jLabel4.setText("Estoque");
 
-        jScrollPane2.setBackground(new java.awt.Color(164, 113, 72));
-        jScrollPane2.setForeground(new java.awt.Color(164, 113, 72));
-        jScrollPane2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-
-        tabelaFuncionarios.setBackground(new java.awt.Color(164, 113, 72));
         tabelaFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null}
             },
             new String [] {
-                "Nome", "Telefone", "Cargo"
+                "Id", "Nome", "Cargo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+                java.lang.Long.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        });
+        tabelaFuncionarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaFuncionariosMouseClicked(evt);
             }
         });
-        tabelaFuncionarios.setFocusable(false);
-        tabelaFuncionarios.setGridColor(new java.awt.Color(164, 113, 72));
-        tabelaFuncionarios.setSelectionBackground(new java.awt.Color(164, 113, 72));
-        tabelaFuncionarios.setSelectionForeground(new java.awt.Color(164, 113, 72));
-        tabelaFuncionarios.setShowHorizontalLines(true);
-        tabelaFuncionarios.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(tabelaFuncionarios);
+        tabelaFuncionarios.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tabelaFuncionariosKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabelaFuncionariosKeyReleased(evt);
+            }
+        });
+        jScrollPane7.setViewportView(tabelaFuncionarios);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -208,12 +199,12 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,8 +240,8 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
                     .addComponent(botaoEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoCadProd, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -291,7 +282,19 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaoEstoqueActionPerformed
 
-     public void readTable() {
+    private void tabelaFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaFuncionariosMouseClicked
+       
+    }//GEN-LAST:event_tabelaFuncionariosMouseClicked
+
+    private void tabelaFuncionariosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaFuncionariosKeyPressed
+        
+    }//GEN-LAST:event_tabelaFuncionariosKeyPressed
+
+    private void tabelaFuncionariosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaFuncionariosKeyReleased
+       
+    }//GEN-LAST:event_tabelaFuncionariosKeyReleased
+
+    public void readTable() {
     DefaultTableModel modelo = (DefaultTableModel) tabelaFuncionarios.getModel();
     modelo.setNumRows(0);
 
@@ -361,7 +364,7 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTable tabelaFuncionarios;
     // End of variables declaration//GEN-END:variables
 }

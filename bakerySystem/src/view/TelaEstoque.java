@@ -348,6 +348,13 @@ public class TelaEstoque extends javax.swing.JFrame {
              produto.setDisponivelParaTroca(marcado);
              
              gerenteController.updateProduto(idProduto, novoNome, novoPreco, novoTipo, novaQuantidade, marcado, novoPontosNec, null);
+             
+             campoNome.setText("");
+             campoQuantidade.setText("");
+             campoTipo.setText("");
+             campoPontosNecessarios.setText("");
+             campoPreco.setText("");
+             
              readTable();
        } catch(NumberFormatException  ex) {
            JOptionPane.showMessageDialog(null, "Erro de formato nos dados. Verifique Preço e Quantidade.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -391,20 +398,15 @@ public class TelaEstoque extends javax.swing.JFrame {
                 });
             }
         } else {
-            System.out.println("ProdutoController.readProduto() retornou null.");
-            // Ou JOptionPane.showMessageDialog(this, "Não foi possível carregar os produtos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Não foi possível carregar os produtos.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     } catch (Exception e) {
-        System.err.println("Erro ao carregar produtos na tabela: " + e.getMessage());
-        e.printStackTrace(); // Imprime o stack trace para depuração
-        // JOptionPane.showMessageDialog(this, "Erro ao carregar produtos: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+         JOptionPane.showMessageDialog(this, "Erro ao carregar produtos: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
     }
 }
     
     private void tabelaExibicaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaExibicaoKeyReleased
         if (tabelaExibicao.getSelectedRow() != -1) {
-            
-            
             
             campoNome.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 1).toString());
             campoPreco.setText(tabelaExibicao.getValueAt(tabelaExibicao.getSelectedRow(), 2).toString());
@@ -437,7 +439,13 @@ public class TelaEstoque extends javax.swing.JFrame {
                 Long idProduto = (Long) tabelaExibicao.getValueAt(selectedRow, 0);
                 
                 gerenteController.deleteProduto(idProduto);
-
+                
+                campoNome.setText("");
+                campoQuantidade.setText("");
+                campoTipo.setText("");
+                campoPontosNecessarios.setText("");
+                campoPreco.setText("");
+                
                 JOptionPane.showMessageDialog(this, "Produto deletado com sucesso!");
                 readTable();
 
