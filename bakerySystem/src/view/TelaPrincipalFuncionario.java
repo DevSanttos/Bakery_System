@@ -117,9 +117,6 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -180,6 +177,11 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(245, 235, 221));
         jButton2.setText("Ver Pontos");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         verificarCliente.setBackground(new java.awt.Color(164, 113, 72));
         verificarCliente.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -278,6 +280,10 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_verificarClienteActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JOptionPane.showMessageDialog(null, vendaController.getProdutoList());
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     public void readTable() {
     DefaultTableModel modelo = (DefaultTableModel) tabelaProdutosVenda.getModel();
     modelo.setNumRows(0);
@@ -293,6 +299,7 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
                     p.getTipo(),
                     p.getQuantidade(),
                 });
+                readTable();
             }
         } else {
             JOptionPane.showMessageDialog(this, "Não foi possível carregar os produtos.", "Erro", JOptionPane.ERROR_MESSAGE);

@@ -142,8 +142,8 @@ public class TelaNovaVenda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoCriarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCriarClienteActionPerformed
-        TelaCADClienteGerente telaCadastrarCliente = new TelaCADClienteGerente();
-        telaCadastrarCliente.setVisible(true);
+        TelaCadastroClienteFuncionario telaCadastroClienteFuncionario = new TelaCadastroClienteFuncionario();
+        telaCadastroClienteFuncionario.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoCriarClienteActionPerformed
 
