@@ -317,8 +317,8 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaFuncionariosKeyReleased
 
     private void botaoCadClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadClientesActionPerformed
-        TelaCadastrarFunc telaCadastrarFunc = new TelaCadastrarFunc();
-        telaCadastrarFunc.setVisible(true);
+        TelaCADClienteGerente telaCADClienteGerente = new TelaCADClienteGerente();
+        telaCADClienteGerente.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoCadClientesActionPerformed
 
