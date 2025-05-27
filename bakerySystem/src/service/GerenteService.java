@@ -19,6 +19,7 @@ import model.dao.impl.ProdutoDAOImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.bean.Cliente;
 
 /**
  * @author jonat
@@ -332,14 +333,68 @@ public class GerenteService {
         }
     }
 
+    
+    public Cliente createCliente (String nome, String CPF, String telefone) {
+        if(nome == null || nome.trim().isEmpty()) {
+            throw new RuntimeException("Não é possível criar um cliente com nome vazio ou nulo!");
+        }
+        if(CPF == null || CPF.trim().isEmpty()) {
+            throw new RuntimeException("Não é possível criar um cliente com CPF vazio ou nulo!");
+        }
+        if(telefone == null || telefone.trim().isEmpty()) {
+            throw new RuntimeException("Não é possível criar um cliente com telefone vazio ou nulo!");
+        }
+
+        try {
+            Cliente cliente = new Cliente(nome, CPF, telefone);
+            return clienteService.createCliente(cliente);
+
+        } catch (RuntimeException ex){
+            throw new RuntimeException("Erro ao criar cliente! " + ex.getMessage());
+        }
+    }
+    
+    public boolean updateCliente(Long idCliente, String nome, String CPF, String telefone){
+        Cliente clienteDAO = clienteService.findById(idCliente);
+
+        if(nome != null && !nome.trim().isEmpty()){
+            clienteDAO.setNome(nome);
+        }
+        if(CPF != null && !CPF.trim().isEmpty()){
+            clienteDAO.setCPF(CPF);
+        }
+        if(telefone != null && !telefone.trim().isEmpty()){
+            clienteDAO.setTelefone(telefone);
+        }
+
+        if(clienteDAO == null){
+            throw new IllegalArgumentException("Não é possível atualizar um cliente nulo.");
+        }
+        if(clienteDAO.getNome() == null || clienteDAO.getNome().trim().isEmpty()){
+            throw new IllegalArgumentException("Não é possível atualizar o nome do cliente para um nome vazio ou nulo.");
+        }
+        if(clienteDAO.getCPF() == null || clienteDAO.getCPF().trim().isEmpty()){
+            throw new IllegalArgumentException("Não é possível atualizar o CPF do cliente para vazio ou nulo.");
+        }
+        if(clienteDAO.getTelefone() == null || clienteDAO.getTelefone().trim().isEmpty()){
+            throw new IllegalArgumentException("Não é possível atualizar o telefone do cliente para um número vazio ou nulo.");
+        }
+
+        try{
+            return clienteService.updateCliente(clienteDAO);
+        } catch (RuntimeException ex){
+            throw new RuntimeException("Erro ao atualizar cliente! " + ex.getMessage());
+        }
+    }
+    
     public boolean deleteCliente(Long idCliente){
         if(idCliente == null || idCliente == 0){
             throw new RuntimeException("Não é possível deletar um cliente com ID nulo ou igual a zero");
         }
         try{
-            return clienteDAO.delete(idCliente);
+            return clienteService.deleteCliente(idCliente);
         } catch (RuntimeException ex){
-            throw new RuntimeException("Erro ao deletar caixa! " + ex.getMessage());
+            throw new RuntimeException("Erro ao deletar cliente! " + ex.getMessage());
         }
     }
 }

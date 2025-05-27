@@ -9,6 +9,7 @@ import model.dao.CaixaDAO;
 import service.GerenteService;
 
 import java.util.List;
+import model.bean.Cliente;
 
 public class GerenteController {
     private GerenteService gerenteService;
@@ -52,8 +53,16 @@ public class GerenteController {
     public boolean deleteProduto(Long idProduto) {
         return gerenteService.deleteProduto(idProduto);
     }
-
-    public boolean deleteCliente(Long idCliente) {
+    
+    public Cliente createCliente (String nome, String CPF, String telefone) {
+        return gerenteService.createCliente(nome, CPF, telefone);
+    }
+    
+    public boolean updateCliente(Long idCliente, String nome, String CPF, String telefone){
+        return gerenteService.updateCliente(idCliente, nome, CPF, telefone);
+    }
+    
+    public boolean deleteCliente(Long idCliente){
         return gerenteService.deleteCliente(idCliente);
     }
 }
