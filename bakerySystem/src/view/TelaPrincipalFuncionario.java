@@ -108,23 +108,23 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
         tabelaProdutosVenda.setBackground(new java.awt.Color(164, 113, 72));
         tabelaProdutosVenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Id", "Descrição", "Valor Uni.", "Qtde"
+                "ID", "Nome", "Preço", "Tipo", "Quantidade"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class
+                java.lang.Long.class, java.lang.String.class, java.lang.Float.class, java.lang.Object.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -289,9 +289,7 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
     modelo.setNumRows(0);
 
     try {
-        List<Produto> produtos = vendaController.getProdutoList();
-        if (produtos != null) { // Importante verificar se não é nulo
-            for (Produto p : produtos) {
+            for (Produto p : vendaController.getProdutoList()) {
                 modelo.addRow(new Object[]{
                     p.getIdProduto(),
                     p.getNome(),
@@ -301,9 +299,6 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
                 });
                 readTable();
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Não foi possível carregar os produtos.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
     } catch (Exception e) {
          JOptionPane.showMessageDialog(this, "Erro ao carregar produtos: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
     }

@@ -232,8 +232,6 @@ public class TelaAdicionaProdutosALista extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro ao tentar inserir produto!");
         }
-
-
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
