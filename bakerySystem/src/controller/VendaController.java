@@ -82,4 +82,8 @@ public class VendaController {
         }
         return vendaService.realizarResgatePorPontos(idProduto, idCliente);
     }
+    
+    public List<Produto> getProdutoList() {
+        return vendaService.getProdutoList();
+    }
 }

@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/jonat/OneDrive/Documentos/MeusProjetos/Bakery_System/bakerySystem/src/controller/GerenteController.java</file>
-            <file>file:/C:/Users/jonat/OneDrive/Documentos/MeusProjetos/Bakery_System/bakerySystem/src/view/TelaAdicionaProdutosALista.java</file>
+            <file>file:/C:/Users/jonat/OneDrive/Documentos/MeusProjetos/Bakery_System/bakerySystem/src/service/GerenteService.java</file>
+            <file>file:/C:/Users/jonat/OneDrive/Documentos/MeusProjetos/Bakery_System/bakerySystem/src/view/TelaCadastrarFunc.java</file>
             <file>file:/C:/Users/jonat/OneDrive/Documentos/MeusProjetos/Bakery_System/bakerySystem/src/view/TelaNovaVenda.java</file>
-            <file>file:/C:/Users/jonat/OneDrive/Documentos/MeusProjetos/Bakery_System/bakerySystem/src/view/TelaPrincipalFuncionario.java</file>
-            <file>file:/C:/Users/jonat/OneDrive/Documentos/MeusProjetos/Bakery_System/bakerySystem/src/controller/VendaController.java</file>
+            <file>file:/C:/Users/jonat/OneDrive/Documentos/MeusProjetos/Bakery_System/bakerySystem/src/view/TelaCadastrarCliente.java</file>
         </group>
     </open-files>
 </project-private>

@@ -189,11 +189,17 @@ public class TelaAdicionaProdutosALista extends javax.swing.JFrame {
     }//GEN-LAST:event_campoIdProdutoActionPerformed
 
     private void botaoProsseguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProsseguirActionPerformed
-        TelaPrincipalFuncionario telaPrincipalFuncionario = new TelaPrincipalFuncionario();
-        telaPrincipalFuncionario.setVisible(true);
-        this.dispose();
-        Long armazenaIdCliente = Long.parseLong(JOptionPane.showInputDialog(null, "Informe o id do cliente, caso possua!"));
-        vendaController.realizarVenda(armazenaIdCliente);
+        if (!vendaController.getProdutoList().isEmpty()) {
+            TelaPrincipalFuncionario telaPrincipalFuncionario = new TelaPrincipalFuncionario();
+            telaPrincipalFuncionario.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "A lista precisa de pelo menos um item!");
+            return;
+        }
+        
+        
+        
     }//GEN-LAST:event_botaoProsseguirActionPerformed
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed

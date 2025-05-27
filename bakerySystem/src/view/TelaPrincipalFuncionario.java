@@ -6,7 +6,10 @@ package view;
 
 import controller.ProdutoController;
 import controller.VendaController;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.bean.Produto;
 import model.dao.ProdutoDAO;
 import model.dao.VendaDAO;
 import model.dao.impl.ProdutoDAOImpl;
@@ -34,6 +37,7 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
     public TelaPrincipalFuncionario() {
                 initComponents();
         setLocationRelativeTo(null); // Centraliza
+        readTable();
     }
 
     /**
@@ -51,9 +55,9 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTextPane4 = new javax.swing.JTextPane();
+        campoIdCliente = new javax.swing.JTextPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaProdutosVenda = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
@@ -78,9 +82,9 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(245, 235, 221));
         jLabel4.setText("ID DO CLIENTE");
 
-        jTextPane4.setBackground(new java.awt.Color(255, 255, 255));
-        jTextPane4.setFont(new java.awt.Font("Arial", 1, 34)); // NOI18N
-        jScrollPane5.setViewportView(jTextPane4);
+        campoIdCliente.setBackground(new java.awt.Color(255, 255, 255));
+        campoIdCliente.setFont(new java.awt.Font("Arial", 1, 34)); // NOI18N
+        jScrollPane5.setViewportView(campoIdCliente);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -101,8 +105,8 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTable1.setBackground(new java.awt.Color(164, 113, 72));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaProdutosVenda.setBackground(new java.awt.Color(164, 113, 72));
+        tabelaProdutosVenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -130,8 +134,8 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jTable1.setToolTipText("");
-        jScrollPane1.setViewportView(jTable1);
+        tabelaProdutosVenda.setToolTipText("");
+        jScrollPane1.setViewportView(tabelaProdutosVenda);
 
         jPanel2.setBackground(new java.awt.Color(164, 113, 72));
 
@@ -253,14 +257,51 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
 
     private void verificarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verificarClienteActionPerformed
         try {
-            Long idCliente = Long.parseLong(verificarCliente.getText().trim());
+        Long idCliente = Long.parseLong(campoIdCliente.getText().trim());
+        
+        if (idCliente <= 0) {
+            JOptionPane.showMessageDialog(null, "O id do cliente inválido!");
+            return;
+        }
+        
+        
             vendaController.realizarVenda(idCliente);
-
+            JOptionPane.showMessageDialog(null, "Sucesso!");
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "ID inválido. Insira um número válido.");
         }
+        catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, "Valor informado é inválido!");
+        }
+        catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao encontrar o cliente e realizar a venda!");
+        }
     }//GEN-LAST:event_verificarClienteActionPerformed
 
+    public void readTable() {
+    DefaultTableModel modelo = (DefaultTableModel) tabelaProdutosVenda.getModel();
+    modelo.setNumRows(0);
+
+    try {
+        List<Produto> produtos = vendaController.getProdutoList();
+        if (produtos != null) { // Importante verificar se não é nulo
+            for (Produto p : produtos) {
+                modelo.addRow(new Object[]{
+                    p.getIdProduto(),
+                    p.getNome(),
+                    p.getPreco(),
+                    p.getTipo(),
+                    p.getQuantidade(),
+                });
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Não foi possível carregar os produtos.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception e) {
+         JOptionPane.showMessageDialog(this, "Erro ao carregar produtos: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+}
+    
     /**
      * @param args the command line arguments
      */
@@ -297,6 +338,7 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextPane campoIdCliente;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -309,9 +351,8 @@ public class TelaPrincipalFuncionario extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextPane jTextPane4;
+    private javax.swing.JTable tabelaProdutosVenda;
     private javax.swing.JButton verificarCliente;
     // End of variables declaration//GEN-END:variables
 }
