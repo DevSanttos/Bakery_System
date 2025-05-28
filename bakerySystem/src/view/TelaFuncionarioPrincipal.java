@@ -254,7 +254,9 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        TelaFuncionarioCadastroCliente telaCadastroClienteFuncionario = new TelaFuncionarioCadastroCliente();
+        telaCadastroClienteFuncionario.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void verificarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verificarClienteActionPerformed

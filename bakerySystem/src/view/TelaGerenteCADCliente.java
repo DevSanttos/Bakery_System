@@ -280,8 +280,8 @@ public class TelaGerenteCADCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        TelaFuncNovaVenda telaNovaVenda = new TelaFuncNovaVenda();
-        telaNovaVenda.setVisible(rootPaneCheckingEnabled);
+        TelaGerentePrincipal telaGerentePrincipal = new TelaGerentePrincipal();
+        telaGerentePrincipal.setVisible(rootPaneCheckingEnabled);
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 

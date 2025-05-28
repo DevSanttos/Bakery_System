@@ -10,7 +10,7 @@ import model.dao.impl.CaixaDAOImpl;
 import model.dao.impl.GerenteDAOImpl;
 import service.CaixaService;
 import service.GerenteService;
-import view.TelaFuncNovaVenda;
+import view.TelaFuncPrimeira;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -210,7 +210,7 @@ public class TelaFuncionarioCadastroCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        TelaFuncNovaVenda telaNovaVenda = new TelaFuncNovaVenda();
+        TelaFuncPrimeira telaNovaVenda = new TelaFuncPrimeira();
         telaNovaVenda.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
