@@ -27,7 +27,7 @@ import service.GerenteService;
  *
  * @author onata
  */
-public class TelaPrincipalGerente extends javax.swing.JFrame {
+public class TelaGerentePrincipal extends javax.swing.JFrame {
     
     GerenteDAO gerenteDAO = new GerenteDAOImpl();
     GerenteService gerenteService = new GerenteService(gerenteDAO);
@@ -37,7 +37,7 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
     CaixaService caixaService = new CaixaService(caixaDAO);
     CaixaController caixaController = new CaixaController(caixaService);
 
-    public TelaPrincipalGerente() {
+    public TelaGerentePrincipal() {
         initComponents();
         setLocationRelativeTo(null); // Centraliza
         readTable();
@@ -106,7 +106,7 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 478, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 474, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addGap(20, 20, 20))
         );
@@ -196,7 +196,7 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
         jScrollPane7.setViewportView(tabelaFuncionarios);
 
         botaoCadClientes.setBackground(new java.awt.Color(164, 87, 44));
-        botaoCadClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/icons8-produto-50 (1).png"))); // NOI18N
+        botaoCadClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/icons8-cliente-50.png"))); // NOI18N
         botaoCadClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCadClientesActionPerformed(evt);
@@ -281,7 +281,7 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoCadFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadFuncActionPerformed
-        TelaCadastrarFunc telaCadastrarFunc = new TelaCadastrarFunc();
+        TelaGerenteCadastrarFunc telaCadastrarFunc = new TelaGerenteCadastrarFunc();
         telaCadastrarFunc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoCadFuncActionPerformed
@@ -293,13 +293,13 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void botaoCadProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadProdActionPerformed
-        TelaCadastrarProd telaCadastrarProd = new TelaCadastrarProd();
+        TelaGerenteCadastrarProd telaCadastrarProd = new TelaGerenteCadastrarProd();
         telaCadastrarProd.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoCadProdActionPerformed
 
     private void botaoEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEstoqueActionPerformed
-        TelaEstoque telaEstoque = new TelaEstoque();
+        TelaGerenteEstoque telaEstoque = new TelaGerenteEstoque();
         telaEstoque.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoEstoqueActionPerformed
@@ -317,7 +317,7 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaFuncionariosKeyReleased
 
     private void botaoCadClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadClientesActionPerformed
-        TelaCADClienteGerente telaCADClienteGerente = new TelaCADClienteGerente();
+        TelaGerenteCADCliente telaCADClienteGerente = new TelaGerenteCADCliente();
         telaCADClienteGerente.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoCadClientesActionPerformed
@@ -363,20 +363,21 @@ public class TelaPrincipalGerente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerentePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerentePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerentePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipalGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerentePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipalGerente().setVisible(true);
+                new TelaGerentePrincipal().setVisible(true);
             }
         });
     }

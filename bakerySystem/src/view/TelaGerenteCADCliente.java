@@ -27,7 +27,7 @@ import service.GerenteService;
  *
  * @author onata
  */
-public class TelaCADClienteGerente extends javax.swing.JFrame {
+public class TelaGerenteCADCliente extends javax.swing.JFrame {
     GerenteDAO gerenteDAO = new GerenteDAOImpl();
     GerenteService gerenteService = new GerenteService(gerenteDAO);
     GerenteController gerenteController = new GerenteController(gerenteService);
@@ -42,7 +42,7 @@ public class TelaCADClienteGerente extends javax.swing.JFrame {
     /**
      * Creates new form TelaCadastrarCliente
      */
-    public TelaCADClienteGerente() {
+    public TelaGerenteCADCliente() {
         initComponents();
         setLocationRelativeTo(null); // Centraliza
         readTable();
@@ -107,11 +107,10 @@ public class TelaCADClienteGerente extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addGap(20, 20, 20))
         );
@@ -281,7 +280,7 @@ public class TelaCADClienteGerente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        TelaNovaVenda telaNovaVenda = new TelaNovaVenda();
+        TelaFuncNovaVenda telaNovaVenda = new TelaFuncNovaVenda();
         telaNovaVenda.setVisible(rootPaneCheckingEnabled);
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -444,21 +443,23 @@ public class TelaCADClienteGerente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCADClienteGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenteCADCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCADClienteGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenteCADCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCADClienteGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenteCADCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCADClienteGerente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenteCADCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCADClienteGerente().setVisible(true);
+                new TelaGerenteCADCliente().setVisible(true);
             }
         });
     }

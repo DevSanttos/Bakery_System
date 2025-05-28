@@ -25,7 +25,7 @@ import service.ProdutoService;
  *
  * @author onata
  */
-public class TelaEstoque extends javax.swing.JFrame {
+public class TelaGerenteEstoque extends javax.swing.JFrame {
     ProdutoDAO produtoDAO = new ProdutoDAOImpl();
     ProdutoService produtoService = new ProdutoService(produtoDAO);
     ProdutoController produtoController = new ProdutoController(produtoService);
@@ -35,7 +35,7 @@ public class TelaEstoque extends javax.swing.JFrame {
     GerenteController gerenteController = new GerenteController(gerenteService);
     
     
-    public TelaEstoque() {
+    public TelaGerenteEstoque() {
          
         initComponents();
         setLocationRelativeTo(null); // Centraliza
@@ -372,7 +372,7 @@ public class TelaEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        TelaPrincipalGerente telaPrincipalGerente = new TelaPrincipalGerente();
+        TelaGerentePrincipal telaPrincipalGerente = new TelaGerentePrincipal();
         telaPrincipalGerente.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -500,20 +500,21 @@ public class TelaEstoque extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenteEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenteEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenteEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenteEstoque.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaEstoque().setVisible(true);
+                new TelaGerenteEstoque().setVisible(true);
             }
         });
     }

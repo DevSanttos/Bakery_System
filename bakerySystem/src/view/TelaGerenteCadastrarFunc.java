@@ -23,7 +23,7 @@ import service.GerenteService;
  *
  * @author onata
  */
-public class TelaCadastrarFunc extends javax.swing.JFrame {
+public class TelaGerenteCadastrarFunc extends javax.swing.JFrame {
 
     GerenteDAO gerenteDAO = new GerenteDAOImpl();
     GerenteService gerenteService = new GerenteService(gerenteDAO);
@@ -36,7 +36,7 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
     /**
      * Creates new form TelaCadastrarFunc
      */
-    public TelaCadastrarFunc() {
+    public TelaGerenteCadastrarFunc() {
         initComponents();
         pack();
         setLocationRelativeTo(null);
@@ -84,6 +84,7 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Padaria Rezende's Gerente");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
+        setPreferredSize(new java.awt.Dimension(650, 400));
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
 
@@ -163,7 +164,7 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(92, 92, 92)
                 .addComponent(jButton5)
@@ -269,12 +270,12 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
                             .addGap(11, 11, 11)
                             .addComponent(jLabel7)
                             .addGap(5, 5, 5)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(10, 10, 10)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jLabel8)
                             .addGap(5, 5, 5)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(26, 26, 26)))
+                            .addGap(18, 18, 18)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,7 +332,7 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        TelaPrincipalGerente telaPrincipalGerente = new TelaPrincipalGerente();
+        TelaGerentePrincipal telaPrincipalGerente = new TelaGerentePrincipal();
         telaPrincipalGerente.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -520,20 +521,21 @@ public class TelaCadastrarFunc extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastrarFunc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenteCadastrarFunc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastrarFunc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenteCadastrarFunc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastrarFunc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenteCadastrarFunc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastrarFunc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenteCadastrarFunc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCadastrarFunc().setVisible(true);
+                new TelaGerenteCadastrarFunc().setVisible(true);
             }
         });
     }

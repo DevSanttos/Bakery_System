@@ -45,12 +45,58 @@ public class TelaLogin extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
        
-        
         usuarioField.setForeground(new Color(204, 204, 204));
         usuarioField.setBackground(new Color(164, 113, 72));
 
         senhaField.setForeground(new Color(204, 204, 204));
         senhaField.setBackground(new Color(164, 113, 72));
+        
+        // Placeholder para usuarioField
+        usuarioField.setText("Informe seu usuário");
+        usuarioField.setForeground(new Color(204, 204, 204));
+
+        usuarioField.addFocusListener(new java.awt.event.FocusAdapter() {
+        @Override
+        public void focusGained(java.awt.event.FocusEvent evt) {
+        if (usuarioField.getText().equals("Informe seu usuário")) {
+            usuarioField.setText("");
+            usuarioField.setForeground(new Color(204, 204, 204));
+        }
+        }
+
+        @Override
+        public void focusLost(java.awt.event.FocusEvent evt) {
+        if (usuarioField.getText().isEmpty()) {
+            usuarioField.setForeground(new Color(204, 204, 204));
+            usuarioField.setText("Informe seu usuário");
+        }
+        }
+        });
+        
+        // Placeholder para senhaField
+    senhaField.setText("Informe sua senha");
+    senhaField.setEchoChar((char) 0); // Mostra o texto sem esconder
+    senhaField.setForeground(new Color(204, 204, 204));
+
+    senhaField.addFocusListener(new java.awt.event.FocusAdapter() {
+    @Override
+    public void focusGained(java.awt.event.FocusEvent evt) {
+        if (String.valueOf(senhaField.getPassword()).equals("Informe sua senha")) {
+            senhaField.setText("");
+            senhaField.setEchoChar('*'); // Oculta os caracteres digitados
+            senhaField.setForeground(new Color(204, 204, 204));
+        }
+    }
+
+    @Override
+    public void focusLost(java.awt.event.FocusEvent evt) {
+        if (String.valueOf(senhaField.getPassword()).isEmpty()) {
+            senhaField.setText("Informe sua senha");
+            senhaField.setEchoChar((char) 0); // Mostra o placeholder de novo
+            senhaField.setForeground(new Color(204, 204, 204));
+        }
+    }
+    });
     }
 
     @SuppressWarnings("unchecked")
@@ -99,6 +145,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(164, 113, 72));
 
         usuarioField.setBackground(new java.awt.Color(164, 113, 72));
+        usuarioField.setText("Informe seu usúario");
         usuarioField.setBorder(null);
         usuarioField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,7 +238,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void usuarioFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioFieldActionPerformed
-        // TODO add your handling code here:
+    
     }//GEN-LAST:event_usuarioFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -200,12 +247,12 @@ public class TelaLogin extends javax.swing.JFrame {
 
         try {
             if (gerenteController.findByLoginAndPassword(login, senha)) {
-                    TelaPrincipalGerente telaPrincipalGerente = new TelaPrincipalGerente();
+                    TelaGerentePrincipal telaPrincipalGerente = new TelaGerentePrincipal();
                     telaPrincipalGerente.setVisible(true);
                     this.dispose();
                 } else{
                 if (caixaController.findByLoginAndPassword(login, senha)) {
-                    TelaNovaVenda telaNovaVenda = new TelaNovaVenda();
+                    TelaFuncNovaVenda telaNovaVenda = new TelaFuncNovaVenda();
                     telaNovaVenda.setVisible(true);
                 this.dispose();
                 }
