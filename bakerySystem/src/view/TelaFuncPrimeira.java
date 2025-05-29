@@ -17,7 +17,10 @@ public class TelaFuncPrimeira extends javax.swing.JFrame {
     public TelaFuncPrimeira(String nomeFunc) {
         this.nomeFunc = nomeFunc;
         initComponents();
-        mensagemBemVindo.setText("Bem-vindo, " + this.nomeFunc);
+        if(this.nomeFunc != null){
+            mensagemBemVindo.setText("Bem-vindo, " + this.nomeFunc);
+        } else
+            mensagemBemVindo.setText("Outras operações");
         setLocationRelativeTo(null); 
     }
 

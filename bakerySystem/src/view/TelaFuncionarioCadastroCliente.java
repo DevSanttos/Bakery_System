@@ -34,7 +34,7 @@ public class TelaFuncionarioCadastroCliente extends javax.swing.JFrame {
     CaixaService caixaService = new CaixaService(caixaDAO);
     CaixaController caixaController = new CaixaController(caixaService);
     
-    public String nomeFunc;
+    
     
     public TelaFuncionarioCadastroCliente() {
         initComponents();
@@ -214,6 +214,7 @@ public class TelaFuncionarioCadastroCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        String nomeFunc = null;
         TelaFuncPrimeira telaNovaVenda = new TelaFuncPrimeira(nomeFunc);
         telaNovaVenda.setVisible(true);
         this.dispose();
