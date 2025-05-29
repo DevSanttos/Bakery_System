@@ -21,9 +21,7 @@ import service.ProdutoService;
 
 public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
 
-    VendaDAO vendaDao = new VendaDAOImpl();
-    VendaService vendaService = new VendaService(vendaDao);
-    VendaController vendaController = new VendaController(vendaService);
+    private VendaController vendaController;
 
     ProdutoDAO produtoDao = new ProdutoDAOImpl();
     ProdutoService produtoService = new ProdutoService(produtoDao);
@@ -34,6 +32,16 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
     ClienteController clienteController = new ClienteController(clienteService);
 
     public TelaFuncAdicionaProdutosALista() {
+        initComponents();
+        setLocationRelativeTo(null); // Centraliza
+        VendaDAO vendaDAO = new VendaDAOImpl();
+        VendaService vendaService = new VendaService(vendaDAO);
+        this.vendaController = new VendaController(vendaService);
+        
+    }
+    
+    public TelaFuncAdicionaProdutosALista(VendaController vendaController) {
+        this.vendaController = vendaController; // Atribui a instância passada
         initComponents();
         setLocationRelativeTo(null); // Centraliza
     }
@@ -199,16 +207,14 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
     }//GEN-LAST:event_campoIdProdutoActionPerformed
 
     private void botaoProsseguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProsseguirActionPerformed
-        if (!vendaController.getProdutoList().isEmpty()) {
-            TelaFuncionarioPrincipal telaPrincipalFuncionario = new TelaFuncionarioPrincipal();
-            telaPrincipalFuncionario.setVisible(true);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "A lista precisa de pelo menos um item!");
-            return;
-        }
-
-
+        if (vendaController != null && !vendaController.getProdutoList().isEmpty()) { // Adicionei null check para vendaController
+        // Corrigido: PASSE A INSTÂNCIA DO VENDAController ATUAL!
+        TelaFuncionarioPrincipal telaPrincipalFuncionario = new TelaFuncionarioPrincipal(this.vendaController);
+        telaPrincipalFuncionario.setVisible(true);
+        this.dispose();
+    } else {
+        JOptionPane.showMessageDialog(null, "A lista de produtos no carrinho está vazia. Adicione produtos antes de prosseguir para o caixa!");
+           }
     }//GEN-LAST:event_botaoProsseguirActionPerformed
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
@@ -219,9 +225,9 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "O ID informado é inválido");
                 return;
             }
-            
-            JOptionPane.showMessageDialog(null, vendaController.addProdutoAoCarrinho(armazenaIdProduto));
-            JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso!");
+            String mensagemRetorno = String.valueOf(vendaController.addProdutoAoCarrinho(armazenaIdProduto));
+            JOptionPane.showMessageDialog(null, mensagemRetorno);
+//            JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso!");
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Por favor, insira um valor válido");
@@ -273,7 +279,13 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new TelaFuncAdicionaProdutosALista().setVisible(true);
+                VendaDAO vendaDao = new VendaDAOImpl();
+                VendaService vendaService = new VendaService(vendaDao);
+                VendaController vendaController = new VendaController(vendaService);
+                
+                new TelaFuncAdicionaProdutosALista(vendaController).setVisible(true);
             }
         });
     }

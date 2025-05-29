@@ -175,6 +175,8 @@ public class ProdutoDAOImpl implements ProdutoDAO {
                 produto.setNome(rs.getString("nome"));
                 produto.setPreco(rs.getDouble("preco"));
                 produto.setTipo(rs.getString("tipo"));
+                produto.setPontosNecessarios(rs.getInt("pontos_necessarios"));
+                produto.setDisponivelParaTroca(rs.getBoolean("disponivel_para_troca"));
                 produto.setQuantidade(rs.getInt("quantidade"));
             }
 

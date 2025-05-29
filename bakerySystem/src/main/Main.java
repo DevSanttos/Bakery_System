@@ -26,6 +26,9 @@ public class Main {
         GerenteDAO gerenteDAO = new GerenteDAOImpl();
         GerenteService gerenteService = new GerenteService(gerenteDAO);
         GerenteController gerenteController = new GerenteController(gerenteService);
+        
+        ClienteDAO clienteDAO = new ClienteDAOImpl();
+        ClienteService clienteService = new ClienteService(clienteDAO);
 
         CaixaDAO caixaDAO = new CaixaDAOImpl();
         CaixaService caixaService =  new CaixaService(caixaDAO);
@@ -34,8 +37,17 @@ public class Main {
         ProdutoDAO produtoDao = new ProdutoDAOImpl();
         ProdutoService produtoService = new ProdutoService(produtoDao);
         
-        System.out.println(produtoService.readProduto());
-
+//        Produto produto = produtoService.findById(16L);  
+//        produto.setDisponivelParaTroca(true);  
+//        produto.setPontosNecessarios(50);  
+//        produtoService.updateProduto(produto);
+//        
+        Cliente cliente = clienteService.findById(2L);
+        cliente.setTotalPontosAcumulados(100);
+        clienteService.updateCliente(cliente);
+//        
+//        System.out.println(produtoService.readProduto());
+        System.out.println(clienteService.readCliente());
     }
 }
 

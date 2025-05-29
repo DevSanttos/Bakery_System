@@ -58,11 +58,11 @@ public class VendaController {
         }
     }
 
-    public void realizarVenda(Long idCliente) {
+    public double realizarVenda(Long idCliente) {
         if (idCliente == null || idCliente <= 0) {
             throw new IllegalArgumentException("O ID do cliente não pode ser null ou negativo");
         }
-        vendaService.realizarVenda(idCliente);
+        return vendaService.realizarVenda(idCliente);
     }
 
     public double calcSubtotal(List<ItemVenda> itensVenda) {
@@ -72,16 +72,7 @@ public class VendaController {
         return vendaService.calcSubtotal(itensVenda);
     }
 
-    public boolean realizarResgatePorPontos(Long idProduto, Long idCliente) {
-        if (idProduto == null || idProduto <= 0) {
-            throw new IllegalArgumentException("O ID do produto não pode ser null ou negativo");
-        }
-
-        if (idCliente == null || idCliente <= 0) {
-            throw new IllegalArgumentException("O ID do cliente não pode ser null ou negativo");
-        }
-        return vendaService.realizarResgatePorPontos(idProduto, idCliente);
-    }
+    
     
     public List<Produto> getProdutoList() {
         return vendaService.getProdutoList();

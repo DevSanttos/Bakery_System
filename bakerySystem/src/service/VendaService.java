@@ -132,7 +132,7 @@ public class VendaService {
     }
 
 
-    public void realizarVenda(Long idCliente) {
+    public double realizarVenda(Long idCliente) {
         //se id null, realizar a venda para a Pessoa que não é cliente
         if (idCliente <= 0) {
             throw new IllegalArgumentException("ID inválido.");
@@ -148,6 +148,7 @@ public class VendaService {
         for (Produto produto : produtoList) {
             ItemVenda itemVenda = new ItemVenda();
             itemVenda.setProduto(produto);
+            itemVenda.setPrecoUnitario(produto.getPreco());
             itensVenda.add(itemVenda);
         }
 
@@ -162,6 +163,7 @@ public class VendaService {
         //Apagar todos os produtos do carrinho
         createVenda(venda);
         produtoList.clear();
+        return calcSubtotal(itensVenda);
     }
 
     public double calcSubtotal(List<ItemVenda> itensVenda) {
@@ -183,29 +185,7 @@ public class VendaService {
         }
     }
     
-    public boolean realizarResgatePorPontos(Long idProduto, Long idCliente) {
-        if (idCliente == null || idCliente <= 0) {
-            throw new IllegalArgumentException("ID do cliente não pode ser nulo.");
-        }
-        Cliente cliente = clienteService.findById(idCliente);
-        if (cliente != null && cliente.getId() != null) {
-            if (idProduto != null && idProduto > 0) {
-                Produto produto = produtoService.findById(idProduto);
-                if (produto.isDisponivelParaTroca()) {
-                    if (produto.getQuantidade() > 0) {
-                        if (produto.getPontosNecessarios() <= cliente.getTotalPontosAcumulados()) {
-                            cliente.setTotalPontosAcumulados(cliente.getTotalPontosAcumulados() - produto.getPontosNecessarios());
-                            produto.setStatusResgate(StatusResgate.REALIZADO);
-                            produto.setQuantidade(produto.getQuantidade() - 1);
-                            produtoService.updateProduto(produto);
-                        }
-                    }
-                } else {
-                    System.out.println("Produto não disponivel para troca!");
-                }
-            } throw new RuntimeException("O ID do produto é nulo ou menor que 0.");
-        } throw new RuntimeException("O ID do cliente é nulo ou menor que 0.");
-    }
+    
 
     public List<Produto> getProdutoList() {
         return produtoList;

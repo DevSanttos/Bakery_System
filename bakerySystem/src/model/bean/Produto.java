@@ -65,7 +65,7 @@ package model.bean;
     }
 
     public boolean isDisponivelParaTroca() {
-        return disponivelParaTroca;
+        return this.disponivelParaTroca;
     }
 
     public void setDisponivelParaTroca(boolean disponivelParaTroca) {
@@ -98,6 +98,8 @@ package model.bean;
 
     @Override
     public String toString() {
-        return "Produto{" + "idProduto=" + idProduto + ", nome=" + nome + ", preco=" + preco + ", tipo=" + tipo + ", disponivelParaTroca=" + disponivelParaTroca + ", pontosNecessarios=" + pontosNecessarios + ", statusResgate=" + statusResgate + ", quantidade" + quantidade + '}';
+        return "Produto{" + "idProduto=" + idProduto + ", nome=" + nome + ", preco=" + preco + ", tipo=" + tipo + ", disponivelParaTroca=" + disponivelParaTroca + ", pontosNecessarios=" + pontosNecessarios + ", statusResgate=" + statusResgate + ", quantidade=" + quantidade + '}';
     }
+
+    
 }

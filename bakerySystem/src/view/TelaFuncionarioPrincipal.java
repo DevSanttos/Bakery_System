@@ -22,10 +22,7 @@ import service.VendaService;
  * @author onata
  */
 public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
-
-    VendaDAO vendaDao = new VendaDAOImpl();
-    VendaService vendaService = new VendaService(vendaDao);
-    VendaController vendaController = new VendaController(vendaService);
+    private VendaController vendaController;
     
     ProdutoDAO produtoDao = new ProdutoDAOImpl();
     ProdutoService produtoService = new ProdutoService(produtoDao);
@@ -35,8 +32,19 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
      * Creates new form TelaPrincipalFuncionario
      */
     public TelaFuncionarioPrincipal() {
-                initComponents();
+        this.vendaController = vendaController;
+        initComponents();
         setLocationRelativeTo(null); // Centraliza
+        readTable();
+        VendaDAO vendaDAO = new VendaDAOImpl();
+        VendaService vendaService = new VendaService(vendaDAO);
+        this.vendaController = new VendaController(vendaService);
+    }
+    
+    public TelaFuncionarioPrincipal(VendaController vendaController) {
+       this.vendaController = vendaController;
+       initComponents();
+        setLocationRelativeTo(null);
         readTable();
     }
 
@@ -269,7 +277,7 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
         }
         
         
-            vendaController.realizarVenda(idCliente);
+            JOptionPane.showMessageDialog(null, vendaController.realizarVenda(idCliente));
             JOptionPane.showMessageDialog(null, "Sucesso!");
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "ID inválido. Insira um número válido.");
@@ -288,22 +296,20 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
 
     public void readTable() {
     DefaultTableModel modelo = (DefaultTableModel) tabelaProdutosVenda.getModel();
-    modelo.setNumRows(0);
+        modelo.setNumRows(0);
 
-    try {
+        try {
             for (Produto p : vendaController.getProdutoList()) {
                 modelo.addRow(new Object[]{
                     p.getIdProduto(),
                     p.getNome(),
                     p.getPreco(),
                     p.getTipo(),
-                    p.getQuantidade(),
-                });
-                readTable();
+                    p.getQuantidade(),});
             }
-    } catch (Exception e) {
-         JOptionPane.showMessageDialog(this, "Erro ao carregar produtos: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-    }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar produtos: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
 }
     
     /**

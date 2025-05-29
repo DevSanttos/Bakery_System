@@ -12,8 +12,12 @@ import model.dao.ClienteDAO;
 import model.dao.GerenteDAO;
 import model.dao.impl.ClienteDAOImpl;
 import model.dao.impl.GerenteDAOImpl;
+import model.bean.Produto;
 
 import java.util.List;
+import model.bean.StatusResgate;
+import model.dao.ProdutoDAO;
+import model.dao.impl.ProdutoDAOImpl;
 
 /**
  *
@@ -22,7 +26,11 @@ import java.util.List;
 public class CaixaService {
     private final CaixaDAO caixaDAO;
     
+    ProdutoDAO produtoDAO = new ProdutoDAOImpl();
+    ProdutoService produtoService = new ProdutoService(produtoDAO);
     
+    ClienteDAO clienteDAO = new ClienteDAOImpl();
+    ClienteService clienteService = new ClienteService(clienteDAO);
 
     public CaixaService(CaixaDAO caixaDAO) {
         this.caixaDAO = caixaDAO;
@@ -161,6 +169,36 @@ public class CaixaService {
         } catch (RuntimeException ex){
             throw new RuntimeException("Erro ao criar cliente! " + ex.getMessage());
         }
+    }
+    
+    public boolean realizarResgatePorPontos(Long idProduto, Long idCliente, int quantidade) {
+        if (idCliente == null || idCliente <= 0) {
+            throw new IllegalArgumentException("ID do cliente não pode ser nulo.");
+        }
+        Cliente cliente = clienteService.findById(idCliente);
+        if (cliente != null && cliente.getId() != null) {
+            if (idProduto != null && idProduto > 0) {
+                Produto produto = produtoService.findById(idProduto);
+                System.out.println(produtoService.readProduto());
+                if (produto.isDisponivelParaTroca()) {
+                    if (produto.getQuantidade() > 0 && quantidade <= produto.getQuantidade()) {
+                            while(quantidade > 0){
+                                if (produto.getPontosNecessarios() <= cliente.getTotalPontosAcumulados()) {
+                                cliente.setTotalPontosAcumulados(cliente.getTotalPontosAcumulados() - produto.getPontosNecessarios());
+                                produto.setStatusResgate(StatusResgate.REALIZADO);
+                                produto.setQuantidade(produto.getQuantidade() - 1);
+                                produtoService.updateProduto(produto);
+                                clienteService.updateCliente(cliente);
+                                quantidade--;
+                                }
+                            return true;
+                            }
+                    }
+                } else {
+                    System.out.println("Produto não disponivel para troca!");
+                }
+            } throw new RuntimeException("O ID do produto é nulo ou menor que 0.");
+        } throw new RuntimeException("O ID do cliente é nulo ou menor que 0.");
     }
 
     public boolean updateCliente (Long id, String nome, String CPF, String telefone) {
