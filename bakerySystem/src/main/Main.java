@@ -37,17 +37,19 @@ public class Main {
         ProdutoDAO produtoDao = new ProdutoDAOImpl();
         ProdutoService produtoService = new ProdutoService(produtoDao);
         
+       
+        
 //        Produto produto = produtoService.findById(16L);  
 //        produto.setDisponivelParaTroca(true);  
 //        produto.setPontosNecessarios(50);  
 //        produtoService.updateProduto(produto);
 //        
-        Cliente cliente = clienteService.findById(2L);
-        cliente.setTotalPontosAcumulados(100);
-        clienteService.updateCliente(cliente);
+//        Cliente cliente = clienteService.findById(2L);
+//        cliente.setTotalPontosAcumulados(100);
+//        clienteService.updateCliente(cliente);
 //        
 //        System.out.println(produtoService.readProduto());
-        System.out.println(clienteService.readCliente());
+//        System.out.println(clienteService.readCliente());
     }
 }
 

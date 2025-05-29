@@ -126,7 +126,7 @@ public class VendaService {
         
         Produto produto = produtoService.findById(idInformado);
         
-        if (produto == null) {
+        if (produto.getIdProduto() == null) {
             throw new RuntimeException("Erro ao encontrar o respectivo produto!");
         }
         produtoList.add(produto);
@@ -158,11 +158,15 @@ public class VendaService {
         for (Produto produto : produtoList) {
             for(int quantidade: quantList){
                 if(produtoList.indexOf(produto) == quantList.indexOf(quantidade)){
-                    ItemVenda itemVenda = new ItemVenda();
-                    itemVenda.setProduto(produto);
-                    itemVenda.setPrecoUnitario(produto.getPreco());
-                    itemVenda.setQuantidade(quantidade);
-                    itensVenda.add(itemVenda);
+                    if(produto.getQuantidade() >= quantidade){
+                        ItemVenda itemVenda = new ItemVenda();
+                        itemVenda.setProduto(produto);
+                        itemVenda.setPrecoUnitario(produto.getPreco());
+                        itemVenda.setQuantidade(quantidade);
+                        itensVenda.add(itemVenda);
+                    } else{
+                        throw new RuntimeException("Quantidade insuficiente");
+                    }    
                 }
             }
         }

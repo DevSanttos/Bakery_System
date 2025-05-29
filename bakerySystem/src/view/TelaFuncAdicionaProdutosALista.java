@@ -243,6 +243,7 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "A quantidade precisa ser maior do que 0");
                 return;
             }
+            
             vendaController.addProdutoAoCarrinho(armazenaIdProduto);
             vendaController.addQuantidadeParaVenda(armazenaQuantidade);
             

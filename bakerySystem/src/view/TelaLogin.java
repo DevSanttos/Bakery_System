@@ -249,7 +249,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String login = usuarioField.getText();
         String senha = String.valueOf(senhaField.getPassword());
-        String nomeFunc = caixaDAO.findByLoginAndPassword(login, senha).getNome();
+        
 
         try {
             if (gerenteController.findByLoginAndPassword(login, senha)) {
@@ -258,6 +258,7 @@ public class TelaLogin extends javax.swing.JFrame {
                     this.dispose();
             } else{
                 if (caixaController.findByLoginAndPassword(login, senha)) {
+                    String nomeFunc = caixaDAO.findByLoginAndPassword(login, senha).getNome();
                     TelaFuncPrimeira telaNovaVenda = new TelaFuncPrimeira(nomeFunc);
                     telaNovaVenda.setVisible(true);
                     this.dispose();
