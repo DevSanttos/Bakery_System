@@ -60,6 +60,7 @@ public class TelaGerenteCadastrarProd extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(245, 235, 221));
         jPanel1.setForeground(new java.awt.Color(245, 235, 221));
 
+        campoNomeProd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jScrollPane3.setViewportView(campoNomeProd);
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -123,6 +124,7 @@ public class TelaGerenteCadastrarProd extends javax.swing.JFrame {
             }
         });
 
+        campoQtdeProd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         campoQtdeProd.setMinimumSize(new java.awt.Dimension(60, 20));
         campoQtdeProd.setPreferredSize(new java.awt.Dimension(60, 20));
         campoQtdeProd.setSelectionColor(new java.awt.Color(255, 0, 102));
@@ -132,6 +134,7 @@ public class TelaGerenteCadastrarProd extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(164, 87, 44));
         jLabel5.setText("Qtde");
 
+        campoValorUnit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         campoValorUnit.setMinimumSize(new java.awt.Dimension(60, 20));
         jScrollPane8.setViewportView(campoValorUnit);
 
@@ -143,6 +146,7 @@ public class TelaGerenteCadastrarProd extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(164, 87, 44));
         jLabel11.setText("Categoria");
 
+        campoTipo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         campoTipo.setMinimumSize(new java.awt.Dimension(60, 20));
         jScrollPane9.setViewportView(campoTipo);
 
@@ -155,24 +159,24 @@ public class TelaGerenteCadastrarProd extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jLabel10)
                         .addGap(5, 5, 5)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel11)
-                        .addGap(5, 5, 5)
-                        .addComponent(jScrollPane9))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(209, 209, 209)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel11)
+                                .addGap(5, 5, 5)
+                                .addComponent(jScrollPane9))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,9 +194,9 @@ public class TelaGerenteCadastrarProd extends javax.swing.JFrame {
                     .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                .addGap(68, 68, 68)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

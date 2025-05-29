@@ -38,8 +38,8 @@ public class TelaFuncionarioCadastroCliente extends javax.swing.JFrame {
     
     public TelaFuncionarioCadastroCliente() {
         initComponents();
-        pack();
         setLocationRelativeTo(null);
+        pack();
     }
 
     /**
@@ -52,13 +52,13 @@ public class TelaFuncionarioCadastroCliente extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        campoTelefone = new javax.swing.JTextField();
-        campoCPF = new javax.swing.JTextField();
-        campoNome = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        campoTelefone = new javax.swing.JTextField();
+        campoCPF = new javax.swing.JTextField();
+        campoNome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -70,17 +70,6 @@ public class TelaFuncionarioCadastroCliente extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(245, 235, 221));
         jPanel1.setForeground(new java.awt.Color(245, 235, 221));
-
-        campoTelefone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        campoCPF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        campoNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        campoNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoNomeActionPerformed(evt);
-            }
-        });
 
         jPanel3.setBackground(new java.awt.Color(164, 113, 72));
         jPanel3.setPreferredSize(new java.awt.Dimension(650, 60));
@@ -129,6 +118,17 @@ public class TelaFuncionarioCadastroCliente extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        campoTelefone.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+
+        campoCPF.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+
+        campoNome.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        campoNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoNomeActionPerformed(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(164, 87, 44));
         jLabel3.setText("Nome");
@@ -174,7 +174,7 @@ public class TelaFuncionarioCadastroCliente extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(203, 203, 203)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -196,7 +196,7 @@ public class TelaFuncionarioCadastroCliente extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(58, 58, 58)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(80, 80, 80))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
