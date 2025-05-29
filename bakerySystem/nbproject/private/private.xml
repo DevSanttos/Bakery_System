@@ -3,10 +3,41 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/onata/OneDrive/Documentos/Bakery_System/bakerySystem/src/view/TelaFuncionarioPrincipal.java</file>
-            <file>file:/C:/Users/onata/OneDrive/Documentos/Bakery_System/bakerySystem/src/view/TelaFuncionarioCadastroCliente.java</file>
-            <file>file:/C:/Users/onata/OneDrive/Documentos/Bakery_System/bakerySystem/src/view/TelaFuncPrimeira.java</file>
-            <file>file:/C:/Users/onata/OneDrive/Documentos/Bakery_System/bakerySystem/src/view/TelaGerenteCadastrarFunc.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/controller/VendaController.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/view/TelaLogin.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/service/VendaService.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/view/TelaFuncionarioPrincipal.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/view/TelaGerentePrincipal.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/view/TelaFuncAdicionaProdutosALista.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/view/TelaFuncPrimeira.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/view/TelaFuncionarioCadastroCliente.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/view/TelaTrocaPontos.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/view/TelaVerPontosCliente.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/view/TelaGerenteCadastrarFunc.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/view/TelaGerenteCadastrarProd.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/bean/ItemVenda.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/bean/StatusResgate.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/service/ProdutoService.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/service/CaixaService.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/service/ClienteService.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/controller/CaixaController.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/main/Main.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/controller/ProdutoController.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/view/TelaGerenteEstoque.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/bean/Produto.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/dao/impl/ProdutoDAOImpl.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/dao/impl/ClienteDAOImpl.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/bean/Gerente.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/bean/Venda.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/dao/CaixaDAO.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/dao/impl/CaixaDAOImpl.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/view/TelaGerenteCADCliente.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/nbproject/private/private.properties</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/nbproject/private/private.xml</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/nbproject/project.properties</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/nbproject/genfiles.properties</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/nbproject/project.xml</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/dao/ClienteDAO.java</file>
         </group>
     </open-files>
 </project-private>
