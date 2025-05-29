@@ -2,7 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+
 package view;
+
+import controller.GerenteController;
+import model.dao.GerenteDAO;
+import service.GerenteService;
 
 import controller.CaixaController;
 import controller.ClienteController;
@@ -244,20 +249,21 @@ public class TelaLogin extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String login = usuarioField.getText();
         String senha = String.valueOf(senhaField.getPassword());
+        String nomeFunc = caixaDAO.findByLoginAndPassword(login, senha).getNome();
 
         try {
             if (gerenteController.findByLoginAndPassword(login, senha)) {
                     TelaGerentePrincipal telaPrincipalGerente = new TelaGerentePrincipal();
                     telaPrincipalGerente.setVisible(true);
                     this.dispose();
-                } else{
+            } else{
                 if (caixaController.findByLoginAndPassword(login, senha)) {
-                    TelaFuncPrimeira telaNovaVenda = new TelaFuncPrimeira();
+                    TelaFuncPrimeira telaNovaVenda = new TelaFuncPrimeira(nomeFunc);
                     telaNovaVenda.setVisible(true);
-                this.dispose();
+                    this.dispose();
                 }
-             
-            }
+             }
+            
       
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, "Login ou senha estão inválidos!");
@@ -279,6 +285,7 @@ public class TelaLogin extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -292,3 +299,4 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JTextField usuarioField;
     // End of variables declaration//GEN-END:variables
 }
+

@@ -6,6 +6,7 @@ package view;
 
 import controller.ProdutoController;
 import controller.VendaController;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -27,6 +28,9 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
     ProdutoDAO produtoDao = new ProdutoDAOImpl();
     ProdutoService produtoService = new ProdutoService(produtoDao);
     ProdutoController produtoController = new ProdutoController(produtoService);
+    DecimalFormat df = new DecimalFormat("'R$' #,##0.00");
+    
+    public String nomeFunc;
     
     /**
      * Creates new form TelaPrincipalFuncionario
@@ -68,7 +72,7 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
         tabelaProdutosVenda = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        campoSubtotal = new javax.swing.JTextPane();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -144,9 +148,9 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(164, 113, 72));
 
-        jTextPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextPane1.setFont(new java.awt.Font("Arial", 1, 34)); // NOI18N
-        jScrollPane2.setViewportView(jTextPane1);
+        campoSubtotal.setBackground(new java.awt.Color(255, 255, 255));
+        campoSubtotal.setFont(new java.awt.Font("Arial", 1, 34)); // NOI18N
+        jScrollPane2.setViewportView(campoSubtotal);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(245, 235, 221));
@@ -174,7 +178,7 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(164, 113, 72));
         jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(245, 235, 221));
-        jButton1.setText("Novo Cliente");
+        jButton1.setText("Nova venda");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -184,7 +188,7 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(164, 113, 72));
         jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(245, 235, 221));
-        jButton2.setText("Ver Pontos");
+        jButton2.setText("Trocar pontos");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -262,8 +266,8 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        TelaFuncionarioCadastroCliente telaCadastroClienteFuncionario = new TelaFuncionarioCadastroCliente();
-        telaCadastroClienteFuncionario.setVisible(true);
+        TelaFuncPrimeira telaFuncPrimeira = new TelaFuncPrimeira(nomeFunc);
+        telaFuncPrimeira.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -275,10 +279,10 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "O id do cliente inválido!");
             return;
         }
-        
-        
-            JOptionPane.showMessageDialog(null, vendaController.realizarVenda(idCliente));
+            
+            campoSubtotal.setText(df.format(vendaController.realizarVenda(idCliente)));
             JOptionPane.showMessageDialog(null, "Sucesso!");
+            
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "ID inválido. Insira um número válido.");
         }
@@ -291,21 +295,25 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_verificarClienteActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JOptionPane.showMessageDialog(null, vendaController.getProdutoList());
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public void readTable() {
     DefaultTableModel modelo = (DefaultTableModel) tabelaProdutosVenda.getModel();
         modelo.setNumRows(0);
-
+        
         try {
-            for (Produto p : vendaController.getProdutoList()) {
-                modelo.addRow(new Object[]{
-                    p.getIdProduto(),
-                    p.getNome(),
-                    p.getPreco(),
-                    p.getTipo(),
-                    p.getQuantidade(),});
+            for(int q : vendaController.getQuantList()){
+                for (Produto p : vendaController.getProdutoList()) {
+                  if(vendaController.getQuantList().indexOf(q) == vendaController.getProdutoList().indexOf(p)){  
+                    modelo.addRow(new Object[]{
+                        p.getIdProduto(),
+                        p.getNome(),
+                        p.getPreco(),
+                        p.getTipo(),
+                        q,});
+                  }  
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar produtos: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -350,6 +358,7 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextPane campoIdCliente;
+    private javax.swing.JTextPane campoSubtotal;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -362,7 +371,6 @@ public class TelaFuncionarioPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTable tabelaProdutosVenda;
     private javax.swing.JButton verificarCliente;
     // End of variables declaration//GEN-END:variables

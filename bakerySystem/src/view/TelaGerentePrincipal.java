@@ -36,6 +36,8 @@ public class TelaGerentePrincipal extends javax.swing.JFrame {
     CaixaDAO caixaDAO = new CaixaDAOImpl();
     CaixaService caixaService = new CaixaService(caixaDAO);
     CaixaController caixaController = new CaixaController(caixaService);
+    
+    
 
     public TelaGerentePrincipal() {
         initComponents();

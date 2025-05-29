@@ -30,7 +30,7 @@ public class CaixaDAOImpl implements CaixaDAO {
     private static final String SQL_UPDATE_CAIXA = "UPDATE caixa SET nome = ?, CPF = ?, telefone = ?, cargo = ?, login = ?, senha = ? WHERE caixa.id_caixa = ?";
     private static final String SQL_DELETE_CAIXA = "DELETE FROM caixa WHERE caixa.id_caixa = ?";
     private static final String SQL_FIND_BY_ID = "SELECT * FROM caixa WHERE caixa.id_caixa = ?";
-    private static final String SQL_FIND_BY_LOGIN_AND_PASSWORD = "SELECT id_caixa, login, senha FROM caixa WHERE caixa.login = ? AND caixa.senha = ?";
+    private static final String SQL_FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM caixa WHERE caixa.login = ? AND caixa.senha = ?";
 
     @Override
     public Caixa create(Caixa caixa) {
@@ -210,6 +210,7 @@ public class CaixaDAOImpl implements CaixaDAO {
 
             if (rs.next()) {
                 caixa.setId(rs.getLong("id_caixa"));
+                caixa.setNome(rs.getString("nome"));
                 caixa.setLogin(rs.getString("login"));
                 caixa.setSenha(rs.getString("senha"));
             } else {

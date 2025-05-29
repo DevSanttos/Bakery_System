@@ -29,6 +29,9 @@ public class VendaService {
     ProdutoService produtoService = new ProdutoService(produtoDAO);
 
     List<Produto> produtoList = new ArrayList();
+    public ArrayList<Integer> quantList = new ArrayList();
+    
+   
          
     double subtotal = 0;
 
@@ -130,10 +133,17 @@ public class VendaService {
         
         return produto;
     }
+    
+    public void addQuantidadeParaVenda(int quantidade){
+        if(quantidade <= 0 ){
+            throw new RuntimeException("Quantidade para a venda menor ou igual a 0 não é permitida!");
+        }
+        quantList.add(quantidade);
+    }
 
 
     public double realizarVenda(Long idCliente) {
-        //se id null, realizar a venda para a Pessoa que não é cliente
+        
         if (idCliente <= 0) {
             throw new IllegalArgumentException("ID inválido.");
         }
@@ -146,10 +156,15 @@ public class VendaService {
         
 
         for (Produto produto : produtoList) {
-            ItemVenda itemVenda = new ItemVenda();
-            itemVenda.setProduto(produto);
-            itemVenda.setPrecoUnitario(produto.getPreco());
-            itensVenda.add(itemVenda);
+            for(int quantidade: quantList){
+                if(produtoList.indexOf(produto) == quantList.indexOf(quantidade)){
+                    ItemVenda itemVenda = new ItemVenda();
+                    itemVenda.setProduto(produto);
+                    itemVenda.setPrecoUnitario(produto.getPreco());
+                    itemVenda.setQuantidade(quantidade);
+                    itensVenda.add(itemVenda);
+                }
+            }
         }
 
         atualizaEstoqueProdutos(itensVenda);
@@ -163,12 +178,14 @@ public class VendaService {
         //Apagar todos os produtos do carrinho
         createVenda(venda);
         produtoList.clear();
+        quantList.clear();
+        subtotal = 0;
         return calcSubtotal(itensVenda);
     }
 
     public double calcSubtotal(List<ItemVenda> itensVenda) {
         for (ItemVenda itemVenda : itensVenda) {
-            subtotal += itemVenda.getPrecoUnitario();
+            subtotal += itemVenda.getPrecoUnitario() * itemVenda.getQuantidade();
         }
         return subtotal;
     }
@@ -189,6 +206,10 @@ public class VendaService {
 
     public List<Produto> getProdutoList() {
         return produtoList;
+    }
+    
+    public List <Integer> getQuantList(){
+        return quantList;
     }
     
     

@@ -18,7 +18,11 @@ public class TelaTrocaPontos extends javax.swing.JFrame {
     /**
      * Creates new form TelaTrocaPontos
      */
-    public TelaTrocaPontos() {
+    
+    public String nomeFunc;
+    
+    public TelaTrocaPontos(){
+        
         initComponents();
     }
 
@@ -155,7 +159,7 @@ public class TelaTrocaPontos extends javax.swing.JFrame {
     }//GEN-LAST:event_campoIdProdutoTrocaActionPerformed
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
-        TelaFuncPrimeira telaFuncPrimeira = new TelaFuncPrimeira();
+        TelaFuncPrimeira telaFuncPrimeira = new TelaFuncPrimeira(nomeFunc);
         telaFuncPrimeira.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoVoltarActionPerformed

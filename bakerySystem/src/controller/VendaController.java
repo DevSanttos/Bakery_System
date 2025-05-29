@@ -52,10 +52,19 @@ public class VendaController {
 
     public Produto addProdutoAoCarrinho(Long idInformado) {
         if (idInformado != null || idInformado > 0) {
+            
             return vendaService.addProdutoAoCarrinho(idInformado);
         } else {
             throw new RuntimeException("Não é possível adicionar itens com ID nulo ou igual a zero!");
         }
+    }
+    
+    public void addQuantidadeParaVenda(int quantidade){
+        if(quantidade <= 0 ){
+            throw new RuntimeException("Quantidade para a venda menor ou igual a 0 não é permitida!");
+        }
+        vendaService.quantList.add(quantidade);
+        return;
     }
 
     public double realizarVenda(Long idCliente) {
@@ -76,5 +85,9 @@ public class VendaController {
     
     public List<Produto> getProdutoList() {
         return vendaService.getProdutoList();
+    }
+    
+    public List <Integer> getQuantList(){
+        return vendaService.getQuantList();
     }
 }

@@ -30,6 +30,8 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
     ClienteDAO clienteDAO = new ClienteDAOImpl();
     ClienteService clienteService = new ClienteService(clienteDAO);
     ClienteController clienteController = new ClienteController(clienteService);
+    
+    public String nomeFunc;
 
     public TelaFuncAdicionaProdutosALista() {
         initComponents();
@@ -63,7 +65,8 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
         botaoAdicionar = new javax.swing.JButton();
         botaoProsseguir = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        campoQuantidadeParaVenda = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Padaria Rezende's");
@@ -140,12 +143,13 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Insira o ID do produto para adicionar ao carrinho:");
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        campoQuantidadeParaVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                campoQuantidadeParaVendaActionPerformed(evt);
             }
         });
+
+        jLabel2.setText("Quantidade");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -154,30 +158,33 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(103, 103, 103))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(15, 15, 15))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(111, 111, 111))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(223, 223, 223)
+                        .addComponent(campoIdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(58, 58, 58)
                         .addComponent(botaoProsseguir, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(163, 163, 163))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(223, 223, 223)
-                .addComponent(campoIdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(campoQuantidadeParaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
+                .addGap(59, 59, 59)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(campoIdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,6 +193,11 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
                     .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoProsseguir, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(78, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoQuantidadeParaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(123, 123, 123))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,15 +232,24 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         try {
             Long armazenaIdProduto = Long.valueOf(campoIdProduto.getText());
+            int armazenaQuantidade = Integer.valueOf(campoQuantidadeParaVenda.getText());
 
             if (armazenaIdProduto == null || armazenaIdProduto <= 0) {
                 JOptionPane.showMessageDialog(null, "O ID informado é inválido");
                 return;
             }
-            String mensagemRetorno = String.valueOf(vendaController.addProdutoAoCarrinho(armazenaIdProduto));
-            JOptionPane.showMessageDialog(null, mensagemRetorno);
-//            JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso!");
+            
+            if(armazenaQuantidade <= 0){
+                JOptionPane.showMessageDialog(null, "A quantidade precisa ser maior do que 0");
+                return;
+            }
+            vendaController.addProdutoAoCarrinho(armazenaIdProduto);
+            vendaController.addQuantidadeParaVenda(armazenaQuantidade);
+            
+            JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso!");
 
+            
+        
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Por favor, insira um valor válido");
         } catch (IllegalArgumentException ex) {
@@ -239,14 +260,14 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        TelaFuncPrimeira telaNovaVenda = new TelaFuncPrimeira();
+        TelaFuncPrimeira telaNovaVenda = new TelaFuncPrimeira(nomeFunc);
         telaNovaVenda.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JOptionPane.showMessageDialog(null, vendaController.getProdutoList());
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void campoQuantidadeParaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoQuantidadeParaVendaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoQuantidadeParaVendaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -294,9 +315,10 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoProsseguir;
     private javax.swing.JTextField campoIdProduto;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField campoQuantidadeParaVenda;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
