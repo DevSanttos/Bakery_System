@@ -38,6 +38,8 @@
             <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/nbproject/genfiles.properties</file>
             <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/nbproject/project.xml</file>
             <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/model/dao/ClienteDAO.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/controller/GerenteController.java</file>
+            <file>file:/C:/Users/joseo/OneDrive/Documentos/GitHub/Bakery_System/bakerySystem/src/service/GerenteService.java</file>
         </group>
     </open-files>
 </project-private>
