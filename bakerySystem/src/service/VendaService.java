@@ -154,21 +154,18 @@ public class VendaService {
 
         List<ItemVenda> itensVenda = new ArrayList<>();
         
-
-        for (Produto produto : produtoList) {
-            for(int quantidade: quantList){
-                if(produtoList.indexOf(produto) == quantList.indexOf(quantidade)){
+       
+        
+        for(int i = 0; i < produtoList.size(); i++) {
+            Produto produto = produtoList.get(i);
+            int quantidade = quantList.get(i);
                     if(produto.getQuantidade() >= quantidade){
                         ItemVenda itemVenda = new ItemVenda();
                         itemVenda.setProduto(produto);
                         itemVenda.setPrecoUnitario(produto.getPreco());
                         itemVenda.setQuantidade(quantidade);
                         itensVenda.add(itemVenda);
-                    } else{
-                        throw new RuntimeException("Quantidade insuficiente");
-                    }    
-                }
-            }
+                    }
         }
 
         atualizaEstoqueProdutos(itensVenda);
@@ -176,7 +173,10 @@ public class VendaService {
         venda.setValorTotal(calcSubtotal(itensVenda));
 
         if(cliente.getId() != null) {
-            cliente.setTotalPontosAcumulados(((int) calcSubtotal(itensVenda)) / 2);
+            double valorCompra = calcSubtotal(itensVenda)/2;
+            int vCompraFormatado = (int) valorCompra;
+            cliente.setTotalPontosAcumulados(cliente.getTotalPontosAcumulados() + (vCompraFormatado/2));
+            clienteService.updateCliente(cliente);
         }
            
         //Apagar todos os produtos do carrinho

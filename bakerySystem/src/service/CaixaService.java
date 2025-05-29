@@ -182,23 +182,28 @@ public class CaixaService {
                 System.out.println(produtoService.readProduto());
                 if (produto.isDisponivelParaTroca()) {
                     if (produto.getQuantidade() > 0 && quantidade <= produto.getQuantidade()) {
-                            while(quantidade > 0){
-                                if (produto.getPontosNecessarios() <= cliente.getTotalPontosAcumulados()) {
-                                cliente.setTotalPontosAcumulados(cliente.getTotalPontosAcumulados() - produto.getPontosNecessarios());
-                                produto.setStatusResgate(StatusResgate.REALIZADO);
-                                produto.setQuantidade(produto.getQuantidade() - 1);
-                                produtoService.updateProduto(produto);
-                                clienteService.updateCliente(cliente);
-                                quantidade--;
-                                }
+                        if ((produto.getPontosNecessarios() * quantidade) <= cliente.getTotalPontosAcumulados()) {
+                            cliente.setTotalPontosAcumulados(cliente.getTotalPontosAcumulados() - (produto.getPontosNecessarios() * quantidade));
+                            produto.setStatusResgate(StatusResgate.REALIZADO);
+                            produto.setQuantidade(produto.getQuantidade() - quantidade);
+                            produtoService.updateProduto(produto);
+                            clienteService.updateCliente(cliente);
                             return true;
-                            }
+                        } else {
+                            throw new RuntimeException("Cliente não possui pontos suficientes");
+                        }
+                    } else {
+                        throw new RuntimeException("Não há produto(s) suficiente(s) no estoque.");
                     }
-                } else {
-                    System.out.println("Produto não disponivel para troca!");
+                } else{
+                    throw new RuntimeException("Produto indisponível para troca.");
                 }
-            } throw new RuntimeException("O ID do produto é nulo ou menor que 0.");
-        } throw new RuntimeException("O ID do cliente é nulo ou menor que 0.");
+            } else{
+                throw new RuntimeException("O ID do produto é nulo ou menor que 0.");
+            }
+        } else{
+            throw new RuntimeException("O ID do cliente é nulo ou menor que 0.");
+        }
     }
 
     public boolean updateCliente (Long id, String nome, String CPF, String telefone) {

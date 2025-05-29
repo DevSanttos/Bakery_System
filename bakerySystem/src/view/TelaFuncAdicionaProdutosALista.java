@@ -244,12 +244,14 @@ public class TelaFuncAdicionaProdutosALista extends javax.swing.JFrame {
                 return;
             }
             
-            vendaController.addProdutoAoCarrinho(armazenaIdProduto);
-            vendaController.addQuantidadeParaVenda(armazenaQuantidade);
+            Produto produto = produtoDao.findById(armazenaIdProduto);
             
-            JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso!");
-
-            
+            if(produto.getQuantidade() >= armazenaQuantidade){
+                vendaController.addQuantidadeParaVenda(armazenaQuantidade);
+                vendaController.addProdutoAoCarrinho(armazenaIdProduto);
+                JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso!");
+            } else
+                JOptionPane.showMessageDialog(null, "Quantidade em estoque é menor do que a preterida para a compra");
         
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Por favor, insira um valor válido");
