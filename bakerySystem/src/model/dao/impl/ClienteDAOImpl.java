@@ -115,7 +115,7 @@ public class ClienteDAOImpl implements ClienteDAO{
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso!");
+//                JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso!");
                 return true;
             } else {
                 JOptionPane.showMessageDialog(null, "Nenhum cliente foi encontrado ou os dados são os mesmos!");

@@ -46,7 +46,7 @@ public class TelaFuncPrimeira extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(245, 235, 221));
 
-        botaoCriarCliente.setBackground(new java.awt.Color(92, 184, 92));
+        botaoCriarCliente.setBackground(new java.awt.Color(164, 87, 44));
         botaoCriarCliente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         botaoCriarCliente.setForeground(new java.awt.Color(245, 235, 221));
         botaoCriarCliente.setText("Criar Cliente");
@@ -109,7 +109,7 @@ public class TelaFuncPrimeira extends javax.swing.JFrame {
         mensagemBemVindo.setForeground(new java.awt.Color(164, 87, 44));
         mensagemBemVindo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        botaoTelaTrocaPontos.setBackground(new java.awt.Color(0, 153, 0));
+        botaoTelaTrocaPontos.setBackground(new java.awt.Color(164, 87, 44));
         botaoTelaTrocaPontos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         botaoTelaTrocaPontos.setForeground(new java.awt.Color(245, 235, 221));
         botaoTelaTrocaPontos.setText("Trocar Pontos");

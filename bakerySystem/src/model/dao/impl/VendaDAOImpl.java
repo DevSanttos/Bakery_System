@@ -5,30 +5,29 @@ import model.bean.Cliente;
 import model.bean.ItemVenda;
 import model.bean.Produto;
 import model.bean.Venda;
-// import javax.swing.JOptionPane; // Removido
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.dao.VendaDAO;
-import model.dao.ClienteDAO; // Importar a interface para melhor prática
-import model.dao.ProdutoDAO; // Importar a interface para melhor prática
+import model.dao.ClienteDAO; 
+import model.dao.ProdutoDAO; 
 
 public class VendaDAOImpl implements VendaDAO {
 
-    // SQL para a tabela 'venda'
+    
     private static final String SQL_INSERT_VENDA = "INSERT INTO venda (data_venda, id_cliente) VALUES (?, ?)";
     private static final String SQL_SELECT_ALL_VENDAS = "SELECT id_venda, data_venda, id_cliente FROM venda";
     private static final String SQL_UPDATE_VENDA = "UPDATE venda SET data_venda = ?, id_cliente = ? WHERE id_venda = ?";
     private static final String SQL_DELETE_VENDA = "DELETE FROM venda WHERE id_venda = ?";
     private static final String SQL_FIND_VENDA_BY_ID = "SELECT id_venda, data_venda, id_cliente FROM venda WHERE venda.id_venda = ?";
 
-    // SQL para a tabela 'item_venda'
     private static final String SQL_INSERT_ITEM_VENDA = "INSERT INTO itemvenda (id_venda, id_produto, quantidade) VALUES (?, ?, ?)";
     private static final String SQL_SELECT_ITEMS_BY_VENDA_ID = "SELECT id_item_venda, id_produto, quantidade FROM itemvenda WHERE itemvenda.id_venda = ?";
     private static final String SQL_DELETE_ITEMS_BY_VENDA_ID = "DELETE FROM itemvenda WHERE itemvenda.id_venda = ?";
 
-    // DAOs para entidades relacionadas (usando interfaces para melhor prática)
+    
     private ClienteDAO clienteDAO;
     private ProdutoDAO produtoDAO;
 
@@ -44,18 +43,18 @@ public class VendaDAOImpl implements VendaDAO {
         ResultSet generatedKeysVenda = null;
         PreparedStatement stmtItemVenda = null;
 
-        // Validação básica do objeto Venda
+        
         if (venda == null) {
             throw new IllegalArgumentException("Objeto Venda não pode ser nulo.");
         }
 
         try {
             connection = ConnectionFactory.getConnection();
-            connection.setAutoCommit(false); // Inicia a transação
+            connection.setAutoCommit(false); 
 
-            // Inserir Venda principal
+            
             stmtVenda = connection.prepareStatement(SQL_INSERT_VENDA, Statement.RETURN_GENERATED_KEYS);
-            stmtVenda.setDate(1, venda.getDataVendaSQL()); // Usa o método que retorna java.sql.Date
+            stmtVenda.setDate(1, venda.getDataVendaSQL()); 
 
             if (venda.getCliente() != null && venda.getCliente().getId() != null) {
                 stmtVenda.setLong(2, venda.getCliente().getId());
@@ -76,11 +75,11 @@ public class VendaDAOImpl implements VendaDAO {
                 throw new SQLException("Falha ao obter o ID da venda após inserção!");
             }
 
-            // Inserir Itens da Venda
+            
             if (venda.getItens() != null && !venda.getItens().isEmpty()) {
                 stmtItemVenda = connection.prepareStatement(SQL_INSERT_ITEM_VENDA, Statement.RETURN_GENERATED_KEYS);
                 for (ItemVenda item : venda.getItens()) {
-                    item.setVenda(venda); // Garante que o item tem a referência correta da venda com ID
+                    item.setVenda(venda); 
 
                     if (item.getProduto() == null || item.getProduto().getIdProduto() == null) {
                         throw new IllegalArgumentException("Item da venda sem produto associado ou ID do produto ausente. Item não pode ser inserido.");
@@ -109,13 +108,13 @@ public class VendaDAOImpl implements VendaDAO {
                     }
                 }
             }
-            connection.commit(); // Confirma a transação
+            connection.commit(); 
             return venda;
 
         } catch (SQLException | IllegalArgumentException ex) {
             if (connection != null) {
                 try {
-                    connection.rollback(); // Desfaz a transação em caso de erro
+                    connection.rollback(); 
                 } catch (SQLException rollbackEx) {
                     System.err.println("Erro durante o rollback da transação: " + rollbackEx.getMessage());
                 }
@@ -145,7 +144,7 @@ public class VendaDAOImpl implements VendaDAO {
             }
             if (connection != null) {
                 try {
-                    connection.setAutoCommit(true); // Restaura o auto-commit
+                    connection.setAutoCommit(true); 
                     connection.close();
                 } catch (SQLException e) {
                     System.err.println("Erro ao fechar Connection: " + e.getMessage());
@@ -170,23 +169,22 @@ public class VendaDAOImpl implements VendaDAO {
                 ItemVenda item = new ItemVenda();
                 item.setIdItemVenda(rs.getLong("id_item_venda"));
                 item.setQuantidade(rs.getInt("quantidade"));
-                item.setVenda(venda); // Associa o item à venda principal
+                item.setVenda(venda); 
 
                 Long idProduto = rs.getLong("id_produto");
-                // ProdutoDAO.findById gerenciará sua própria conexão conforme o padrão do ProdutoDAO
+                
                 Produto produto = produtoDAO.findById(idProduto);
 
                 if (produto == null || produto.getIdProduto() == null) {
                     System.err.println("AVISO: Produto com ID " + idProduto + " não encontrado para o item " + item.getIdItemVenda() + " da venda " + venda.getIdVenda() + ". Item não será adicionado com produto completo.");
-                    // Define um produto placeholder ou nulo, dependendo da lógica de negócio
+                   
                 } else {
                     item.setProduto(produto);
                 }
                 itens.add(item);
             }
         } finally {
-            // ResultSet e PreparedStatement são locais para este método auxiliar e devem ser fechados aqui.
-            // A conexão é gerenciada pelo método chamador (read, findById).
+            
             if (rs != null) {
                 try {
                     rs.close();
@@ -232,7 +230,7 @@ public class VendaDAOImpl implements VendaDAO {
                     Cliente cliente = clienteDAO.findById(idCliente);
                     if (cliente == null || cliente.getId() == null) {
                         //System.err.println("AVISO: Cliente com ID " + idCliente + " não encontrado para a venda " + venda.getIdVenda() + ".");
-                        venda.setCliente(null); // Ou tratar como erro, dependendo dos requisitos
+                        venda.setCliente(null); 
                     } else {
                         venda.setCliente(cliente);
                     }
@@ -240,7 +238,7 @@ public class VendaDAOImpl implements VendaDAO {
                     venda.setCliente(null); // Cliente é opcional na venda
                 }
 
-                // Carrega os itens para esta venda usando a mesma conexão principal
+                
                 List<ItemVenda> itens = loadItensForVenda(venda);
                 venda.setItens(itens);
 
@@ -356,9 +354,9 @@ public class VendaDAOImpl implements VendaDAO {
 
         try {
             connection = ConnectionFactory.getConnection();
-            connection.setAutoCommit(false); // Inicia a transação
+            connection.setAutoCommit(false); 
 
-            // 1. Atualizar dados da Venda principal
+            
             stmtUpdateVenda = connection.prepareStatement(SQL_UPDATE_VENDA);
             stmtUpdateVenda.setDate(1, venda.getDataVendaSQL());
             if (venda.getCliente() != null && venda.getCliente().getId() != null) {
@@ -370,20 +368,20 @@ public class VendaDAOImpl implements VendaDAO {
 
             int affectedRowsVenda = stmtUpdateVenda.executeUpdate();
             if (affectedRowsVenda == 0) {
-                // Se a venda não foi encontrada, pode ser um erro ou o ID não existe
+                
                 throw new SQLException("Nenhuma venda foi encontrada com o ID " + venda.getIdVenda() + " para atualizar, ou os dados são os mesmos.");
             }
 
-            // 2. Remover ItensVenda antigos associados a esta Venda
+            
             stmtDeleteItens = connection.prepareStatement(SQL_DELETE_ITEMS_BY_VENDA_ID);
             stmtDeleteItens.setLong(1, venda.getIdVenda());
-            stmtDeleteItens.executeUpdate(); // Não precisa verificar affectedRows, pois pode não haver itens anteriores
+            stmtDeleteItens.executeUpdate();
 
-            // 3. Inserir os novos ItensVenda
+            
             if (venda.getItens() != null && !venda.getItens().isEmpty()) {
                 stmtInsertItem = connection.prepareStatement(SQL_INSERT_ITEM_VENDA, Statement.RETURN_GENERATED_KEYS);
                 for (ItemVenda item : venda.getItens()) {
-                    item.setVenda(venda); // Garante referência correta
+                    item.setVenda(venda); 
 
                     if (item.getProduto() == null || item.getProduto().getIdProduto() == null) {
                         throw new IllegalArgumentException("Item da venda (durante atualização) sem produto associado ou ID do produto ausente. Item não pode ser (re)inserido.");
@@ -412,13 +410,13 @@ public class VendaDAOImpl implements VendaDAO {
                 }
             }
 
-            connection.commit(); // Confirma a transação
+            connection.commit();
             return true;
 
         } catch (SQLException | IllegalArgumentException ex) {
             if (connection != null) {
                 try {
-                    connection.rollback(); // Desfaz a transação em caso de erro
+                    connection.rollback(); 
                 } catch (SQLException rollbackEx) {
                     System.err.println("Erro durante o rollback da transação na atualização da venda: " + rollbackEx.getMessage());
                 }
@@ -448,7 +446,7 @@ public class VendaDAOImpl implements VendaDAO {
             }
             if (connection != null) {
                 try {
-                    connection.setAutoCommit(true); // Restaura o auto-commit
+                    connection.setAutoCommit(true);
                     connection.close();
                 } catch (SQLException e) {
                     System.err.println("Erro ao fechar Connection: " + e.getMessage());
@@ -469,14 +467,14 @@ public class VendaDAOImpl implements VendaDAO {
 
         try {
             connection = ConnectionFactory.getConnection();
-            connection.setAutoCommit(false); // Inicia a transação
+            connection.setAutoCommit(false);
 
-            // 1. Excluir ItensVenda associados
+            
             stmtDeleteItens = connection.prepareStatement(SQL_DELETE_ITEMS_BY_VENDA_ID);
             stmtDeleteItens.setLong(1, idVenda);
-            stmtDeleteItens.executeUpdate(); // Não precisa verificar affectedRows, pois pode não haver itens
+            stmtDeleteItens.executeUpdate(); 
 
-            // 2. Excluir a Venda principal
+            
             stmtDeleteVenda = connection.prepareStatement(SQL_DELETE_VENDA);
             stmtDeleteVenda.setLong(1, idVenda);
             int affectedRowsVenda = stmtDeleteVenda.executeUpdate();
