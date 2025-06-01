@@ -447,14 +447,17 @@ public class TelaGerenteEstoque extends javax.swing.JFrame {
                 
                 gerenteController.deleteProduto(idProduto);
                 
+                readTable();
+                JOptionPane.showMessageDialog(this, "Produto deletado com sucesso!");
+                
                 campoNome.setText("");
                 campoQuantidade.setText("");
                 campoTipo.setText("");
                 campoPontosNecessarios.setText("");
                 campoPreco.setText("");
                 
-                JOptionPane.showMessageDialog(this, "Produto deletado com sucesso!");
-                readTable();
+                
+                
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Erro ao deletar produto: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
